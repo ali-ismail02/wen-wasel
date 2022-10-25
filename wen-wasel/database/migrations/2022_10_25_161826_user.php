@@ -85,8 +85,8 @@ return new class extends Migration
             $table->increments('id');
             $table->string("start_location");
             $table->string("end_location");
-            $table->dateTime('departure_time', $precision = 0);
-            $table->dateTime('arrival_time', $precision = 0);
+            $table->dateTime('departure_time', $precision = 0)->nullable();
+            $table->dateTime('arrival_time', $precision = 0)->nullable();
             $table->timestamps();
         });
 

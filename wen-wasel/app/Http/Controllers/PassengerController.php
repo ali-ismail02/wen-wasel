@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Trip;
+use App\Models\SubTrip;
+use App\Models\TripType;
+use App\Models\TripInfo;
+
 use Validator;
 
 class PassengerController extends Controller
@@ -33,6 +38,7 @@ class PassengerController extends Controller
                 "message" => "Email taken"
             ]);
         }
+
         $user = new User();
         $user->name = $request->name;
         $user->phone = $request->phone;
@@ -41,6 +47,7 @@ class PassengerController extends Controller
         $user->password = bcrypt($request->password);
         $user->image = null;
         $user->save();
+
         return response()->json([
             "status" => "1",
             "message" => "User created successfully"

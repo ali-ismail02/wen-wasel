@@ -28,7 +28,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     public function userTypes(){
-        return $this->belongsTo(User_type::class);
+        return $this->belongsTo(UserType::class);
     }
 
     public function drivers(){

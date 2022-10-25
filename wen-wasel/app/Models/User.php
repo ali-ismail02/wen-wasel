@@ -14,23 +14,40 @@ class User extends Authenticatable implements JWTSubject
     use HasApiTokens, HasFactory, Notifiable;
     use Notifiable;
 
-    // Rest omitted for brevity
+    protected $fillable = [
+        'name',
+        'phone',
+        'email',
+        'password',
+        'image',
+        'user_type',
+    ];
 
-    /**
-     * Get the identifier that will be stored in the subject claim of the JWT.
-     *
-     * @return mixed
-     */
+    protected $hidden = [
+        'password',
+    ];
+
+    public function userTypes(){
+        return $this->belongsTo(User_type::class);
+    }
+
+    public function drivers(){
+        return $this->hasMany(Driver::class);
+    }
+
+    public function reservations(){
+        return $this->hasMany(Reservation::class);
+    }
+
+    public function trips(){
+        return $this->hasMany(Trip::class);
+    }
+
     public function getJWTIdentifier()
     {
         return $this->getKey();
     }
 
-    /**
-     * Return a key value array, containing any custom claims to be added to the JWT.
-     *
-     * @return array
-     */
     public function getJWTCustomClaims()
     {
         return [];

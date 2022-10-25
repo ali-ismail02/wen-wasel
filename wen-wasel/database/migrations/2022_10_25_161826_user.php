@@ -14,12 +14,12 @@ return new class extends Migration
     public function up()
     {
         Schema::create('route_types', function (Blueprint $table) {
-            $table->increments();
+            $table->increments('id');
             $table->string('type');
         });
 
         Schema::create('trip_types', function (Blueprint $table) {
-            $table->increments();
+            $table->increments('id');
             $table->string('type');
         });
 
@@ -127,6 +127,6 @@ return new class extends Migration
         Schema::dropIfExists('drivers');
         Schema::dropIfExists('trip_types');
         Schema::dropIfExists('route_types');
-        
+
     }
 };

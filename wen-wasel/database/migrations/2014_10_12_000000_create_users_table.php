@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::create('user_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type');
+            $table->timestamps();
         });
 
         Schema::create('users', function (Blueprint $table) {

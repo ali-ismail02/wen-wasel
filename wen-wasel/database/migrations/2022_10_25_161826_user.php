@@ -16,11 +16,13 @@ return new class extends Migration
         Schema::create('route_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type');
+            $table->timestamps();
         });
 
         Schema::create('trip_types', function (Blueprint $table) {
             $table->increments('id');
             $table->string('type');
+            $table->timestamps();
         });
 
         Schema::create('drivers', function (Blueprint $table) {

@@ -19,7 +19,7 @@ class PresavedRoute extends Model
         return $this->belongsTo(Driver::class);
     }
 
-    public function route(){
+    public function routes(){
         return $this->hasMany(Route::class);
     }
 }

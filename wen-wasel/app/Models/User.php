@@ -27,7 +27,7 @@ class User extends Authenticatable implements JWTSubject
         'password',
     ];
 
-    public function userTypes(){
+    public function userType(){
         return $this->belongsTo(UserType::class);
     }
 

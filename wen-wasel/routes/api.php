@@ -10,3 +10,5 @@ Route::group(['prefix' => 'auth:api'], function () {
     Route::post('refresh',[AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
 });
+
+Route::post('signUp', [UserController::class, 'signUp']);

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Validator;
 
 class PassengerController extends Controller
 {
@@ -14,7 +15,19 @@ class PassengerController extends Controller
                 "message" => "Missing Fields"
             ]);
         }
-        if($user->where('email',$request['email'])->first()){
+        $validator = Validator::make($request->all(), [
+            'email'=>'email:rfc,dns',
+            'password' => 'required|min:6',
+            'phone' => 'required|min:8|max:8',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                "status" => "0",
+                "message" => $validator->errors()
+            ]);
+        }
+
+        if(User::where('email',$request['email'])->first()){
             return response()->json([
                 "status" => "0",
                 "message" => "Email taken"

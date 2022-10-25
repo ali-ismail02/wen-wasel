@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Facades\JWTFactory;
+use App\Models\User;
 
 class AuthController extends Controller
 {
@@ -18,28 +21,12 @@ class AuthController extends Controller
         return $this->respondWithToken($token);
     }
 
-    public function me()
-    {
-        return response()->json(auth()->user());
-    }
-
-    public function logout()
-    {
-        auth()->logout();
-
-        return response()->json(['message' => 'Successfully logged out']);
-    }
-
-    public function refresh()
-    {
-        return $this->respondWithToken(auth()->refresh());
-    }
-
     protected function respondWithToken($token)
     {
+        $user = User::where('email', request(['email']))->first();
         return response()->json([
             'access_token' => $token,
-            'token_type' => 'bearer',
+            'user_type' => $user->user_type,
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }

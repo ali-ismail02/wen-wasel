@@ -9,7 +9,7 @@ class RouteTypes extends Model
 {
     use HasFactory;
 
-    public $fillable = [
+    protected $fillable = [
         'type',
     ];
 

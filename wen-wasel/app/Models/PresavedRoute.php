@@ -9,7 +9,7 @@ class PresavedRoute extends Model
 {
     use HasFactory;
 
-    public $fillable = [
+    protected $fillable = [
         'driver_id',
         'name',
         'start_time',

@@ -9,7 +9,7 @@ class Trip extends Model
 {
     use HasFactory;
 
-    public $fillable = [
+    protected $fillable = [
         'user_id',
     ];
 

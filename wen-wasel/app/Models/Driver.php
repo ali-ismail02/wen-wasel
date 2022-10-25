@@ -9,7 +9,7 @@ class Driver extends Model
 {
     use HasFactory;
 
-    public $fillable = [
+    protected $fillable = [
         'user_id',
         'make',
         'model',

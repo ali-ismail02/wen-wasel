@@ -9,7 +9,7 @@ class Route extends Model
 {
     use HasFactory;
 
-    public $fillable = [
+    protected $fillable = [
         'route_type',
         'driver_id',
         'presaved_route_id',

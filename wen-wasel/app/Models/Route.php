@@ -20,7 +20,7 @@ class Route extends Model
     ];
 
     public function route_type(){
-        return $this->belongsTo(RouteTypes::class);
+        return $this->belongsTo(RouteType::class);
     }
 
     public function driver(){

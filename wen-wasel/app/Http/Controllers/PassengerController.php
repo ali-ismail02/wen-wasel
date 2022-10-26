@@ -157,6 +157,29 @@ class PassengerController extends Controller
             ]);
         }
 
-        $trip->
+        $sub_trips = $trip->subTrips()->get();
+        
+        foreach($sub_trips as $sub_trip){
+            $trip_info =  $sub_trip->tripInfo()->first();
+            if($trip_info->departure_time && $trip_info->arrival_time == null){
+                $trip_info->arrival_time = date("Y-m-d H:i:s");
+                $trip_info->save();
+                break;
+            }
+        }
+
+        foreach($sub_trips as $sub_trip){
+            $trip_info =  $sub_trip->tripInfo()->first();
+            if($trip_info->departure_time == null){
+                $trip_info->departure_time = date("Y-m-d H:i:s");
+                $trip_info->save();
+                break;
+            }
+        }
+
+        return response()->json([
+            "status" => "1",
+            "message" => "Trip updated successfully"
+        ]);
     }
 }

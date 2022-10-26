@@ -12,7 +12,8 @@ Route::group(['prefix' => 'auth'], function () {
 Route::group(['prefix' => 'user'], function () {
     Route::post('signup', [PassengerController::class, 'passengerSignUp']);
     Route::group(['middleware' => 'PassengerJWT'], function () {
-        Route::post('addtrip', [PassengerController::class, 'addTrip']);
-        Route::post('gettrip', [PassengerController::class, 'getTripById']);
+        Route::post('add-trip', [PassengerController::class, 'addTrip']);
+        Route::post('get-trip', [PassengerController::class, 'getTripById']);
+        Route::put('update-trip', [PassengerController::class, 'updateTrip']);
     });
 });

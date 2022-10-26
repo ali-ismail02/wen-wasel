@@ -355,4 +355,31 @@ class PassengerController extends Controller
         ]);
     }
 
+    public function updateReservation(Requrest $request){
+        if(!$request->reservation_id){
+            return response()->json([
+                "status" => "0",
+                "message" => "Missing Fields"
+            ]);
+        }
+
+        if(!$reservation = Reservation::where('id',$request->reservation_id)->first()){
+            return response()->json([
+                "status" => "0",
+                "message" => "Reservation not found"
+            ]);
+        }
+
+        $reservation->status = 1;
+        $reservation->save();
+
+        $driver = $reservation->route()->first()->driver()->first();
+        $driver->seats = $driver->seats + 1;
+        $driver->save();
+
+        return response()->json([
+            "status" => "1",
+            "message" => "Reservation updated successfully"
+        ]);
+    }
 }

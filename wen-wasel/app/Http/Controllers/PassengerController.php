@@ -140,4 +140,23 @@ class PassengerController extends Controller
             "trip" => $trip_infos
         ]);
     }
+
+    public function updateTrip(Request $request){
+        if(!$request->trip_id){
+            return response()->json([
+                "status" => "0",
+                "message" => "Missing Fields"
+            ]);
+        }
+
+        $trip = Trip::where('id',$request->trip_id)->first();
+        if(!$trip){
+            return response()->json([
+                "status" => "0",
+                "message" => "Trip not found"
+            ]);
+        }
+
+        $trip->
+    }
 }

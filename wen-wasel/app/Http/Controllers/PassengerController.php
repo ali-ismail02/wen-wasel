@@ -327,5 +327,32 @@ class PassengerController extends Controller
         ]);
     }
     
+    public function getReservations(Request $request){
+        if(!$request->user_data){
+            return response()->json([
+                "status" => "0",
+                "message" => "Missing Fields"
+            ]);
+        }
+
+        $reservations = Reservation::where('user_id',$request->user_data->id)->get();
+        $reservations_data = [];
+        foreach($reservations as $reservation){
+            $route = Route::where('id',$reservation->route_id)->first();
+            $driver = $route->driver()->first();
+            $reservations_data[] = [
+                "reservation_id" => $reservation->id,
+                "route" => $route,
+                "driver" => $driver,
+                "status" => $reservation->status
+            ];
+        }
+
+        return response()->json([
+            "status" => "1",
+            "message" => "Reservations found",
+            "reservations" => $reservations_data
+        ]);
+    }
 
 }

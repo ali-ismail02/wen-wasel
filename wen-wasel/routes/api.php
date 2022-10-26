@@ -13,5 +13,6 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('signup', [PassengerController::class, 'passengerSignUp']);
     Route::group(['middleware' => 'PassengerJWT'], function () {
         Route::post('addtrip', [PassengerController::class, 'addTrip']);
+        Route::post('gettrip', [PassengerController::class, 'getTripById']);
     });
 });

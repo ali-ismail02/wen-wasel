@@ -171,7 +171,7 @@ class PassengerController extends Controller
                         "message" => "Trip Completed"
                     ]);
                 }
-                
+
                 break;
             }
         }
@@ -288,5 +288,44 @@ class PassengerController extends Controller
             "current_trip" => $current_trip
         ]);
     }
+
+    public function addReservation(Request $request){
+        if(!$request->user_data || !$request->route_id){
+            return response()->json([
+                "status" => "0",
+                "message" => "Missing Fields"
+            ]);
+        }
+
+        if(!$route = Route::where('id',$request->route_id)->first()){
+            return response()->json([
+                "status" => "0",
+                "message" => "Route not found"
+            ]);
+        }
+
+        $driver = $route->driver()->first();
+
+        if($driver->seats == 0){
+            return response()->json([
+                "status" => "0",
+                "message" => "No seats available"
+            ]);
+        }
+
+        $reservation = new Reservation;
+        $reservation->user_id = $request->user_data->id;
+        $reservation->route_id = $request->route_id;
+        $reservation->status = 0;
+        $reservation->save();
+
+        $driver->seats = $driver->seats - 1;
+
+        return response()->json([
+            "status" => "1",
+            "message" => "Reservation added successfully"
+        ]);
+    }
+    
 
 }

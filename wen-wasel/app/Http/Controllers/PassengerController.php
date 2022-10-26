@@ -102,4 +102,42 @@ class PassengerController extends Controller
             "trip_id" => $trip->id
         ]);
     }
+
+    public function getTripById(Request $request){
+        if(!$request->trip_id){
+            return response()->json([
+                "status" => "0",
+                "message" => "Missing Fields"
+            ]);
+        }
+
+        $trip = Trip::where('id',$request->trip_id)->first();
+        if(!$trip){
+            return response()->json([
+                "status" => "0",
+                "message" => "Trip not found"
+            ]);
+        }
+
+        $sub_trips = SubTrip::where('trip_id',$trip->id)->get();
+        $trip_infos = [];
+        foreach($sub_trips as $sub_trip){
+            $trip_info = TripInfo::where('id',$sub_trip->trip_info_id)->first();
+            $trip_infos[] = [
+                "trip_info_id" => $trip_info->id,
+                "start_location" => $trip_info->start_location,
+                "end_location" => $trip_info->end_location,
+                "departure_time" => $trip_info->departure_time,
+                "arrival_time" => $trip_info->arrival_time,
+                "directions" => $sub_trip->directions,
+                "trip_type" => $sub_trip->trip_type
+            ];
+        }
+
+        return response()->json([
+            "status" => "1",
+            "message" => "Trip found",
+            "trip" => $trip_infos
+        ]);
+    }
 }

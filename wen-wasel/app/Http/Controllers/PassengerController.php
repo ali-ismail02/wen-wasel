@@ -8,6 +8,7 @@ use App\Models\Trip;
 use App\Models\SubTrip;
 use App\Models\TripType;
 use App\Models\TripInfo;
+use App\Models\Reservation;
 
 use Validator;
 

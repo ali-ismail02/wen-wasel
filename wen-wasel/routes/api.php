@@ -16,5 +16,6 @@ Route::group(['prefix' => 'user'], function () {
         Route::post('get-trip', [PassengerController::class, 'getTripById']);
         Route::put('update-trip', [PassengerController::class, 'updateTrip']);
         Route::get('get-trips', [PassengerController::class, 'getTrips']);
+        ROute::get('get-current-trip', [PassengerController::class, 'getCurrentTrip']);
     });
 });

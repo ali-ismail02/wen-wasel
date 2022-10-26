@@ -164,6 +164,14 @@ class PassengerController extends Controller
             if($trip_info->departure_time && $trip_info->arrival_time == null){
                 $trip_info->arrival_time = date("Y-m-d H:i:s");
                 $trip_info->save();
+                
+                if($sub_trip == $sub_trips->last()){
+                    return response()->json([
+                        "status" => "2",
+                        "message" => "Trip Completed"
+                    ]);
+                }
+                
                 break;
             }
         }
@@ -173,13 +181,19 @@ class PassengerController extends Controller
             if($trip_info->departure_time == null){
                 $trip_info->departure_time = date("Y-m-d H:i:s");
                 $trip_info->save();
+
+                return response()->json([
+                    "status" => "1",
+                    "message" => "Trip updated successfully"
+                ]);
+
                 break;
             }
         }
 
         return response()->json([
-            "status" => "1",
-            "message" => "Trip updated successfully"
+            "status" => "0",
+            "message" => "Trip already completed"
         ]);
     }
 
@@ -220,4 +234,59 @@ class PassengerController extends Controller
             "trips" => $trips_data
         ]);
     }
+    
+    public function getCurrentTrip(Request $request){
+        if(!$request->user_data){
+            return response()->json([
+                "status" => "0",
+                "message" => "Missing Fields"
+            ]);
+        }
+
+        $trips = Trip::where('user_id',$request->user_data->id)->orderBy('id',"DESC")->get();
+        $trips_data = [];
+        $trip = $trips[0];
+        $sub_trips = SubTrip::where('trip_id',$trip->id)->get();
+        $trip_infos = [];
+        foreach($sub_trips as $sub_trip){
+            $trip_info = TripInfo::where('id',$sub_trip->trip_info_id)->first();
+            $trip_infos[] = [
+                "trip_info_id" => $trip_info->id,
+                "start_location" => $trip_info->start_location,
+                "end_location" => $trip_info->end_location,
+                "departure_time" => $trip_info->departure_time,
+                "arrival_time" => $trip_info->arrival_time,
+                "directions" => $sub_trip->directions,
+                "trip_type" => $sub_trip->trip_type
+            ];
+        }
+        $trips_data[] = [
+            "trip_id" => $trip->id,
+            "trip" => $trip_infos
+        ];
+
+        $current_trip = null;
+        foreach($trips_data as $trip){
+            foreach($trip['trip'] as $trip_info){
+                if($trip_info['arrival_time'] == null){
+                    $current_trip = $trip;
+                    break;
+                }
+            }
+        }
+
+        if($current_trip == null){
+            return response()->json([
+                "status" => "0",
+                "message" => "No current trip"
+            ]);
+        }
+
+        return response()->json([
+            "status" => "1",
+            "message" => "Trips found",
+            "current_trip" => $current_trip
+        ]);
+    }
+
 }

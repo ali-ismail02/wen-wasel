@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Van;
 use App\Models\Route;
 use App\Models\PresavedRoute;
+use App\Models\Reservation;
 
 use Validator;
 use JWTAuth;
@@ -113,7 +114,7 @@ class VanController extends Controller
         $route->time_difference = null;
         $route->arrival_status = 0;
         $route->route_type = 1;
-        $route->driver_id =$request->user_data->id;
+        $route->driver_id =$driver->id;
         $route->save();
 
         return response()->json([
@@ -146,10 +147,20 @@ class VanController extends Controller
 
         $routes = $driver->routes()->where('route_type', 1)->get();
 
+        $routes_with_reservations = [];
+
+        foreach($routes as $route){
+            $reservations = $route->reservations()->count();
+            $routes_with_reservations[] = [
+                "route" => $route,
+                "reservations" => $reservations
+            ];
+        }
+
         return response()->json([
             "status" => "1",
             "message" =>"Routes fetched successfully",
-            "routes" => $routes
+            "routes" => $routes_with_reservations
         ]);
     }
 
@@ -182,11 +193,13 @@ class VanController extends Controller
         }
 
         $route = $driver->routes()->where('route_type', 1)->where('id', $request->route_id)->first();
+        $reservations = $route->reservations()->count();
 
         return response()->json([
             "status" => "1",
             "message" =>"Route fetched successfully",
-            "route" => $route
+            "route" => $route,
+            "reservations" => $reservations
         ]);
     }
 
@@ -217,7 +230,7 @@ class VanController extends Controller
 
         $presaved_route = new PresavedRoute();
         $presaved_route->name = $request->name;
-        $presaved_route->driver_id = $request->user_data->id;
+        $presaved_route->driver_id = $driver->id;
         $presaved_route->start_time = date('Y-m-d H:i:s');
         $presaved_route->save();
 
@@ -229,7 +242,7 @@ class VanController extends Controller
             $r->time_difference = $route[2];
             $r->arrival_status = 0;
             $r->route_type = 2;
-            $r->driver_id =$request->user_data->id;
+            $r->driver_id =$driver->id;
             $r->presaved_route_id = $presaved_route->id;
             $r->save();
             $routes_id[] = $r;
@@ -267,12 +280,20 @@ class VanController extends Controller
         $presaved_routes = $driver->presavedRoutes()->get();
 
         $routes = [];
+        $routes_with_count= [];
 
         foreach($presaved_routes as $presaved_route){
-            $route = $presaved_route->routes()->get();
+            $routes_with_count= [];
+            $presaved_route_routes = $presaved_route->routes()->get();
+            foreach($presaved_route_routes as $route){
+                $routes_with_count[]= [
+                    "route" => $route,
+                    "reservations" => $route->reservations()->count()
+                ];
+            }
             $routes[] = [
                 "presaved_route" => $presaved_route,
-                "routes" => $route
+                "routes" => $routes_with_count
             ];
         }
 
@@ -313,13 +334,27 @@ class VanController extends Controller
 
         $presaved_route = $driver->presavedRoutes()->where('id', $request->presaved_route_id)->first();
 
-        $route = $presaved_route->routes()->get();
+        if(!$presaved_route){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Presaved route not found",
+            ]);
+        }
+
+        $routes = $presaved_route->routes()->get();
+
+        foreach($routes as $route){
+            $routes_with_count[] = [
+                "route" => $route,
+                "reservations" => $route->reservations()->count()
+            ];
+        }
 
         return response()->json([
             "status" => "1",
             "message" =>"Route fetched successfully",
             "presaved_route" => $presaved_route,
-            "routes" => $route
+            "routes" => $routes_with_count
         ]);
     }
 
@@ -368,4 +403,6 @@ class VanController extends Controller
             'route' => $route
         ]);
     }
+
+    
 }

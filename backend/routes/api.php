@@ -34,5 +34,6 @@ Route::group(['prefix' => 'van'], function() {
         Route::get('get-one-routes', [VanController::class, 'getOneTimeRoutes']);
         Route::get('get-route/{route_id}',[VanController::class, 'getOneTimeRouteById']);
         Route::post('add-recurring-route', [VanController::class, 'addRecurringRoute']);
+        Route::get('get-recurring-routes', [VanController::class, 'getRecurringRoutes']);
     });
 });

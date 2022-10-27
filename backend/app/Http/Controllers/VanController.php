@@ -45,8 +45,7 @@ class VanController extends Controller
             $data = base64_decode($img);
             $filee = uniqid() . '.png';
             $file = public_path('images')."\\".$filee;
-            $images_to_save = "/backend/public/images/".$filee;
-            $image_names[] = $images_to_save;
+            $image_names[] = $filee;
             file_put_contents($file, $data);
         }
 

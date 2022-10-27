@@ -5,10 +5,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PassengerController;
 use App\Http\Controllers\VanController;
+use App\Http\Controllers\ImagesController;
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [AuthController::class, 'login']);
 });
+
+Route::get('images/{name}', [ImagesController::class, 'getImageByName']);
 
 Route::group(['prefix' => 'user'], function () {
     Route::post('signup', [PassengerController::class, 'passengerSignUp']);

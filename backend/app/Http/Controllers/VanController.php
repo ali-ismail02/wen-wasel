@@ -404,5 +404,49 @@ class VanController extends Controller
         ]);
     }
 
-    
+    public function departureFromRoute(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_data' => 'required',
+        ]);
+
+        if(!$request->route_id){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Route id is required",
+            ]);
+        }
+
+        if($validator->fails()){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Validation Failed",
+                "errors" => $validator->errors()
+            ]);
+        }
+
+        $driver = Driver::find($request->user_data->id);
+        if(!$driver){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Driver not found",
+            ]);
+        }
+
+        $route = $driver->routes()->where('id', $request->route_id)->first();
+        if(!$route){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Route not found",
+            ]);
+        }
+
+        $route->arrival_status = 2;
+        $route->save();
+
+        return response()->json([
+            "status" => "1",
+            "message" =>"Route departed successfully",
+            'route' => $route
+        ]);
+    }
 }

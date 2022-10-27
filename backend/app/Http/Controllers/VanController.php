@@ -12,7 +12,7 @@ class VanController extends Controller
     public function vanSignUp(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'email'=>'email:rfc,dns',
+            'email'=>'required|email:rfc,dns|unique:users',
             'password' => 'required|min:6',
             'phone' => 'required|min:8|max:8',
             'name' => 'required',

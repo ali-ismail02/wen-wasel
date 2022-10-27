@@ -9,22 +9,17 @@ use App\Models\SubTrip;
 use App\Models\TripType;
 use App\Models\TripInfo;
 use App\Models\Reservation;
-
+use JWTAuth;
 use Validator;
 
 class PassengerController extends Controller
 {
     public function passengerSignUp(Request $request){
-        if(!$request->name || !$request->phone || !$request->email || !$request->password){
-            return response()->json([
-                "status" => "0",
-                "message" => "Missing Fields"
-            ]);
-        }
         $validator = Validator::make($request->all(), [
-            'email'=>'email:rfc,dns',
+            'email'=>'required|email:rfc,dns|unique:users',
             'password' => 'required|min:6',
             'phone' => 'required|min:8|max:8',
+            'name' => 'required',
         ]);
         if($validator->fails()){
             return response()->json([
@@ -49,10 +44,12 @@ class PassengerController extends Controller
         $user->image = null;
         $user->save();
 
+        $token = JWTAuth::fromUser($user);
+
         return response()->json([
-            "status" => "1",
-            "message" => "User created successfully"
-        ]);
+            'token' => $token,
+            'user' => $user,
+        ], 200);
     }
 
     public function addTrip(Request $request){

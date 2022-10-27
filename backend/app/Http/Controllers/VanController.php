@@ -119,4 +119,34 @@ class VanController extends Controller
             "route" => $route
         ]);
     }
+
+    public function getOneTimeRoutes(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_data' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Validation Failed",
+                "errors" => $validator->errors()
+            ]);
+        }
+
+        $driver = Driver::find($request->user_data->id);
+        if(!$driver){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Driver not found",
+            ]);
+        }
+
+        $routes = $driver->routes()->where('route_type', 1)->get();
+
+        return response()->json([
+            "status" => "1",
+            "message" =>"Routes fetched successfully",
+            "routes" => $routes
+        ]);
+    }
 }

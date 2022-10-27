@@ -282,4 +282,44 @@ class VanController extends Controller
             "presaved_routes" => $routes
         ]);
     }
+
+    public function getRecurringRouteById(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_data' => 'required',
+        ]);
+
+        if(!$request->presaved_route_id){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Presaved route id is required",
+            ]);
+        }
+
+        if($validator->fails()){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Validation Failed",
+                "errors" => $validator->errors()
+            ]);
+        }
+
+        $driver = Driver::find($request->user_data->id);
+        if(!$driver){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Driver not found",
+            ]);
+        }
+
+        $presaved_route = $driver->presavedRoutes()->where('id', $request->presaved_route_id)->first();
+
+        $route = $presaved_route->routes()->get();
+
+        return response()->json([
+            "status" => "1",
+            "message" =>"Route fetched successfully",
+            "presaved_route" => $presaved_route,
+            "routes" => $route
+        ]);
+    }
 }

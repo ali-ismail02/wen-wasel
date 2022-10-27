@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PassengerController;
 use App\Http\Controllers\VanController;
 use App\Http\Controllers\ImagesController;
+use App\Http\Controllers\ServiceController;
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [AuthController::class, 'login']);
@@ -38,5 +39,11 @@ Route::group(['prefix' => 'van'], function() {
         Route::get('get-recurring-route/{presaved_route_id}', [VanController::class, 'getRecurringRouteById']);
         Route::put('arrive-at-route', [VanController::class, 'arriveAtRoute']);
         Route::put('departure-from-route', [VanController::class, 'departureFromRoute']);
+    });
+});
+
+Route::group(['prefix' => 'service'], function() {
+    Route::post('signup', [ServiceController::class, 'serviceSignUp']);
+    Route::group(['middleware' => 'ServiceJWT'], function() {
     });
 });

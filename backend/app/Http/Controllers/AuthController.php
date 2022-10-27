@@ -25,6 +25,15 @@ class AuthController extends Controller
     {
         JWTAuth::parseToken()->authenticate();
         $user_data = auth()->user();
+        if($user_data->user_type == 3 || $user_data->user_type == 4){
+            $driver = $user_data->driver()->first();
+            return response()->json([
+                'access_token' => $token,
+                'user_data' => $user_data,
+                'driver_data' => $driver,
+                'expires_in' => auth()->factory()->getTTL() * 60
+            ]);
+        }
         return response()->json([
             'access_token' => $token,
             'user_data' => $user_data,

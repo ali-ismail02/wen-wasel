@@ -111,7 +111,7 @@ class VanController extends Controller
         $route->location = $request->location;
         $route->arrival_time = $request->date_time;
         $route->time_difference = null;
-        $route->arrival_status = 1;
+        $route->arrival_status = 0;
         $route->route_type = 1;
         $route->driver_id =$request->user_data->id;
         $route->save();
@@ -187,6 +187,59 @@ class VanController extends Controller
             "status" => "1",
             "message" =>"Route fetched successfully",
             "route" => $route
+        ]);
+    }
+
+    public function addRecurringRoute(Request $request){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'user_data' => 'required',
+            'routes' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Validation Failed",
+                "errors" => $validator->errors()
+            ]);
+        }
+
+        $driver = Driver::find($request->user_data->id);
+        if(!$driver){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Driver not found",
+            ]);
+        }
+
+        $routes = explode('@', $request->routes);
+
+        $presaved_route = new PresavedRoute();
+        $presaved_route->name = $request->name;
+        $presaved_route->driver_id = $request->user_data->id;
+        $presaved_route->start_time = date('Y-m-d H:i:s');
+        $presaved_route->save();
+
+        $routes_id = [];
+        foreach($routes as $route){
+            $route = explode(',', $route);
+            $r = new Route();
+            $r->location = $route[0].','.$route[1];
+            $r->time_difference = $route[2];
+            $r->arrival_status = 0;
+            $r->route_type = 2;
+            $r->driver_id =$request->user_data->id;
+            $r->presaved_route_id = $presaved_route->id;
+            $r->save();
+            $routes_id[] = $r;
+        }
+
+        return response()->json([
+            "status" => "1",
+            "message" =>"Presaved route added successfully",
+            "route" => $presaved_route,
+            "routes" => $routes_id
         ]);
     }
 }

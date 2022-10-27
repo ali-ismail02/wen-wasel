@@ -122,4 +122,58 @@ class ServiceController extends Controller
             'trip_info' => $trip_info
         ], 200);
     }
+
+    public function endTrip(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_data' => 'required',
+            'end_location' => 'required',
+            'trip_record_id' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Validation Failed",
+                "errors" => $validator->errors()
+            ]);
+        }
+
+        $driver = Driver::where('user_id', $request->user_data->id)->first();
+
+        if($driver == null){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Driver not found"
+            ]);
+        }
+
+        $trip_record = $driver->tripRecords()->where('id', $request->trip_record_id)->first();
+
+        if($trip_record == null){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Trip record not found"
+            ]);
+        }
+
+        $trip_info = $trip_record->tripInfo()->first();
+
+        if($trip_info == null){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Trip info not found"
+            ]);
+        }
+
+        $trip_info->arrival_time = date('Y-m-d H:i:s');
+        $trip_info->end_location = $request->end_location;
+        $trip_info->save();
+
+        return response()->json([
+            'status' => '1',
+            'message' => 'Trip ended successfully',
+            'trip_record' => $trip_record,
+            'trip_info' => $trip_info
+        ], 200);
+    }
 }

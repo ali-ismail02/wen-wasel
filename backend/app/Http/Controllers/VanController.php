@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Driver;
 use App\Models\User;
+use App\Models\Van;
+use App\Models\Route;
 use Validator;
 use JWTAuth;
 class VanController extends Controller
@@ -77,5 +79,44 @@ class VanController extends Controller
             'user' => $user,
             'driver' => $driver
         ], 200);
+    }
+
+    public function addOneTimeRoute(Request $request){
+        $validator = Validator::make($request->all(), [
+            'location' => 'required',
+            'date_time' => 'required',
+            'user_data' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Validation Failed",
+                "errors" => $validator->errors()
+            ]);
+        }
+
+        $driver = Driver::find($request->user_data->id);
+        if(!$driver){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Driver not found",
+            ]);
+        }
+
+        $route = new Route();
+        $route->location = $request->location;
+        $route->arrival_time = $request->date_time;
+        $route->time_difference = null;
+        $route->arrival_status = 1;
+        $route->route_type = 1;
+        $route->driver_id =$request->user_data->id;
+        $route->save();
+
+        return response()->json([
+            "status" => "1",
+            "message" =>"Route added successfully",
+            "route" => $route
+        ]);
     }
 }

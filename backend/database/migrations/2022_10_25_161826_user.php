@@ -55,12 +55,12 @@ return new class extends Migration
             $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('cascade');
             $table->integer("route_type")->unsigned();
             $table->foreign('route_type')->references('id')->on('route_types')->onDelete('cascade');
-            $table->integer("presaved_route_id")->unsigned()->nullable();
+            $table->integer("presaved_route_id")->unsigned()->nullable()->constrained();;
             $table->foreign('presaved_route_id')->references('id')->on('presaved_routes')->onDelete('cascade');
             $table->string("location");
-            $table->integer("time_difference");
+            $table->integer("time_difference")->nullable();
             $table->integer("arrival_status");
-            $table->dateTime('arrival_time', $precision = 0);
+            $table->dateTime('arrival_time', $precision = 0)->nullable();
             $table->timestamps();
         });
 

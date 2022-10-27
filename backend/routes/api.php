@@ -29,4 +29,7 @@ Route::group(['prefix' => 'user'], function () {
 
 Route::group(['prefix' => 'van'], function() {
     Route::post('signup', [VanController::class, 'vanSignUp']);
+    Route::group(['middleware' => 'VanJWT'], function() {
+        Route::POST('add-one-route', [VanController::class, 'addOneTimeRoute']);
+    });
 });

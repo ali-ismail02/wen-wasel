@@ -45,7 +45,7 @@ return new class extends Migration
             $table->integer("driver_id")->unsigned();
             $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('cascade');
             $table->string("name");
-            $table->dateTime('start_time', $precision = 0);
+            $table->dateTime('start_time', $precision = 0)->nullable();
             $table->timestamps();
         });
 

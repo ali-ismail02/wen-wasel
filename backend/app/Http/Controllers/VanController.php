@@ -7,8 +7,11 @@ use App\Models\Driver;
 use App\Models\User;
 use App\Models\Van;
 use App\Models\Route;
+use App\Models\PresavedRoute;
+
 use Validator;
 use JWTAuth;
+
 class VanController extends Controller
 {
     public function vanSignUp(Request $request){
@@ -147,6 +150,43 @@ class VanController extends Controller
             "status" => "1",
             "message" =>"Routes fetched successfully",
             "routes" => $routes
+        ]);
+    }
+
+    public function getOneTimeRouteById(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_data' => 'required',
+        ]);
+
+        if(!$request->route_id){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Route id is required",
+            ]);
+        }
+
+        if($validator->fails()){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Validation Failed",
+                "errors" => $validator->errors()
+            ]);
+        }
+
+        $driver = Driver::find($request->user_data->id);
+        if(!$driver){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Driver not found",
+            ]);
+        }
+
+        $route = $driver->routes()->where('route_type', 1)->where('id', $request->route_id)->first();
+
+        return response()->json([
+            "status" => "1",
+            "message" =>"Route fetched successfully",
+            "route" => $route
         ]);
     }
 }

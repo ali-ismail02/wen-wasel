@@ -17,7 +17,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::post('signup', [PassengerController::class, 'passengerSignUp']);
     Route::group(['middleware' => 'PassengerJWT'], function () {
         Route::post('add-trip', [PassengerController::class, 'addTrip']);
-        Route::post('get-trip', [PassengerController::class, 'getTripById']);
+        Route::get('get-trip/{trip_id}', [PassengerController::class, 'getTripById']);
         Route::put('update-trip', [PassengerController::class, 'updateTrip']);
         Route::get('get-trips', [PassengerController::class, 'getTrips']);
         Route::get('get-current-trip', [PassengerController::class, 'getCurrentTrip']);
@@ -31,5 +31,7 @@ Route::group(['prefix' => 'van'], function() {
     Route::post('signup', [VanController::class, 'vanSignUp']);
     Route::group(['middleware' => 'VanJWT'], function() {
         Route::POST('add-one-route', [VanController::class, 'addOneTimeRoute']);
+        Route::get('get-one-routes', [VanController::class, 'getOneTimeRoutes']);
+        Route::get('get-route/{route_id}',[VanController::class, 'getOneTimeRouteById']);
     });
 });

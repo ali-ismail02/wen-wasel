@@ -3,6 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Driver;
+use App\Models\TripRecord;
+use App\Models\TripInfo;
+use Validator;
+use JWTAuth;
 
 class ServiceController extends Controller
 {
@@ -17,7 +23,6 @@ class ServiceController extends Controller
             'license' => 'required',
             'front_image' => 'required',
             'side_image' => 'required',
-            'seats' => 'required',
             'make' => 'required',
             'model' => 'required',
             'year' => 'required',
@@ -28,6 +33,13 @@ class ServiceController extends Controller
                 "status" => "0",
                 "message" =>"Validation Failed",
                 "errors" => $validator->errors()
+            ]);
+        }
+
+        if(User::where('phone', $request->phone)->exists()){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Phone number already exists"
             ]);
         }
 
@@ -72,6 +84,42 @@ class ServiceController extends Controller
             'token' => $token,
             'user' => $user,
             'driver' => $driver
+        ], 200);
+    }
+
+    public function addTripRecord(Request $request){
+        $validator = Validator::make($request->all(), [
+            'user_data' => 'required',
+            'start_location' => 'required',
+        ]);
+
+        if($validator->fails()){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Validation Failed",
+                "errors" => $validator->errors()
+            ]);
+        }
+
+        $driver = Driver::where('user_id', $request->user_data->id)->first();
+
+        $trip_info = new TripInfo();
+        $trip_info->departure_time = date('Y-m-d H:i:s');
+        $trip_info->start_location = $request->start_location;
+        $trip_info->arrival_time = null;
+        $trip_info->end_location = null;
+        $trip_info->save();
+        
+        $trip_record = new TripRecord();
+        $trip_record->driver_id = $driver->id;
+        $trip_record->trip_info_id = $trip_info->id;
+        $trip_record->save();
+
+        return response()->json([
+            'status' => '1',
+            'message' => 'Trip record added successfully',
+            'trip_record' => $trip_record,
+            'trip_info' => $trip_info
         ], 200);
     }
 }

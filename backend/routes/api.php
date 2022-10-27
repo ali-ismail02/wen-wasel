@@ -45,5 +45,7 @@ Route::group(['prefix' => 'van'], function() {
 Route::group(['prefix' => 'service'], function() {
     Route::post('signup', [ServiceController::class, 'serviceSignUp']);
     Route::group(['middleware' => 'ServiceJWT'], function() {
+        Route::post('add-trip-record', [ServiceController::class, 'addTripRecord']);
+        Route::put('end-trip-record', [ServiceController::class, 'endTripRecord']);
     });
 });

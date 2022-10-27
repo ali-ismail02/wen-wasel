@@ -47,5 +47,6 @@ Route::group(['prefix' => 'service'], function() {
     Route::group(['middleware' => 'ServiceJWT'], function() {
         Route::post('add-trip-record', [ServiceController::class, 'addTripRecord']);
         Route::put('end-trip', [ServiceController::class, 'endTrip']);
+        Route::get('get-trips', [ServiceController::class, 'getTrips']);
     });
 });

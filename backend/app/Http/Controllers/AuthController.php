@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
-use JWTAuth;
-use JWTFactory;
+use Tymon\JWTAuth\Facades\JWTAuth;
+use Tymon\JWTAuth\Facades\JWTFactory;
 use App\Models\User;
 
 class AuthController extends Controller
@@ -23,20 +23,19 @@ class AuthController extends Controller
 
     protected function respondWithToken($token)
     {
-        JWTAuth::parseToken()->authenticate();
-        $user_data = auth()->user();
-        if($user_data->user_type == 3 || $user_data->user_type == 4){
-            $driver = $user_data->driver()->first();
+        $user = User::where('email', request(['email']))->first();
+        if($user->user_type == 3 || $user->user_type == 4){
+            $driver = $user->drivers()->first();
             return response()->json([
                 'access_token' => $token,
-                'user_data' => $user_data,
-                'driver_data' => $driver,
+                'user' => $user,
+                'driver' => $driver,
                 'expires_in' => auth()->factory()->getTTL() * 60
             ]);
         }
         return response()->json([
             'access_token' => $token,
-            'user_data' => $user_data,
+            'user' => $user,
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);
     }

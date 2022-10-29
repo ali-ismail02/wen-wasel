@@ -411,4 +411,30 @@ class PassengerController extends Controller
 
         return false;
     }
+
+    // function to check if point is within 2 location points
+
+    public function checkPoint($point, $start_location, $end_location){
+        $start_location = explode(",",$start_location);
+        $end_location = explode(",",$end_location);
+        $point = explode(",",$point);
+
+        $start_lat = $start_location[0];
+        $start_lng = $start_location[1];
+        $end_lat = $end_location[0];
+        $end_lng = $end_location[1];
+        $point_lat = $point[0];
+        $point_lng = $point[1];
+
+        if($point_lat >= $start_lat && $point_lat <= $end_lat 
+            && $point_lng >= $start_lng && $point_lng <= $end_lng){
+            return true;
+        }
+        if($point_lat <= $start_lat && $point_lat >= $end_lat 
+        && $point_lng <= $start_lng && $point_lng >= $end_lng){
+            return true;
+        }
+
+        return false;
+    }
 }

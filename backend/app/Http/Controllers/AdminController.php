@@ -83,4 +83,30 @@ class AdminController extends Controller
             'user' => $user
         ]);
     }
+
+    // api to accept or reject driver
+
+    public function acceptOrRejectDriver(Request $request)
+    {
+        $user = User::find($request->id);
+        if(!$user){
+            return response()->json([
+                'status' => 0,
+                'message' => 'User not found'
+            ]);
+        }
+        $driver = $user->drivers()->first();
+        if(!$driver){
+            return response()->json([
+                'status' => 0,
+                'message' => 'Driver not found'
+            ]);
+        }
+        $driver->approval_status = $request->status;
+        $driver->save();
+        return response()->json([
+            'status' => 1,
+            'message' => 'Driver status updated'
+        ]);
+    }
 }

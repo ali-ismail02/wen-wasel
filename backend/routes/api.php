@@ -53,6 +53,7 @@ Route::group(['prefix' => 'service'], function() {
         Route::post('add-trip-record', [ServiceController::class, 'addTripRecord']);
         Route::put('end-trip', [ServiceController::class, 'endTrip']);
         Route::get('get-trips', [ServiceController::class, 'getTrips']);
+        Route::put('update-profile', [ServiceController::class, 'updateProfile']);
     });
 });
 

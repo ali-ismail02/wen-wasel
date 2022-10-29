@@ -207,4 +207,99 @@ class ServiceController extends Controller
             'trips' => $trips
         ], 200);
     }
+
+    public function updateProfile(Request $request){
+        $user = User::find($request->user_data->id);
+        if(!$user){
+            return response()->json([
+                'status' => 0,
+                'message' => 'User not found'
+            ]);
+        }
+        $driver = $user->drivers()->first();
+        if(!$driver){
+            return response()->json([
+                'status' => 0,
+                'message' => 'Driver not found'
+            ]);
+        }
+        if($request->name){
+            $user->name = $request->name;
+        }
+        if($request->email){
+            if($request->email != $user->email){
+                $validator = Validator::make($request->all(), [
+                    'email' => 'required|email:rfc,dns|unique:users'
+                ]);
+                if($validator->fails()){
+                    return response()->json([
+                        'status' => 0,
+                        'message' => $validator->errors()->first()
+                    ]);
+                }
+                $user->email = $request->email;
+            }
+        }
+        if($request->phone){
+            // check if phone number is unique and 8 characters long
+            if($request->phone != $user->phone){
+                $validator = Validator::make($request->all(), [
+                    'phone' => 'required|numeric|digits:8|unique:users'
+                ]);
+                if($validator->fails()){
+                    return response()->json([
+                        'status' => 0,
+                        'message' => $validator->errors()->first()
+                    ]);
+                }
+                $user->phone = $request->phone;
+            }
+        }
+        if($request->password){
+            // check if password is strong
+            $validator = Validator::make($request->all(), [
+                'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'
+            ]);
+            if($validator->fails()){
+                return response()->json([
+                    'status' => 0,
+                    'message' => $validator->errors()->first()
+                ]);
+            }
+            $user->password == bcrypt($request->password);
+        }
+        if($request->make){
+            $driver->make = $request->make;
+        }
+        if($request->model){
+            $driver->model = $request->model;
+        }
+        if($request->year){
+            $driver->year = $request->year;
+        }
+        if($request->license_plate){
+            $driver->license_plate = $request->license_plate;
+        }
+        if($request->seats){
+            $driver->seats = $request->seats;
+        }
+        if($request->image){
+            $img = $request->image;
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $data = base64_decode($img);
+            $filee = uniqid() . '.png';
+            $file = public_path('images')."\\".$filee;
+            $user->image = $filee;
+            file_put_contents($file, $data);
+        }
+        $user->save();
+        $driver->save();
+        return response()->json([
+            'status' => 1,
+            'message' => 'Driver updated',
+            'user' => $user,
+            'driver' => $driver
+        ]);
+    }
 }

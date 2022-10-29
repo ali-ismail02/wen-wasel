@@ -380,4 +380,35 @@ class PassengerController extends Controller
             "message" => "Reservation updated successfully"
         ]);
     }
+
+    // function to check if trip info is within 2 location points
+    public function checkTripInfo($trip_info, $start_location, $end_location){
+        $start_location = explode(",",$start_location);
+        $end_location = explode(",",$end_location);
+        $trip_info_start_location = explode(",",$trip_info->start_location);
+        $trip_info_end_location = explode(",",$trip_info->end_location);
+
+        $start_lat = $start_location[0];
+        $start_lng = $start_location[1];
+        $end_lat = $end_location[0];
+        $end_lng = $end_location[1];
+        $trip_info_start_lat = $trip_info_location[0];
+        $trip_info_start_lng = $trip_info_location[1];
+        $trip_info_end_lat = $trip_info_end_location[0];
+        $trip_info_end_lng = $trip_info_end_location[1];
+
+        if($trip_info_start_lat >= $start_lat && $trip_info_start_lat <= $end_lat && $trip_info_start_lng >= $start_lng && $trip_info_start_lng <= $end_lng){
+                if(abs($end_lat - $trip_info_start_lat) < abs($start_lat - $trip_info_start_lat) && abs($end_lng - $trip_info_start_lng) < abs($start_lng - $trip_info_start_lng)){
+                    return true;
+                }
+        }
+        if($trip_info_start_lat <= $start_lat && $trip_info_start_lat >= $end_lat 
+        && $trip_info_start_lng <= $start_lng && $trip_info_start_lng >= $end_lng){
+            if(abs($end_lat - $trip_info_start_lat) < abs($start_lat - $trip_info_start_lat) && abs($end_lng - $trip_info_start_lng) < abs($start_lng - $trip_info_start_lng)){
+                return true;
+            }
+        }
+
+        return false;
+    }
 }

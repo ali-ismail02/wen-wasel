@@ -7,6 +7,7 @@ use App\Http\Controllers\PassengerController;
 use App\Http\Controllers\VanController;
 use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\AdminController;
 
 Route::group(['prefix' => 'auth'], function () {
     Route::post('login', [AuthController::class, 'login']);
@@ -48,5 +49,11 @@ Route::group(['prefix' => 'service'], function() {
         Route::post('add-trip-record', [ServiceController::class, 'addTripRecord']);
         Route::put('end-trip', [ServiceController::class, 'endTrip']);
         Route::get('get-trips', [ServiceController::class, 'getTrips']);
+    });
+});
+
+Route::group(['prefix' => 'admin'], function() {
+    Route::group(['middleware' => 'AdminJWT'], function() {
+        Route::get('get-passengers', [AdminController::class, 'getPassengers']);
     });
 });

@@ -29,6 +29,7 @@ return new class extends Migration
             $table->increments('id');
             $table->integer("user_id")->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->integer("approval_status")->default(0);
             $table->string("make");
             $table->string("model");
             $table->integer("year");

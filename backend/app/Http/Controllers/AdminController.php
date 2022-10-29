@@ -7,6 +7,8 @@ use App\Models\User;
 
 class AdminController extends Controller
 {
+    // api to get all passengers
+
     public function getPassengers(Request $request)
     {
         $search = $request->search;
@@ -16,6 +18,8 @@ class AdminController extends Controller
                     })->get();
         return response()->json($passengers);
     }
+
+    // api to get all van drivers
 
     public function getVanDrivers(Request $request)
     {
@@ -35,6 +39,8 @@ class AdminController extends Controller
         ]);
     }
 
+    // api to get all service drivers
+
     public function getServiceDrivers(Request $request)
     {
         $drivers = [];
@@ -50,6 +56,31 @@ class AdminController extends Controller
         return response()->json([
             'status' => 1,
             'drivers' => $drivers
+        ]);
+    }
+
+    // api to get user by id with driver info if he is a driver
+
+    public function getUserById(Request $request)
+    {
+        $user = User::find($request->id);
+        if(!$user){
+            return response()->json([
+                'status' => 0,
+                'message' => 'User not found'
+            ]);
+        }
+        if($user->user_type == 3 || $user->user_type == 4){
+            $driver = $user->drivers()->first();
+            return response()->json([
+                'status' => 1,
+                'user' => $user,
+                'driver' => $driver
+            ]);
+        }
+        return response()->json([
+            'status' => 1,
+            'user' => $user
         ]);
     }
 }

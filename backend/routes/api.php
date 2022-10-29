@@ -57,5 +57,6 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('get-passengers/{search?}', [AdminController::class, 'getPassengers']);
         Route::get('get-van-drivers/{search?}', [AdminController::class, 'getVanDrivers']);
         Route::get('get-service-drivers/{search?}', [AdminController::class, 'getServiceDrivers']);
+        Route::get('get-user/{id}', [AdminController::class, 'getUserById']);
     });
 });

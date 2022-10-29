@@ -27,6 +27,7 @@ Route::group(['prefix' => 'user'], function () {
         Route::get('get-reservations', [PassengerController::class, 'getReservations']);
         Route::put('update-reservation', [PassengerController::class, 'updateReservation']);
         Route::get('get-possible-routes/{start_location}/{end_location}', [PassengerController::class, 'getPossibleRoutes']);
+        Route::put('update-profile', [PassengerController::class, 'updateProfile']);
     });
 });
 

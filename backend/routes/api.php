@@ -62,5 +62,6 @@ Route::group(['prefix' => 'admin'], function() {
         Route::put('update-passenger', [AdminController::class, 'updatePassenger']);
         Route::put('update-driver', [AdminController::class, 'updateDriver']);
         Route::get('get-presaved-routes', [AdminController::class, 'getPresavedRoutes']);
+        Route::get('get-one-time-routes', [AdminController::class, 'getOneTimeRoutes']);
     });
 });

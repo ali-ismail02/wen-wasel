@@ -302,4 +302,22 @@ class AdminController extends Controller
             'routes' => $presaved_routes
         ]);
     }
+
+    // api to get all one time routes
+
+    public function getOneTimeRoutes()
+    {
+        $one_time = Route::where('route_type', 1)->get();
+        if($one_time == []){
+            return response()->json([
+                'status' => 0,
+                'message' => 'No one time routes found'
+            ]);
+        }
+        return response()->json([
+            'status' => 1,
+            'message' => 'One time routes',
+            'routes' => $one_time
+        ]);
+    }
 }

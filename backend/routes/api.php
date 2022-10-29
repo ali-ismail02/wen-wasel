@@ -42,6 +42,8 @@ Route::group(['prefix' => 'van'], function() {
         Route::get('get-recurring-route/{presaved_route_id}', [VanController::class, 'getRecurringRouteById']);
         Route::put('arrive-at-route', [VanController::class, 'arriveAtRoute']);
         Route::put('departure-from-route', [VanController::class, 'departureFromRoute']);
+        Route::put('update-profile', [VanController::class, 'updateProfile']);
+
     });
 });
 

@@ -62,6 +62,7 @@ class Kernel extends HttpKernel
         'PassengerJWT' => \App\Http\Middleware\PassengerJWT::class,
         'VanJWT' => \App\Http\Middleware\VanJWT::class,
         'ServiceJWT' => \App\Http\Middleware\ServiceJWT::class,
+        'AdminJWT' => \App\Http\Middleware\AdminJWT::class,
         'password.confirm' => \Illuminate\Auth\Middleware\RequirePassword::class,
         'signed' => \App\Http\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,

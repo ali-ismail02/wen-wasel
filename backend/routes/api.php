@@ -54,6 +54,7 @@ Route::group(['prefix' => 'service'], function() {
 
 Route::group(['prefix' => 'admin'], function() {
     Route::group(['middleware' => 'AdminJWT'], function() {
-        Route::get('get-passengers', [AdminController::class, 'getPassengers']);
+        Route::get('get-passengers/{search?}', [AdminController::class, 'getPassengers']);
+        Route::get('get-van-drivers/{search?}', [AdminController::class, 'getVanDrivers']);
     });
 });

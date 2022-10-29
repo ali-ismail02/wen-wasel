@@ -34,4 +34,22 @@ class AdminController extends Controller
             'drivers' => $drivers
         ]);
     }
+
+    public function getServiceDrivers(Request $request)
+    {
+        $drivers = [];
+        $search = $request->search;
+        $users = User::where('user_type', 4)->where(function ($query) use ($search) {
+                        $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('email', 'like', '%' . $search . '%');
+                    })->get();
+        foreach($users as $user){
+            $driver = $user->drivers()->first();
+            $drivers[] = [$user, $driver];
+        }
+        return response()->json([
+            'status' => 1,
+            'drivers' => $drivers
+        ]);
+    }
 }

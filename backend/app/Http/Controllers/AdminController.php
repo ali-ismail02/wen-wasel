@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Driver;
+use App\Models\Route;
+use App\Models\PresavedRoute;
 use Validator;
 
 class AdminController extends Controller
@@ -274,6 +277,29 @@ class AdminController extends Controller
             'message' => 'Driver updated',
             'user' => $user,
             'driver' => $driver
+        ]);
+    }
+
+    // api to get all presaved routes
+
+    public function getPresavedRoutes()
+    {
+        $presaved = PresavedRoute::all();
+        if($presaved == []){
+            return response()->json([
+                'status' => 0,
+                'message' => 'No presaved routes found'
+            ]);
+        }
+        $presaved_routes = [];
+        foreach($presaved as $route){
+            $routes = $route->routes()->get();
+            $presaved_routes[] = [$route, $routes];
+        }
+        return response()->json([
+            'status' => 1,
+            'message' => 'Presaved routes',
+            'routes' => $presaved_routes
         ]);
     }
 }

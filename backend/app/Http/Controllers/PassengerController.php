@@ -17,7 +17,7 @@ class PassengerController extends Controller
     public function passengerSignUp(Request $request){
         $validator = Validator::make($request->all(), [
             'email'=>'required|email:rfc,dns|unique:users',
-            'password' => 'required|min:6',
+            'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', // at least 1 uppercase, 1 lowercase, 1 number
             'phone' => 'required|min:8|max:8',
             'name' => 'required',
         ]);

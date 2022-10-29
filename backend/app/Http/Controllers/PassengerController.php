@@ -8,7 +8,9 @@ use App\Models\Trip;
 use App\Models\SubTrip;
 use App\Models\TripType;
 use App\Models\TripInfo;
+use App\Models\TripRecord;
 use App\Models\Reservation;
+use App\Models\Route;
 use JWTAuth;
 use Validator;
 
@@ -381,34 +383,60 @@ class PassengerController extends Controller
         ]);
     }
 
+    // distance function
+
+    public function distance($lat1, $lon1, $lat2, $lon2, $unit) {
+        if (($lat1 == $lat2) && ($lon1 == $lon2)) {
+            return 0;
+        }
+        else {
+            $theta = $lon1 - $lon2;
+            $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+            $dist = acos($dist);
+            $dist = rad2deg($dist);
+            $miles = $dist * 60 * 1.1515;
+            $unit = strtoupper($unit);
+            if ($unit == "K") {
+                return ($miles * 1.609344);
+            } else if ($unit == "N") {
+                return ($miles * 0.8684);
+            } else {
+                return $miles;
+            }
+        }
+    }
+    
     // function to check if trip info is within 2 location points
-    public function checkTripInfo($trip_info, $start_location, $end_location){
+    public function checkTripInfo($trip_start_location, $trip_end_location, $start_location, $end_location){
         $start_location = explode(",",$start_location);
         $end_location = explode(",",$end_location);
-        $trip_info_start_location = explode(",",$trip_info->start_location);
-        $trip_info_end_location = explode(",",$trip_info->end_location);
+        $trip_info_start_location = explode(",",$trip_start_location);
+        $trip_info_end_location = explode(",",$trip_end_location);
 
         $start_lat = $start_location[0];
         $start_lng = $start_location[1];
         $end_lat = $end_location[0];
         $end_lng = $end_location[1];
-        $trip_info_start_lat = $trip_info_location[0];
-        $trip_info_start_lng = $trip_info_location[1];
+        $trip_info_start_lat = $trip_info_start_location[0];
+        $trip_info_start_lng = $trip_info_start_location[1];
         $trip_info_end_lat = $trip_info_end_location[0];
         $trip_info_end_lng = $trip_info_end_location[1];
 
-        if($trip_info_start_lat >= $start_lat && $trip_info_start_lat <= $end_lat && $trip_info_start_lng >= $start_lng && $trip_info_start_lng <= $end_lng){
-                if(abs($end_lat - $trip_info_start_lat) < abs($start_lat - $trip_info_start_lat) && abs($end_lng - $trip_info_start_lng) < abs($start_lng - $trip_info_start_lng)){
+        // get center of 2 location points
+        $center_lat = ($start_lat + $end_lat) / 2;
+        $center_lng = ($start_lng + $end_lng) / 2;
+
+        // check if distance between center and trip info start location is less than start location
+        $distance = $this->distance($center_lat, $center_lng, $trip_info_start_lat, $trip_info_start_lng, "K");
+        if($distance < $this->distance($center_lat, $center_lng, $start_lat, $start_lng, "K") + 1){
+            $distance = $this->distance($center_lat, $center_lng, $trip_info_end_lat, $trip_info_end_lng, "K");
+            if($distance < $this->distance($center_lat, $center_lng, $end_lat, $end_lng, "K") + 1 ){
+                $distance = $this->distance($end_lat, $end_lng, $trip_info_end_lat, $trip_info_end_lng, "K");
+                if($distance < $this->distance($end_lat, $end_lng, $trip_info_start_lat, $trip_info_start_lng, "K")){
                     return true;
                 }
-        }
-        if($trip_info_start_lat <= $start_lat && $trip_info_start_lat >= $end_lat 
-        && $trip_info_start_lng <= $start_lng && $trip_info_start_lng >= $end_lng){
-            if(abs($end_lat - $trip_info_start_lat) < abs($start_lat - $trip_info_start_lat) && abs($end_lng - $trip_info_start_lng) < abs($start_lng - $trip_info_start_lng)){
-                return true;
             }
         }
-
         return false;
     }
 
@@ -426,15 +454,75 @@ class PassengerController extends Controller
         $point_lat = $point[0];
         $point_lng = $point[1];
 
-        if($point_lat >= $start_lat && $point_lat <= $end_lat 
-            && $point_lng >= $start_lng && $point_lng <= $end_lng){
-            return true;
-        }
-        if($point_lat <= $start_lat && $point_lat >= $end_lat 
-        && $point_lng <= $start_lng && $point_lng >= $end_lng){
-            return true;
+        // get center of 2 location points
+        $center_lat = ($start_lat + $end_lat) / 2;
+        $center_lng = ($start_lng + $end_lng) / 2;
+
+        // check if distance between center and trip info start location is less than start location
+        $distance = $this->distance($center_lat, $center_lng, $point_lat, $point_lng, "K");
+        if($distance < $this->distance($center_lat, $center_lng, $start_lat, $start_lng, "K") + 1){
+            $distance = $this->distance($center_lat, $center_lng, $point_lat, $point_lng, "K");
+            if($distance < $this->distance($center_lat, $center_lng, $end_lat, $end_lng, "K") + 1 ){
+                return true;
+            }
         }
 
         return false;
+    }
+
+    public function getPossibleRoutes(Request $request){
+        if(!$request->start_location || !$request->end_location){
+            return response()->json([
+                "status" => "0",
+                "message" => "Missing Fields"
+            ]);
+        }
+
+        $van_routes = Route::where('arrival_time','>=',date('Y-m-d H:i:s'))->orWhere('route_type',2)->get();
+        $valid_van_routes = [];
+        foreach($van_routes as $van_route){
+            if($van_route->route_type == 2){
+                $start_time = strtotime($van_route->presaved_route()->first()->start_time.' +'.$van_route->time_difference.' minutes');
+                $start_time = date('Y-m-d H:i:s',$start_time);
+                $van_route->arrival_time = $start_time;
+                if($start_time > date('Y-m-d H:i:s') && $this->checkPoint($van_route->location,$request->start_location,$request->end_location)){
+                    $valid_van_routes[] = $van_route;
+                }
+            }else if($this->checkPoint($van_route->location,$request->start_location,$request->end_location)){
+                $valid_van_routes[] = $van_route;
+            }
+        }
+
+        $trips = [];
+
+        for($i = 0 ; $i < count($valid_van_routes) ; $i++){
+            for($j = $i + 1 ; $j < count($valid_van_routes) ; $j++){
+                if($valid_van_routes[$i]->driver()->first()->id == $valid_van_routes[$j]->driver()->first()->id){
+                    if(($valid_van_routes[$i]->arrival_time < $valid_van_routes[$j]->arrival_time && $this->checkTripInfo($valid_van_routes[$i]->location,$valid_van_routes[$j]->location,$request->start_location,$request->end_location)) || ($valid_van_routes[$i]->arrival_time > $valid_van_routes[$j]->arrival_time && $this->checkTripInfo($valid_van_routes[$j]->location,$valid_van_routes[$i]->location,$request->start_location,$request->end_location))){
+                            $trips["van"][] = [$valid_van_routes[$i], $valid_van_routes[$j]];
+                    }
+                }
+            }
+        }
+
+
+
+        $service_trips = TripRecord::all();
+
+        foreach($service_trips as $service_trip){
+            if(!$service_trip->tripInfo()->first()->end_location){
+                continue;
+            }
+            if($this->checkTripInfo($service_trip->tripInfo()->first()->start_location,$service_trip->tripInfo()->first()->end_location,$request->start_location,$request->end_location)){
+                $trips["service"][] = [$service_trip, $service_trip->tripInfo()->first()];
+            }
+        }
+
+        return response()->json([
+            "status" => "1",
+            "message" => "Success",
+            "trips" => $trips
+        ]);
+
     }
 }

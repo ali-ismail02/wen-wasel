@@ -181,4 +181,99 @@ class AdminController extends Controller
             'user' => $user
         ]);
     }
+
+    // api to update van or service driver
+
+    public function updateDriver(Request $request)
+    {
+        $user = User::find($request->id);
+        if(!$user){
+            return response()->json([
+                'status' => 0,
+                'message' => 'User not found'
+            ]);
+        }
+        // check if user is a driver
+        if($user->user_type != 3 && $user->user_type != 4){
+            return response()->json([
+                'status' => 0,
+                'message' => 'User is not a driver'
+            ]);
+        }
+        $driver = $user->drivers()->first();
+        if(!$driver){
+            return response()->json([
+                'status' => 0,
+                'message' => 'Driver not found'
+            ]);
+        }
+        if($request->name){
+            $user->name = $request->name;
+        }
+        if($request->email){
+            if($request->email != $user->email){
+                $validator = Validator::make($request->all(), [
+                    'email' => 'required|email|unique:users'
+                ]);
+                if($validator->fails()){
+                    return response()->json([
+                        'status' => 0,
+                        'message' => $validator->errors()->first()
+                    ]);
+                }
+                $user->email = $request->email;
+            }
+        }
+        if($request->phone){
+            // check if phone number is unique and 8 characters long
+            if($request->phone != $user->phone){
+                $validator = Validator::make($request->all(), [
+                    'phone' => 'required|numeric|digits:8|unique:users'
+                ]);
+                if($validator->fails()){
+                    return response()->json([
+                        'status' => 0,
+                        'message' => $validator->errors()->first()
+                    ]);
+                }
+                $user->phone = $request->phone;
+            }
+        }
+        if($request->password){
+            // check if password is strong
+            $validator = Validator::make($request->all(), [
+                'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'
+            ]);
+            if($validator->fails()){
+                return response()->json([
+                    'status' => 0,
+                    'message' => $validator->errors()->first()
+                ]);
+            }
+            $user->password == bcrypt($request->password);
+        }
+        if($request->make){
+            $driver->make = $request->make;
+        }
+        if($request->model){
+            $driver->model = $request->model;
+        }
+        if($request->year){
+            $driver->year = $request->year;
+        }
+        if($request->license_plate){
+            $driver->license_plate = $request->license_plate;
+        }
+        if($request->seats){
+            $driver->seats = $request->seats;
+        }
+        $user->save();
+        $driver->save();
+        return response()->json([
+            'status' => 1,
+            'message' => 'Driver updated',
+            'user' => $user,
+            'driver' => $driver
+        ]);
+    }
 }

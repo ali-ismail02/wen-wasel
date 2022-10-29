@@ -60,5 +60,6 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('get-user/{id}', [AdminController::class, 'getUserById']);
         Route::put('accept-reject-driver', [AdminController::class, 'acceptOrRejectDriver']);
         Route::put('update-passenger', [AdminController::class, 'updatePassenger']);
+        Route::put('update-driver', [AdminController::class, 'updateDriver']);
     });
 });

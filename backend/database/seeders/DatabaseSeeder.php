@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             RouteTypeSeeder::class,
             UserTypeSeeder::class,
-            TripTypeSeeder::class
+            TripTypeSeeder::class,
+            AdminAccsSeeder::class,
         ]);
     }
 }

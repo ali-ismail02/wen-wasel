@@ -12,11 +12,13 @@ use JWTAuth;
 
 class ServiceController extends Controller
 {
+    // Api for service driver registration
     public function serviceSignup(Request $request){
+        // Validate the request
         $validator = Validator::make($request->all(), [
             'email'=>'required|email:rfc,dns|unique:users',
             'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', // at least 1 uppercase, 1 lowercase, 1 number
-            'phone' => 'required|min:8|max:8',
+            'phone' => 'required|min:8|max:8|unique:users',
             'name' => 'required',
             'phone' => 'required',
             'license_plate' => 'required',
@@ -36,18 +38,11 @@ class ServiceController extends Controller
             ]);
         }
 
-        if(User::where('phone', $request->phone)->exists()){
-            return response()->json([
-                "status" => "0",
-                "message" =>"Phone number already exists"
-            ]);
-        }
-
+        // Converting the base64 images to images and saving them
         $images = [$request->license, $request->front_image, $request->side_image];
         $image_names = [];
 
         foreach($images as $img){
-            // convert base64 to image and save it
             $img = str_replace('data:image/png;base64,', '', $img);
             $img = str_replace(' ', '+', $img);
             $data = base64_decode($img);
@@ -87,7 +82,9 @@ class ServiceController extends Controller
         ], 200);
     }
 
+    // Api to add a trip record
     public function addTripRecord(Request $request){
+        // Validate the request
         $validator = Validator::make($request->all(), [
             'user_data' => 'required',
             'start_location' => 'required',
@@ -101,7 +98,14 @@ class ServiceController extends Controller
             ]);
         }
 
-        $driver = Driver::where('user_id', $request->user_data->id)->first();
+        $user = JWTAuth::parseToken()->authenticate();
+        $driver = $user->drivers()->first();
+        if($driver == null){
+            return response()->json([
+                "status" => "0",
+                "message" =>"You are not a driver"
+            ]);
+        }
 
         $trip_info = new TripInfo();
         $trip_info->departure_time = date('Y-m-d H:i:s');
@@ -123,7 +127,9 @@ class ServiceController extends Controller
         ], 200);
     }
 
+    // Api to end a trip record by id
     public function endTrip(Request $request){
+        // Validate the request
         $validator = Validator::make($request->all(), [
             'user_data' => 'required',
             'end_location' => 'required',
@@ -138,8 +144,8 @@ class ServiceController extends Controller
             ]);
         }
 
-        $driver = Driver::where('user_id', $request->user_data->id)->first();
-
+        $user = JWTAuth::parseToken()->authenticate();
+        $driver = $user->drivers()->first();
         if($driver == null){
             return response()->json([
                 "status" => "0",
@@ -147,8 +153,8 @@ class ServiceController extends Controller
             ]);
         }
 
+        // Get the trip record by id
         $trip_record = $driver->tripRecords()->where('id', $request->trip_record_id)->first();
-
         if($trip_record == null){
             return response()->json([
                 "status" => "0",
@@ -156,8 +162,8 @@ class ServiceController extends Controller
             ]);
         }
 
+        // Get the trip info of the trip record
         $trip_info = $trip_record->tripInfo()->first();
-
         if($trip_info == null){
             return response()->json([
                 "status" => "0",
@@ -165,6 +171,7 @@ class ServiceController extends Controller
             ]);
         }
 
+        // Update the trip info
         $trip_info->arrival_time = date('Y-m-d H:i:s');
         $trip_info->end_location = $request->end_location;
         $trip_info->save();
@@ -177,6 +184,7 @@ class ServiceController extends Controller
         ], 200);
     }
 
+    // Api to get all the trip records of a driver
     public function getTrips(Request $request){
         $validator = Validator::make($request->all(), [
             'user_data' => 'required',
@@ -190,8 +198,8 @@ class ServiceController extends Controller
             ]);
         }
 
-        $driver = Driver::where('user_id', $request->user_data->id)->first();
-
+        $user = JWTAuth::parseToken()->authenticate();
+        $driver = $user->drivers()->first();
         if($driver == null){
             return response()->json([
                 "status" => "0",
@@ -208,14 +216,21 @@ class ServiceController extends Controller
         ], 200);
     }
 
+    // api to update van driver's profile
     public function updateProfile(Request $request){
-        $user = User::find($request->user_data->id);
-        if(!$user){
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'user_data' => 'required',
+        ]);
+        if($validator->fails()){
             return response()->json([
-                'status' => 0,
-                'message' => 'User not found'
+                "status" => "0",
+                "message" =>"Validation Failed",
+                "errors" => $validator->errors()
             ]);
         }
+
+        $user = JWTAuth::parseToken()->authenticate();
         $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
@@ -223,13 +238,11 @@ class ServiceController extends Controller
                 'message' => 'Driver not found'
             ]);
         }
-        if($request->name){
-            $user->name = $request->name;
-        }
+
         if($request->email){
             if($request->email != $user->email){
                 $validator = Validator::make($request->all(), [
-                    'email' => 'required|email:rfc,dns|unique:users'
+                    'email' => 'required|email:rfc,dns|unique:users' // check if email is unique and valid
                 ]);
                 if($validator->fails()){
                     return response()->json([
@@ -240,6 +253,7 @@ class ServiceController extends Controller
                 $user->email = $request->email;
             }
         }
+
         if($request->phone){
             // check if phone number is unique and 8 characters long
             if($request->phone != $user->phone){
@@ -255,10 +269,11 @@ class ServiceController extends Controller
                 $user->phone = $request->phone;
             }
         }
+
         if($request->password){
             // check if password is strong
             $validator = Validator::make($request->all(), [
-                'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'
+                'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/' // at least 1 uppercase, 1 lowercase, 1 number
             ]);
             if($validator->fails()){
                 return response()->json([
@@ -268,21 +283,7 @@ class ServiceController extends Controller
             }
             $user->password == bcrypt($request->password);
         }
-        if($request->make){
-            $driver->make = $request->make;
-        }
-        if($request->model){
-            $driver->model = $request->model;
-        }
-        if($request->year){
-            $driver->year = $request->year;
-        }
-        if($request->license_plate){
-            $driver->license_plate = $request->license_plate;
-        }
-        if($request->seats){
-            $driver->seats = $request->seats;
-        }
+
         if($request->image){
             $img = $request->image;
             $img = str_replace('data:image/png;base64,', '', $img);
@@ -293,8 +294,22 @@ class ServiceController extends Controller
             $user->image = $filee;
             file_put_contents($file, $data);
         }
+
+        if($request->name) $user->name = $request->name;
+
+        if($request->make) $driver->make = $request->make;
+
+        if($request->model) $driver->model = $request->model;
+
+        if($request->year) $driver->year = $request->year;
+
+        if($request->license_plate) $driver->license_plate = $request->license_plate;
+
+        if($request->seats) $driver->seats = $request->seats;
+
         $user->save();
         $driver->save();
+
         return response()->json([
             'status' => 1,
             'message' => 'Driver updated',

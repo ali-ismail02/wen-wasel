@@ -21,7 +21,7 @@ class VanController extends Controller
         $validator = Validator::make($request->all(), [
             'email'=>'required|email:rfc,dns|unique:users',
             'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', // at least 1 uppercase, 1 lowercase, 1 number
-            'phone' => 'required|min:8|max:8',
+            'phone' => 'required|min:8|max:8|unique:users',
             'name' => 'required',
             'phone' => 'required',
             'license_plate' => 'required',
@@ -46,7 +46,6 @@ class VanController extends Controller
         $image_names = [];
 
         foreach($images as $img){
-            // convert base64 to image and save it
             $img = str_replace('data:image/png;base64,', '', $img);
             $img = str_replace(' ', '+', $img);
             $data = base64_decode($img);
@@ -577,7 +576,7 @@ class VanController extends Controller
 
         $user->save();
         $driver->save();
-        
+
         return response()->json([
             'status' => 1,
             'message' => 'Driver updated',

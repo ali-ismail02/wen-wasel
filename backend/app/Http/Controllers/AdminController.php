@@ -11,62 +11,79 @@ use Validator;
 
 class AdminController extends Controller
 {
-    // api to get all passengers
-
-    public function getPassengers(Request $request)
-    {
+    // Spi to get all passengers
+    public function getPassengers(Request $request){
         $search = $request->search;
         $users = User::where('user_type', 1)->where(function ($query) use ($search) {
                         $query->where('name', 'like', '%' . $search . '%')
                         ->orWhere('email', 'like', '%' . $search . '%');
                     })->get();
-        return response()->json($passengers);
+
+        return response()->json([
+            'status' => 1,
+            'message' => 'Passengers fetched successfully',
+            'users' => $users
+        ]);
     }
 
-    // api to get all van drivers
-
-    public function getVanDrivers(Request $request)
-    {
+    // Api to get all van drivers
+    public function getVanDrivers(Request $request){
         $drivers = [];
         $search = $request->search;
         $users = User::where('user_type', 3)->where(function ($query) use ($search) {
                         $query->where('name', 'like', '%' . $search . '%')
                         ->orWhere('email', 'like', '%' . $search . '%');
                     })->get();
+                    
+        // Get the drivers for all the users
         foreach($users as $user){
             $driver = $user->drivers()->first();
             $drivers[] = [$user, $driver];
         }
+
         return response()->json([
             'status' => 1,
+            'message' => 'Van drivers fetched successfully',
             'drivers' => $drivers
         ]);
     }
 
-    // api to get all service drivers
-
-    public function getServiceDrivers(Request $request)
-    {
+    // Api to get all service drivers
+    public function getServiceDrivers(Request $request){
         $drivers = [];
         $search = $request->search;
         $users = User::where('user_type', 4)->where(function ($query) use ($search) {
                         $query->where('name', 'like', '%' . $search . '%')
                         ->orWhere('email', 'like', '%' . $search . '%');
                     })->get();
+
+        // Get the drivers for all the users
         foreach($users as $user){
             $driver = $user->drivers()->first();
             $drivers[] = [$user, $driver];
         }
+
         return response()->json([
             'status' => 1,
+            'message' => 'Service drivers fetched successfully',
             'drivers' => $drivers
         ]);
     }
 
-    // api to get user by id with driver info if he is a driver
-
-    public function getUserById(Request $request)
-    {
+    // Api to get user by id with driver info if he is a driver
+    public function getUserById(Request $request){
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required'
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 0,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ]);
+        }
+        // Get the user
         $user = User::find($request->id);
         if(!$user){
             return response()->json([
@@ -74,6 +91,7 @@ class AdminController extends Controller
                 'message' => 'User not found'
             ]);
         }
+        // Get the driver info if he is a driver
         if($user->user_type == 3 || $user->user_type == 4){
             $driver = $user->drivers()->first();
             return response()->json([
@@ -88,10 +106,21 @@ class AdminController extends Controller
         ]);
     }
 
-    // api to accept or reject driver
+    // Api to accept or reject driver
+    public function acceptOrRejectDriver(Request $request){
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required'
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 0,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ]);
+        }
 
-    public function acceptOrRejectDriver(Request $request)
-    {
+        // Get the user
         $user = User::find($request->id);
         if(!$user){
             return response()->json([
@@ -106,18 +135,34 @@ class AdminController extends Controller
                 'message' => 'Driver not found'
             ]);
         }
+
+        // Update the driver approval status
         $driver->approval_status = $request->status;
         $driver->save();
+
         return response()->json([
             'status' => 1,
-            'message' => 'Driver status updated'
+            'message' => 'Driver status updated',
+            'user'=>$user,
+            'driver'=>$driver
         ]);
     }
 
-    // api to update passenger
+    // Api to update passenger
+    public function updatePassenger(Request $request){
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required'
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 0,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ]);
+        }
 
-    public function updatePassenger(Request $request)
-    {
+        // Get the user
         $user = User::find($request->id);
         if(!$user){
             return response()->json([
@@ -125,20 +170,20 @@ class AdminController extends Controller
                 'message' => 'User not found'
             ]);
         }
-        // check if user is a passenger
+        // Check if user is a passenger
         if($user->user_type != 2){
             return response()->json([
                 'status' => 0,
                 'message' => 'User is not a passenger'
             ]);
         }
-        if($request->name){
-            $user->name = $request->name;
-        }
+
+        if($request->name) $user->name = $request->name;
+
         if($request->email){
             if($request->email != $user->email){
                 $validator = Validator::make($request->all(), [
-                    'email' => 'required|email|unique:users'
+                    'email' => 'required|email:rfc,dns|unique:users' // check if email is unique and valid
                 ]);
                 if($validator->fails()){
                     return response()->json([
@@ -149,6 +194,7 @@ class AdminController extends Controller
                 $user->email = $request->email;
             }
         }
+
         if($request->phone){
             // check if phone number is unique and 8 characters long
             if($request->phone != $user->phone){
@@ -164,6 +210,7 @@ class AdminController extends Controller
                 $user->phone = $request->phone;
             }
         }
+
         if($request->password){
             // check if password is strong
             $validator = Validator::make($request->all(), [
@@ -177,7 +224,9 @@ class AdminController extends Controller
             }
             $user->password = bcrypt($request->password);
         }
+
         $user->save();
+
         return response()->json([
             'status' => 1,
             'message' => 'Passenger updated',
@@ -185,10 +234,20 @@ class AdminController extends Controller
         ]);
     }
 
-    // api to update van or service driver
+    // Api to update van or service driver
+    public function updateDriver(Request $request){
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required'
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 0,
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ]);
+        }
 
-    public function updateDriver(Request $request)
-    {
         $user = User::find($request->id);
         if(!$user){
             return response()->json([
@@ -210,13 +269,11 @@ class AdminController extends Controller
                 'message' => 'Driver not found'
             ]);
         }
-        if($request->name){
-            $user->name = $request->name;
-        }
+
         if($request->email){
             if($request->email != $user->email){
                 $validator = Validator::make($request->all(), [
-                    'email' => 'required|email|unique:users'
+                    'email' => 'required|email:rfc,dns|unique:users' // check if email is unique and valid
                 ]);
                 if($validator->fails()){
                     return response()->json([
@@ -227,6 +284,7 @@ class AdminController extends Controller
                 $user->email = $request->email;
             }
         }
+
         if($request->phone){
             // check if phone number is unique and 8 characters long
             if($request->phone != $user->phone){
@@ -242,10 +300,11 @@ class AdminController extends Controller
                 $user->phone = $request->phone;
             }
         }
+
         if($request->password){
             // check if password is strong
             $validator = Validator::make($request->all(), [
-                'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'
+                'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/' // at least 1 uppercase, 1 lowercase, 1 number
             ]);
             if($validator->fails()){
                 return response()->json([
@@ -255,23 +314,33 @@ class AdminController extends Controller
             }
             $user->password == bcrypt($request->password);
         }
-        if($request->make){
-            $driver->make = $request->make;
+
+        if($request->image){
+            $img = $request->image;
+            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace(' ', '+', $img);
+            $data = base64_decode($img);
+            $filee = uniqid() . '.png';
+            $file = public_path('images')."\\".$filee;
+            $user->image = $filee;
+            file_put_contents($file, $data);
         }
-        if($request->model){
-            $driver->model = $request->model;
-        }
-        if($request->year){
-            $driver->year = $request->year;
-        }
-        if($request->license_plate){
-            $driver->license_plate = $request->license_plate;
-        }
-        if($request->seats){
-            $driver->seats = $request->seats;
-        }
+
+        if($request->name) $user->name = $request->name;
+
+        if($request->make) $driver->make = $request->make;
+
+        if($request->model) $driver->model = $request->model;
+
+        if($request->year) $driver->year = $request->year;
+
+        if($request->license_plate) $driver->license_plate = $request->license_plate;
+
+        if($request->seats) $driver->seats = $request->seats;
+
         $user->save();
         $driver->save();
+
         return response()->json([
             'status' => 1,
             'message' => 'Driver updated',
@@ -280,10 +349,9 @@ class AdminController extends Controller
         ]);
     }
 
-    // api to get all presaved routes
-
-    public function getPresavedRoutes()
-    {
+    // Api to get all presaved routes
+    public function getPresavedRoutes(){
+        // Get all presaved routes
         $presaved = PresavedRoute::all();
         if($presaved == []){
             return response()->json([
@@ -303,10 +371,9 @@ class AdminController extends Controller
         ]);
     }
 
-    // api to get all one time routes
-
-    public function getOneTimeRoutes()
-    {
+    // Api to get all one time routes
+    public function getOneTimeRoutes(){
+        // Get all one time routes
         $one_time = Route::where('route_type', 1)->get();
         if($one_time == []){
             return response()->json([

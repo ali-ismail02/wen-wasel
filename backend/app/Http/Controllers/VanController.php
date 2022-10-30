@@ -15,8 +15,9 @@ use JWTAuth;
 
 class VanController extends Controller
 {
-    public function vanSignUp(Request $request){
 
+    public function vanSignUp(Request $request){
+        // Validate the request
         $validator = Validator::make($request->all(), [
             'email'=>'required|email:rfc,dns|unique:users',
             'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', // at least 1 uppercase, 1 lowercase, 1 number
@@ -40,7 +41,7 @@ class VanController extends Controller
                 "errors" => $validator->errors()
             ]);
         }
-
+        // converting base64 to images and saving it
         $images = [$request->license, $request->front_image, $request->side_image];
         $image_names = [];
 
@@ -76,6 +77,8 @@ class VanController extends Controller
         $driver->user_id = $user->id;
         $driver->save();
 
+        // Creating a token for the user
+
         $token = JWTAuth::fromUser($user);
 
         return response()->json([
@@ -85,7 +88,10 @@ class VanController extends Controller
         ], 200);
     }
 
+    // Add a one time route
+
     public function addOneTimeRoute(Request $request){
+        // Validate the request
         $validator = Validator::make($request->all(), [
             'location' => 'required',
             'date_time' => 'required',
@@ -100,7 +106,8 @@ class VanController extends Controller
             ]);
         }
 
-        $driver = Driver::find($request->user_data->id);
+        $user = JWTAuth::parseToken()->authenticate();
+        $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
                 "status" => "0",
@@ -124,7 +131,10 @@ class VanController extends Controller
         ]);
     }
 
+    // get one time routes
+
     public function getOneTimeRoutes(Request $request){
+        // Validate the request
         $validator = Validator::make($request->all(), [
             'user_data' => 'required',
         ]);
@@ -137,7 +147,8 @@ class VanController extends Controller
             ]);
         }
 
-        $driver = Driver::find($request->user_data->id);
+        $user = JWTAuth::parseToken()->authenticate();
+        $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
                 "status" => "0",
@@ -145,6 +156,7 @@ class VanController extends Controller
             ]);
         }
 
+        // get all routes for the driver of type one time
         $routes = $driver->routes()->where('route_type', 1)->get();
 
         $routes_with_reservations = [];
@@ -164,6 +176,7 @@ class VanController extends Controller
         ]);
     }
 
+    // get one time route by id
     public function getOneTimeRouteById(Request $request){
         $validator = Validator::make($request->all(), [
             'user_data' => 'required',
@@ -184,7 +197,8 @@ class VanController extends Controller
             ]);
         }
 
-        $driver = Driver::find($request->user_data->id);
+        $user = JWTAuth::parseToken()->authenticate();
+        $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
                 "status" => "0",
@@ -192,6 +206,7 @@ class VanController extends Controller
             ]);
         }
 
+        // get route for the driver of type one time by id
         $route = $driver->routes()->where('route_type', 1)->where('id', $request->route_id)->first();
         $reservations = $route->reservations()->count();
 
@@ -203,6 +218,7 @@ class VanController extends Controller
         ]);
     }
 
+    // Add a recurring route
     public function addRecurringRoute(Request $request){
         $validator = Validator::make($request->all(), [
             'name' => 'required',
@@ -218,7 +234,8 @@ class VanController extends Controller
             ]);
         }
 
-        $driver = Driver::find($request->user_data->id);
+        $user = JWTAuth::parseToken()->authenticate();
+        $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
                 "status" => "0",
@@ -226,6 +243,7 @@ class VanController extends Controller
             ]);
         }
 
+        // routes should be sent as a string seperated by '@'
         $routes = explode('@', $request->routes);
 
         $presaved_route = new PresavedRoute();
@@ -234,6 +252,7 @@ class VanController extends Controller
         $presaved_route->start_time = date('Y-m-d H:i:s');
         $presaved_route->save();
 
+        // save all routes
         $routes_id = [];
         foreach($routes as $route){
             $route = explode(',', $route);
@@ -256,7 +275,9 @@ class VanController extends Controller
         ]);
     }
 
+    // api to get all recurring routes
     public function getRecurringRoutes(Request $request){
+        // Validate the request
         $validator = Validator::make($request->all(), [
             'user_data' => 'required',
         ]);
@@ -269,7 +290,8 @@ class VanController extends Controller
             ]);
         }
 
-        $driver = Driver::find($request->user_data->id);
+        $user = JWTAuth::parseToken()->authenticate();
+        $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
                 "status" => "0",
@@ -279,9 +301,10 @@ class VanController extends Controller
 
         $presaved_routes = $driver->presavedRoutes()->get();
 
-        $routes = [];
-        $routes_with_count= [];
+        $routes = []; // array to hold all presaved routes with their routes
+        $routes_with_count= []; // array to hold routes with their reservations count
 
+        // get all routes for each presaved route
         foreach($presaved_routes as $presaved_route){
             $routes_with_count= [];
             $presaved_route_routes = $presaved_route->routes()->get();
@@ -304,7 +327,9 @@ class VanController extends Controller
         ]);
     }
 
+    // api to get one recurring route by id
     public function getRecurringRouteById(Request $request){
+        // Validate the request
         $validator = Validator::make($request->all(), [
             'user_data' => 'required',
         ]);
@@ -324,7 +349,8 @@ class VanController extends Controller
             ]);
         }
 
-        $driver = Driver::find($request->user_data->id);
+        $user = JWTAuth::parseToken()->authenticate();
+        $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
                 "status" => "0",
@@ -343,6 +369,8 @@ class VanController extends Controller
 
         $routes = $presaved_route->routes()->get();
 
+        $routes_with_count = [];
+
         foreach($routes as $route){
             $routes_with_count[] = [
                 "route" => $route,
@@ -358,11 +386,14 @@ class VanController extends Controller
         ]);
     }
 
+    // api to set route's arrival status to 1 (arrived)
     public function arriveAtRoute(Request $request){
+        // Validate the request
         $validator = Validator::make($request->all(), [
             'user_data' => 'required',
         ]);
 
+        // check if route id is sent
         if(!$request->route_id){
             return response()->json([
                 "status" => "0",
@@ -378,7 +409,8 @@ class VanController extends Controller
             ]);
         }
 
-        $driver = Driver::find($request->user_data->id);
+        $user = JWTAuth::parseToken()->authenticate();
+        $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
                 "status" => "0",
@@ -404,6 +436,7 @@ class VanController extends Controller
         ]);
     }
 
+    // api to set route's arrival status to 2 (departed)
     public function departureFromRoute(Request $request){
         $validator = Validator::make($request->all(), [
             'user_data' => 'required',
@@ -424,7 +457,8 @@ class VanController extends Controller
             ]);
         }
 
-        $driver = Driver::find($request->user_data->id);
+        $user = JWTAuth::parseToken()->authenticate();
+        $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
                 "status" => "0",
@@ -450,14 +484,21 @@ class VanController extends Controller
         ]);
     }
 
+    // api to update van driver's profile
     public function updateProfile(Request $request){
-        $user = User::find($request->user_data->id);
-        if(!$user){
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'user_data' => 'required',
+        ]);
+        if($validator->fails()){
             return response()->json([
-                'status' => 0,
-                'message' => 'User not found'
+                "status" => "0",
+                "message" =>"Validation Failed",
+                "errors" => $validator->errors()
             ]);
         }
+
+        $user = JWTAuth::parseToken()->authenticate();
         $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
@@ -465,13 +506,11 @@ class VanController extends Controller
                 'message' => 'Driver not found'
             ]);
         }
-        if($request->name){
-            $user->name = $request->name;
-        }
+
         if($request->email){
             if($request->email != $user->email){
                 $validator = Validator::make($request->all(), [
-                    'email' => 'required|email:rfc,dns|unique:users'
+                    'email' => 'required|email:rfc,dns|unique:users' // check if email is unique and valid
                 ]);
                 if($validator->fails()){
                     return response()->json([
@@ -482,6 +521,7 @@ class VanController extends Controller
                 $user->email = $request->email;
             }
         }
+
         if($request->phone){
             // check if phone number is unique and 8 characters long
             if($request->phone != $user->phone){
@@ -497,10 +537,11 @@ class VanController extends Controller
                 $user->phone = $request->phone;
             }
         }
+
         if($request->password){
             // check if password is strong
             $validator = Validator::make($request->all(), [
-                'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'
+                'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/' // at least 1 uppercase, 1 lowercase, 1 number
             ]);
             if($validator->fails()){
                 return response()->json([
@@ -510,21 +551,7 @@ class VanController extends Controller
             }
             $user->password == bcrypt($request->password);
         }
-        if($request->make){
-            $driver->make = $request->make;
-        }
-        if($request->model){
-            $driver->model = $request->model;
-        }
-        if($request->year){
-            $driver->year = $request->year;
-        }
-        if($request->license_plate){
-            $driver->license_plate = $request->license_plate;
-        }
-        if($request->seats){
-            $driver->seats = $request->seats;
-        }
+
         if($request->image){
             $img = $request->image;
             $img = str_replace('data:image/png;base64,', '', $img);
@@ -535,8 +562,22 @@ class VanController extends Controller
             $user->image = $filee;
             file_put_contents($file, $data);
         }
+
+        if($request->name) $user->name = $request->name;
+
+        if($request->make) $driver->make = $request->make;
+
+        if($request->model) $driver->model = $request->model;
+
+        if($request->year) $driver->year = $request->year;
+
+        if($request->license_plate) $driver->license_plate = $request->license_plate;
+
+        if($request->seats) $driver->seats = $request->seats;
+
         $user->save();
         $driver->save();
+        
         return response()->json([
             'status' => 1,
             'message' => 'Driver updated',

@@ -107,6 +107,7 @@ class ServiceController extends Controller
             ]);
         }
 
+        // Adding new trip info for the trip record
         $trip_info = new TripInfo();
         $trip_info->departure_time = date('Y-m-d H:i:s');
         $trip_info->start_location = $request->start_location;
@@ -114,6 +115,7 @@ class ServiceController extends Controller
         $trip_info->end_location = null;
         $trip_info->save();
         
+        // Adding new trip record and assigning the trip info to it
         $trip_record = new TripRecord();
         $trip_record->driver_id = $driver->id;
         $trip_record->trip_info_id = $trip_info->id;
@@ -186,6 +188,7 @@ class ServiceController extends Controller
 
     // Api to get all the trip records of a driver
     public function getTrips(Request $request){
+        // Validate the request
         $validator = Validator::make($request->all(), [
             'user_data' => 'required',
         ]);
@@ -207,6 +210,7 @@ class ServiceController extends Controller
             ]);
         }
 
+        // Get all the trip records of the driver with a trip info
         $trips = $driver->tripRecords()->with('tripInfo')->get();
 
         return response()->json([

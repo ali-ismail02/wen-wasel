@@ -43,6 +43,12 @@ class PassengerController extends Controller
             'user_type' => 2,
             'image' => 'default.png',
         ]);
+        if(!$user){
+            return response()->json([
+                "status" => "Failed",
+                "message" => "Failed to create user"
+            ]);
+        }
 
         // Create a token for the user to avoid another request for login
         $token = JWTAuth::fromUser($user);
@@ -423,7 +429,7 @@ class PassengerController extends Controller
         }
 
         // Add the reservation
-        $reservation = create([
+        $reservation = Reservation::create([
             "user_id" => $request->user_data->id,
             "route_id" => $request->route_id,
             "status" => 0

@@ -52,26 +52,39 @@ class ServiceController extends Controller
             file_put_contents($file, $data);
         }
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->phone = $request->phone;
-        $user->user_type = 4;
-        $user->image = null;
-        $user->save();
+        // Creating the user
+        $user = User::create([ // ====================================================================
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone' => $request->phone,
+            'name' => $request->name,
+            'user_type' => 2,
+            'image' => 'default.png',
+        ]);
+        if(!$user){
+            return response()->json([
+                "status" => "Failed",
+                "message" => "Failed to create user"
+            ]);
+        }
 
-        $driver = new Driver();
-        $driver->license_plate = $request->license_plate;
-        $driver->seats = 0;
-        $driver->model = $request->model;
-        $driver->make = $request->make;
-        $driver->year = $request->year;
-        $driver->license = $image_names[0];
-        $driver->front_image = $image_names[1];
-        $driver->side_image = $image_names[2];
-        $driver->user_id = $user->id;
-        $driver->save();
+        $driver = Driver::create([
+            'user_id' => $user->id,
+            'license_plate' => $request->license_plate,
+            'license' => $image_names[0],
+            'front_image' => $image_names[1],
+            'side_image' => $image_names[2],
+            'make' => $request->make,
+            'model' => $request->model,
+            'year' => $request->year,
+            'seats' => 0
+        ]);
+        if(!$driver){
+            return response()->json([
+                "status" => "Failed",
+                "message" => "Failed to create driver"
+            ]);
+        }
 
         $token = JWTAuth::fromUser($user);
 
@@ -98,7 +111,7 @@ class ServiceController extends Controller
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
         $driver = $user->drivers()->first();
         if($driver == null){
             return response()->json([
@@ -108,18 +121,31 @@ class ServiceController extends Controller
         }
 
         // Adding new trip info for the trip record
-        $trip_info = new TripInfo();
-        $trip_info->departure_time = date('Y-m-d H:i:s');
-        $trip_info->start_location = $request->start_location;
-        $trip_info->arrival_time = null;
-        $trip_info->end_location = null;
-        $trip_info->save();
+        $trip_info = TripInfo::create([
+            'departure_time' => date('Y-m-d H:i:s'),
+            'start_location' => $request->start_location,
+            'arrival_time' => $request->start_time,
+            'end_time' => $request->end_time,
+            'end_location' => $request->end_location,
+        ]);
+        if(!$trip_info){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Failed to create trip info"
+            ]);
+        }
         
         // Adding new trip record and assigning the trip info to it
-        $trip_record = new TripRecord();
-        $trip_record->driver_id = $driver->id;
-        $trip_record->trip_info_id = $trip_info->id;
-        $trip_record->save();
+        $trip_record = TripRecord::create([
+            'driver_id' => $driver->id,
+            'trip_info_id' => $trip_info->id
+        ]);
+        if(!$trip_record){
+            return response()->json([
+                "status" => "0",
+                "message" =>"Failed to create trip record"
+            ]);
+        }
 
         return response()->json([
             'status' => '1',
@@ -146,7 +172,7 @@ class ServiceController extends Controller
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
         $driver = $user->drivers()->first();
         if($driver == null){
             return response()->json([
@@ -201,7 +227,7 @@ class ServiceController extends Controller
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
         $driver = $user->drivers()->first();
         if($driver == null){
             return response()->json([
@@ -234,7 +260,7 @@ class ServiceController extends Controller
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
         $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([

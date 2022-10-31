@@ -11,6 +11,7 @@ use App\Models\TripInfo;
 use App\Models\TripRecord;
 use App\Models\Reservation;
 use App\Models\Route;
+use Auth;
 use JWTAuth;
 use Validator;
 
@@ -27,22 +28,23 @@ class PassengerController extends Controller
         ]);
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
-                "message" => $validator->errors()
+                "status" => "Failed",
+                "message" => "Validation Failed",
+                "errors" => $validator->errors()
             ]);
         }
 
         // Create new user
-        $user = new User();
-        $user->name = $request->name;
-        $user->phone = $request->phone;
-        $user->user_type = 2;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->image = null;
-        $user->save();
+        $user = User::create([ // ====================================================================
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone' => $request->phone,
+            'name' => $request->name,
+            'user_type' => 2,
+            'image' => 'default.png',
+        ]);
 
-        // Create a token for the user
+        // Create a token for the user to avoid another request for login
         $token = JWTAuth::fromUser($user);
 
         return response()->json([
@@ -53,54 +55,82 @@ class PassengerController extends Controller
 
     // Api to add a trip
     public function addTrip(Request $request){
+
         // Validate the request
-        if(!$request->trip_infos || !$request->directions || !$request->transport_types){
+        $validator = Validator::make($request->all(), [
+            'trip_infos' => 'required',
+            'directions' => 'required',
+            'transport_types' => 'required',
+            'user_data' => 'required',
+        ]);
+        if($validator->fails()){
             return response()->json([
-                "status" => "0",
-                "message" => "Missing Fields"
+                "status" => "Failed",
+                "message" => "Validation Failed",
+                "errors" => $validator->errors()
             ]);
         }
+
+        $user = $request->user_data;
         
-        // Trip info, direction, transport type should be sent as a string seoeated by "@"
-        $trip_infos = explode("@",$request->trip_infos);
+        // Trip info, direction, transport type should be sent as a string seperated by "@"
+        $trip_infos = explode("@",$request->trip_infos); 
         $directions = explode("@",$request->directions);
         $transport_types = explode("@",$request->transport_types);
         // Check if the number of trip infos, directions and transport types are equal
         if(count($trip_infos) != count ($directions) || count($trip_infos) != count ($transport_types)){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" => "Unmatched trip info"
             ]);
         }
 
         // Create a new trip
-        $trip = new Trip();
-        $trip->user_id = $request->user_data->id;
-        $trip->save();
+        $trip = Trip::create([
+            'user_id' => $user->id,
+        ]);
+        if(!$trip){
+            return response()->json([
+                "status" => "Failed",
+                "message" => "Failed to create trip"
+            ]);
+        }
 
         // loop through the trip infos, directions and transport types
         for($i=0;$i<count($trip_infos);$i++){
             $trip_info_location = explode(",",$trip_infos[$i]);
 
             // Create a new trip info
-            $trip_info = new TripInfo();
-            $trip_info->start_location = $trip_info_location[0] . "," . $trip_info_location[1];
-            $trip_info->end_location = $trip_info_location[2] . "," . $trip_info_location[3];
-            $trip_info->departure_time = null;
-            $trip_info->arrival_time = null;
-            $trip_info->save();
+            $trip_info = TripInfo::create([
+                'start_location' =>  $trip_info_location[0] . "," . $trip_info_location[1],
+                'end_location' => $trip_info_location[2] . "," . $trip_info_location[3],
+                'departure_time' => null,
+                'arrival_time' => null,
+            ]);
+            if(!$trip_info){
+                return response()->json([
+                    "status" => "Failed",
+                    "message" => "Failed to create trip info"
+                ]);
+            }
 
             // Create a new sub trip and attach the trip info and trip to it
-            $sub_trip = new SubTrip();
-            $sub_trip->trip_info_id = $trip_info->id;
-            $sub_trip->directions = $directions[$i];
-            $sub_trip->trip_type = $transport_types[$i];
-            $sub_trip->trip_id = $trip->id;
-            $sub_trip->save();
+            $sub_trip = SubTrip::create([
+                'directions' => $directions[$i],
+                'trip_info_id' => $trip_info->id,
+                'trip_id' => $trip->id,
+                'trip_type' => $transport_types[$i],
+            ]);
+            if(!$sub_trip){
+                return response()->json([
+                    "status" => "Failed",
+                    "message" => "Failed to create sub trip"
+                ]);
+            }
         }
 
         return response()->json([
-            "status" => "1",
+            "status" => "success",
             "message" => "Trip added successfully",
             "trip_id" => $trip->id
         ]);
@@ -109,20 +139,30 @@ class PassengerController extends Controller
     // Api to get trip by id
     public function getTripById(Request $request){
         // Validate the request
+        $validator = Validator::make($request->all(), [
+            'user_data' => 'required',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                "status" => "Failed",
+                "message" => "Validation Failed",
+                "errors" => $validator->errors()
+            ]);
+        }
         if(!$request->trip_id){
             return response()->json([
-                "status" => "0",
-                "message" => "Missing Fields"
+                "status" => "Failed",
+                "message" => "Trip id is required"
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
 
         // Get the trip
         $trip = $user->trips()->where('id',$request->trip_id)->first();
         if(!$trip){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" => "Trip not found"
             ]);
         }
@@ -132,7 +172,7 @@ class PassengerController extends Controller
 
         // Get the trip info for each sub trip
         foreach($sub_trips as $sub_trip){
-            $trip_info = TripInfo::where('id',$sub_trip->trip_info_id)->first();
+            $trip_info = $sub_trip->tripInfo()->first();
             $trip_infos[] = [
                 "trip_info_id" => $trip_info->id,
                 "start_location" => $trip_info->start_location,
@@ -145,7 +185,7 @@ class PassengerController extends Controller
         }
 
         return response()->json([
-            "status" => "1",
+            "status" => "success",
             "message" => "Trip found",
             "trip" => $trip_infos
         ]);
@@ -160,19 +200,19 @@ class PassengerController extends Controller
         ]);
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" => 'Validation Failed',
                 "errors" => $validator->errors()
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
 
         // Get the trip
         $trip = $user->trips()->where('id',$request->trip_id)->first();
         if(!$trip){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" => "Trip not found"
             ]);
         }
@@ -213,7 +253,7 @@ class PassengerController extends Controller
                 $trip_info->save();
 
                 return response()->json([
-                    "status" => "1",
+                    "status" => "success",
                     "message" => "Trip updated successfully"
                 ]);
 
@@ -222,7 +262,7 @@ class PassengerController extends Controller
         }
 
         return response()->json([
-            "status" => "0",
+            "status" => "Failed",
             "message" => "Trip already completed"
         ]);
     }
@@ -235,13 +275,13 @@ class PassengerController extends Controller
         ]);
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" => 'Validation Failed',
                 "errors" => $validator->errors()
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
         $trips = $user->trips()->get();
 
         $trips_data = [];
@@ -269,7 +309,7 @@ class PassengerController extends Controller
         }
 
         return response()->json([
-            "status" => "1",
+            "status" => "success",
             "message" => "Trips found",
             "trips" => $trips_data
         ]);
@@ -283,13 +323,13 @@ class PassengerController extends Controller
         ]);
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" => 'Validation Failed',
                 "errors" => $validator->errors()
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
         // Get the latest trip
         $trips = $user->trips()->orderBy('id',"DESC")->get();
         
@@ -332,13 +372,13 @@ class PassengerController extends Controller
         // If no current trip found
         if($current_trip == null){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" => "No current trip"
             ]);
         }
 
         return response()->json([
-            "status" => "1",
+            "status" => "success",
             "message" => "Trips found",
             "current_trip" => $current_trip
         ]);
@@ -353,7 +393,7 @@ class PassengerController extends Controller
         ]);
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" => 'Validation Failed',
                 "errors" => $validator->errors()
             ]);
@@ -361,7 +401,7 @@ class PassengerController extends Controller
 
         if(!$route = Route::where('id',$request->route_id)->first()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" => "Route not found"
             ]);
         }
@@ -370,31 +410,37 @@ class PassengerController extends Controller
         $driver = $route->driver()->first();
         if(!$driver){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" => "Driver not found"
             ]);
         }
         // Make sure there are seats available
         if($driver->seats == 0){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" => "No seats available"
             ]);
         }
 
         // Add the reservation
-        $reservation = new Reservation;
-        $reservation->user_id = $request->user_data->id;
-        $reservation->route_id = $request->route_id;
-        $reservation->status = 0;
-        $reservation->save();
+        $reservation = create([
+            "user_id" => $request->user_data->id,
+            "route_id" => $request->route_id,
+            "status" => 0
+        ]);
+        if(!$reservation){
+            return response()->json([
+                "status" => "Failed",
+                "message" => "Failed to add reservation"
+            ]);
+        }
 
         // Update the driver seats
         $driver->seats = $driver->seats - 1;
         $driver->save();
 
         return response()->json([
-            "status" => "1",
+            "status" => "success",
             "message" => "Reservation added successfully"
         ]);
     }
@@ -407,13 +453,13 @@ class PassengerController extends Controller
         ]);
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" => 'Validation Failed',
                 "errors" => $validator->errors()
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
         // Get the reservations
         $reservations = $user->reservations()->get();
 
@@ -430,7 +476,7 @@ class PassengerController extends Controller
         }
 
         return response()->json([
-            "status" => "1",
+            "status" => "success",
             "message" => "Reservations found",
             "reservations" => $reservations_data
         ]);
@@ -445,17 +491,17 @@ class PassengerController extends Controller
         ]);
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" => 'Validation Failed',
                 "errors" => $validator->errors()
             ]);
         }
         
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
 
         if(!$reservation = $user->reservations()->where('id',$request->reservation_id)->first()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" => "Reservation not found"
             ]);
         }
@@ -470,7 +516,7 @@ class PassengerController extends Controller
         $driver->save();
 
         return response()->json([
-            "status" => "1",
+            "status" => "success",
             "message" => "Reservation updated successfully"
         ]);
     }
@@ -565,7 +611,7 @@ class PassengerController extends Controller
     public function getPossibleRoutes(Request $request){
         if(!$request->start_location || !$request->end_location){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" => "Missing Fields"
             ]);
         }
@@ -619,7 +665,7 @@ class PassengerController extends Controller
         }
 
         return response()->json([
-            "status" => "1",
+            "status" => "success",
             "message" => "Success",
             "trips" => $trips
         ]);
@@ -634,11 +680,13 @@ class PassengerController extends Controller
         ]);
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" => "Validation Failed",
                 "errors" => $validator->errors()
             ]);
         }
+
+        $user = Auth::user();
 
         if($request->name) $user->name = $request->name;
 

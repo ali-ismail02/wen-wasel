@@ -28,7 +28,6 @@ class VanController extends Controller
             'license' => 'required',
             'front_image' => 'required',
             'side_image' => 'required',
-            'seats' => 'required',
             'make' => 'required',
             'model' => 'required',
             'year' => 'required',
@@ -36,12 +35,13 @@ class VanController extends Controller
 
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Validation Failed",
                 "errors" => $validator->errors()
             ]);
         }
-        // Converting base64 to images and saving it
+
+        // Converting the base64 images to images and saving them
         $images = [$request->license, $request->front_image, $request->side_image];
         $image_names = [];
 
@@ -55,28 +55,39 @@ class VanController extends Controller
             file_put_contents($file, $data);
         }
 
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt($request->password);
-        $user->phone = $request->phone;
-        $user->user_type = 3;
-        $user->image = null;
-        $user->save();
+        // Creating the user
+        $user = User::create([ // ====================================================================
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'phone' => $request->phone,
+            'name' => $request->name,
+            'user_type' => 3,
+            'image' => 'default.png',
+        ]);
+        if(!$user){
+            return response()->json([
+                "status" => "Failed",
+                "message" => "Failed to create user"
+            ]);
+        }
 
-        $driver = new Driver();
-        $driver->license_plate = $request->license_plate;
-        $driver->seats = $request->seats;
-        $driver->model = $request->model;
-        $driver->make = $request->make;
-        $driver->year = $request->year;
-        $driver->license = $image_names[0];
-        $driver->front_image = $image_names[1];
-        $driver->side_image = $image_names[2];
-        $driver->user_id = $user->id;
-        $driver->save();
-
-        // Creating a token for the user
+        $driver = Driver::create([
+            'user_id' => $user->id,
+            'license_plate' => $request->license_plate,
+            'license' => $image_names[0],
+            'front_image' => $image_names[1],
+            'side_image' => $image_names[2],
+            'make' => $request->make,
+            'model' => $request->model,
+            'year' => $request->year,
+            'seats' => 0
+        ]);
+        if(!$driver){
+            return response()->json([
+                "status" => "Failed",
+                "message" => "Failed to create driver"
+            ]);
+        }
 
         $token = JWTAuth::fromUser($user);
 
@@ -99,32 +110,38 @@ class VanController extends Controller
 
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Validation Failed",
                 "errors" => $validator->errors()
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
         $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Driver not found",
             ]);
         }
 
-        $route = new Route();
-        $route->location = $request->location;
-        $route->arrival_time = $request->date_time;
-        $route->time_difference = null;
-        $route->arrival_status = 0;
-        $route->route_type = 1;
-        $route->driver_id =$driver->id;
-        $route->save();
+        $route = Route::create([
+            'location' => $request->location,
+            'date_time' => $request->date_time,
+            'driver_id' => $driver->id,
+            'time_difference' => null,
+            'arrival_status' => 0,
+            'route_type' => 1,
+        ]);
+        if(!$route){
+            return response()->json([
+                "status" => "Failed",
+                "message" =>"Failed to create route",
+            ]);
+        }
 
         return response()->json([
-            "status" => "1",
+            "status" => "Success",
             "message" =>"Route added successfully",
             "route" => $route
         ]);
@@ -139,17 +156,17 @@ class VanController extends Controller
 
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Validation Failed",
                 "errors" => $validator->errors()
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
         $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Driver not found",
             ]);
         }
@@ -168,7 +185,7 @@ class VanController extends Controller
         }
 
         return response()->json([
-            "status" => "1",
+            "status" => "Success",
             "message" =>"Routes fetched successfully",
             "routes" => $routes_with_reservations
         ]);
@@ -182,24 +199,24 @@ class VanController extends Controller
 
         if(!$request->route_id){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Route id is required",
             ]);
         }
 
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Validation Failed",
                 "errors" => $validator->errors()
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
         $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Driver not found",
             ]);
         }
@@ -209,7 +226,7 @@ class VanController extends Controller
         $reservations = $route->reservations()->count();
 
         return response()->json([
-            "status" => "1",
+            "status" => "Success",
             "message" =>"Route fetched successfully",
             "route" => $route,
             "reservations" => $reservations
@@ -227,17 +244,17 @@ class VanController extends Controller
 
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Validation Failed",
                 "errors" => $validator->errors()
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
         $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Driver not found",
             ]);
         }
@@ -245,29 +262,41 @@ class VanController extends Controller
         // Routes should be sent as a string seperated by '@'
         $routes = explode('@', $request->routes);
 
-        $presaved_route = new PresavedRoute();
-        $presaved_route->name = $request->name;
-        $presaved_route->driver_id = $driver->id;
-        $presaved_route->start_time = date('Y-m-d H:i:s');
-        $presaved_route->save();
+        $presaved_route = PresavedRoute::create([
+            'name' => $request->name,
+            'driver_id' => $driver->id,
+            "start_time" => date('Y-m-d H:i:s')
+        ]);
+        if(!$presaved_route){
+            return response()->json([
+                "status" => "Failed",
+                "message" =>"Failed to create presaved route",
+            ]);
+        }
 
         // Save all routes
         $routes_id = [];
         foreach($routes as $route){
             $route = explode(',', $route);
-            $r = new Route();
-            $r->location = $route[0].','.$route[1];
-            $r->time_difference = $route[2];
-            $r->arrival_status = 0;
-            $r->route_type = 2;
-            $r->driver_id =$driver->id;
-            $r->presaved_route_id = $presaved_route->id;
-            $r->save();
+            $r = Route::create([
+                'location' => $route[0].','.$route[1],
+                'date_time' => $route[1],
+                'driver_id' => $driver->id,
+                'time_difference' => $route[2],
+                'arrival_status' => 0,
+                'route_type' => 2,
+            ]);
+            if(!$r){
+                return response()->json([
+                    "status" => "Failed",
+                    "message" =>"Failed to create route",
+                ]);
+            }
             $routes_id[] = $r;
         }
 
         return response()->json([
-            "status" => "1",
+            "status" => "Success",
             "message" =>"Presaved route added successfully",
             "route" => $presaved_route,
             "routes" => $routes_id
@@ -283,17 +312,17 @@ class VanController extends Controller
 
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Validation Failed",
                 "errors" => $validator->errors()
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
         $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Driver not found",
             ]);
         }
@@ -321,7 +350,7 @@ class VanController extends Controller
         }
 
         return response()->json([
-            "status" => "1",
+            "status" => "Success",
             "message" =>"Routes fetched successfully",
             "presaved_routes" => $routes
         ]);
@@ -336,24 +365,24 @@ class VanController extends Controller
 
         if(!$request->presaved_route_id){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Presaved route id is required",
             ]);
         }
 
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Validation Failed",
                 "errors" => $validator->errors()
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
         $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Driver not found",
             ]);
         }
@@ -363,7 +392,7 @@ class VanController extends Controller
 
         if(!$presaved_route){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Presaved route not found",
             ]);
         }
@@ -381,7 +410,7 @@ class VanController extends Controller
         }
 
         return response()->json([
-            "status" => "1",
+            "status" => "Success",
             "message" =>"Route fetched successfully",
             "presaved_route" => $presaved_route,
             "routes" => $routes_with_count
@@ -398,24 +427,24 @@ class VanController extends Controller
         // Check if route id is sent
         if(!$request->route_id){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Route id is required",
             ]);
         }
 
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Validation Failed",
                 "errors" => $validator->errors()
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
         $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Driver not found",
             ]);
         }
@@ -424,7 +453,7 @@ class VanController extends Controller
         $route = $driver->routes()->where('id', $request->route_id)->first();
         if(!$route){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Route not found",
             ]);
         }
@@ -434,7 +463,7 @@ class VanController extends Controller
         $route->save();
 
         return response()->json([
-            "status" => "1",
+            "status" => "Success",
             "message" =>"Route arrived successfully",
             'route' => $route
         ]);
@@ -449,24 +478,24 @@ class VanController extends Controller
 
         if(!$request->route_id){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Route id is required",
             ]);
         }
 
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Validation Failed",
                 "errors" => $validator->errors()
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
         $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Driver not found",
             ]);
         }
@@ -475,7 +504,7 @@ class VanController extends Controller
         $route = $driver->routes()->where('id', $request->route_id)->first();
         if(!$route){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Route not found",
             ]);
         }
@@ -485,7 +514,7 @@ class VanController extends Controller
         $route->save();
 
         return response()->json([
-            "status" => "1",
+            "status" => "Success",
             "message" =>"Route departed successfully",
             'route' => $route
         ]);
@@ -499,13 +528,13 @@ class VanController extends Controller
         ]);
         if($validator->fails()){
             return response()->json([
-                "status" => "0",
+                "status" => "Failed",
                 "message" =>"Validation Failed",
                 "errors" => $validator->errors()
             ]);
         }
 
-        $user = JWTAuth::parseToken()->authenticate();
+        $user = $request->user_data;
         $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([

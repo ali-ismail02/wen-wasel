@@ -58,7 +58,7 @@ class ServiceController extends Controller
             'password' => bcrypt($request->password),
             'phone' => $request->phone,
             'name' => $request->name,
-            'user_type' => 2,
+            'user_type' => 4,
             'image' => 'default.png',
         ]);
         if(!$user){

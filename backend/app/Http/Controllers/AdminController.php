@@ -20,7 +20,7 @@ class AdminController extends Controller
                     })->get();
 
         return response()->json([
-            'status' => 1,
+            'status' => "Success",
             'message' => 'Passengers fetched successfully',
             'users' => $users
         ]);
@@ -42,7 +42,7 @@ class AdminController extends Controller
         }
 
         return response()->json([
-            'status' => 1,
+            'status' => "Success",
             'message' => 'Van drivers fetched successfully',
             'drivers' => $drivers
         ]);
@@ -64,7 +64,7 @@ class AdminController extends Controller
         }
 
         return response()->json([
-            'status' => 1,
+            'status' => "Success",
             'message' => 'Service drivers fetched successfully',
             'drivers' => $drivers
         ]);
@@ -78,7 +78,7 @@ class AdminController extends Controller
         ]);
         if($validator->fails()){
             return response()->json([
-                'status' => 0,
+                'status' => "Failed",
                 'message' => 'Validation error',
                 'errors' => $validator->errors()
             ]);
@@ -87,7 +87,7 @@ class AdminController extends Controller
         $user = User::find($request->id);
         if(!$user){
             return response()->json([
-                'status' => 0,
+                'status' => "Failed",
                 'message' => 'User not found'
             ]);
         }
@@ -95,13 +95,13 @@ class AdminController extends Controller
         if($user->user_type == 3 || $user->user_type == 4){
             $driver = $user->drivers()->first();
             return response()->json([
-                'status' => 1,
+                'status' => "Success",
                 'user' => $user,
                 'driver' => $driver
             ]);
         }
         return response()->json([
-            'status' => 1,
+            'status' => "Success",
             'user' => $user
         ]);
     }
@@ -114,7 +114,7 @@ class AdminController extends Controller
         ]);
         if($validator->fails()){
             return response()->json([
-                'status' => 0,
+                'status' => "Failed",
                 'message' => 'Validation error',
                 'errors' => $validator->errors()
             ]);
@@ -124,14 +124,14 @@ class AdminController extends Controller
         $user = User::find($request->id);
         if(!$user){
             return response()->json([
-                'status' => 0,
+                'status' => "Failed",
                 'message' => 'User not found'
             ]);
         }
         $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
-                'status' => 0,
+                'status' => "Failed",
                 'message' => 'Driver not found'
             ]);
         }
@@ -141,7 +141,7 @@ class AdminController extends Controller
         $driver->save();
 
         return response()->json([
-            'status' => 1,
+            'status' => "Success",
             'message' => 'Driver status updated',
             'user'=>$user,
             'driver'=>$driver
@@ -156,7 +156,7 @@ class AdminController extends Controller
         ]);
         if($validator->fails()){
             return response()->json([
-                'status' => 0,
+                'status' => "Failed",
                 'message' => 'Validation error',
                 'errors' => $validator->errors()
             ]);
@@ -166,14 +166,14 @@ class AdminController extends Controller
         $user = User::find($request->id);
         if(!$user){
             return response()->json([
-                'status' => 0,
+                'status' => "Failed",
                 'message' => 'User not found'
             ]);
         }
         // Check if user is a passenger
         if($user->user_type != 2){
             return response()->json([
-                'status' => 0,
+                'status' => "Failed",
                 'message' => 'User is not a passenger'
             ]);
         }
@@ -187,7 +187,7 @@ class AdminController extends Controller
                 ]);
                 if($validator->fails()){
                     return response()->json([
-                        'status' => 0,
+                        'status' => "Failed",
                         'message' => $validator->errors()->first()
                     ]);
                 }
@@ -203,7 +203,7 @@ class AdminController extends Controller
                 ]);
                 if($validator->fails()){
                     return response()->json([
-                        'status' => 0,
+                        'status' => "Failed",
                         'message' => $validator->errors()->first()
                     ]);
                 }
@@ -218,7 +218,7 @@ class AdminController extends Controller
             ]);
             if($validator->fails()){
                 return response()->json([
-                    'status' => 0,
+                    'status' => "Failed",
                     'message' => $validator->errors()->first()
                 ]);
             }
@@ -228,7 +228,7 @@ class AdminController extends Controller
         $user->save();
 
         return response()->json([
-            'status' => 1,
+            'status' => "Success",
             'message' => 'Passenger updated',
             'user' => $user
         ]);
@@ -242,7 +242,7 @@ class AdminController extends Controller
         ]);
         if($validator->fails()){
             return response()->json([
-                'status' => 0,
+                'status' => "Failed",
                 'message' => 'Validation error',
                 'errors' => $validator->errors()
             ]);
@@ -251,21 +251,21 @@ class AdminController extends Controller
         $user = User::find($request->id);
         if(!$user){
             return response()->json([
-                'status' => 0,
+                'status' => "Failed",
                 'message' => 'User not found'
             ]);
         }
         // check if user is a driver
         if($user->user_type != 3 && $user->user_type != 4){
             return response()->json([
-                'status' => 0,
+                'status' => "Failed",
                 'message' => 'User is not a driver'
             ]);
         }
         $driver = $user->drivers()->first();
         if(!$driver){
             return response()->json([
-                'status' => 0,
+                'status' => "Failed",
                 'message' => 'Driver not found'
             ]);
         }
@@ -277,7 +277,7 @@ class AdminController extends Controller
                 ]);
                 if($validator->fails()){
                     return response()->json([
-                        'status' => 0,
+                        'status' => "Failed",
                         'message' => $validator->errors()->first()
                     ]);
                 }
@@ -293,7 +293,7 @@ class AdminController extends Controller
                 ]);
                 if($validator->fails()){
                     return response()->json([
-                        'status' => 0,
+                        'status' => "Failed",
                         'message' => $validator->errors()->first()
                     ]);
                 }
@@ -308,7 +308,7 @@ class AdminController extends Controller
             ]);
             if($validator->fails()){
                 return response()->json([
-                    'status' => 0,
+                    'status' => "Failed",
                     'message' => $validator->errors()->first()
                 ]);
             }
@@ -342,7 +342,7 @@ class AdminController extends Controller
         $driver->save();
 
         return response()->json([
-            'status' => 1,
+            'status' => "Success",
             'message' => 'Driver updated',
             'user' => $user,
             'driver' => $driver
@@ -355,7 +355,7 @@ class AdminController extends Controller
         $presaved = PresavedRoute::all();
         if($presaved == []){
             return response()->json([
-                'status' => 0,
+                'status' => "Failed",
                 'message' => 'No presaved routes found'
             ]);
         }
@@ -365,7 +365,7 @@ class AdminController extends Controller
             $presaved_routes[] = [$route, $routes];
         }
         return response()->json([
-            'status' => 1,
+            'status' => "Success",
             'message' => 'Presaved routes',
             'routes' => $presaved_routes
         ]);
@@ -377,12 +377,12 @@ class AdminController extends Controller
         $one_time = Route::where('route_type', 1)->get();
         if($one_time == []){
             return response()->json([
-                'status' => 0,
+                'status' => "Failed",
                 'message' => 'No one time routes found'
             ]);
         }
         return response()->json([
-            'status' => 1,
+            'status' => "Success",
             'message' => 'One time routes',
             'routes' => $one_time
         ]);

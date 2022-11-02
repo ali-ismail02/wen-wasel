@@ -24,6 +24,7 @@ const Map = () => {
     const [location, setLocation] = useState<Location.LocationObject | null>();
     const [errorMsg, setErrorMsg] = useState("");
     const [view_directions, setViewDirections] = useState(true);
+    const [color, setColor] = useState("red");
 
     const getUserLocation = async () => {
         let location = await Location.getCurrentPositionAsync({});
@@ -74,8 +75,8 @@ const Map = () => {
                             destination={destination}
                             apikey={Google_API_Key}
                             strokeWidth={3}
-                            strokeColor="hotpink" />}
-                </MapView>
+                            strokeColor={color} />}
+                </MapView> 
                 <View style={styles.searchContainer}>
                     <Search onPlaceSelect={(details) => onPlaceSelect(details, "destination")} />
                 </View>

@@ -4,9 +4,11 @@ import { Google_API_Key } from "../GoogleAPIKey";
 import styles from "../styles/styles";
 
 const Search = ({ onPlaceSelect }) => {
+    return (
     <GooglePlacesAutocomplete
         styles={{ textInput: styles.input }}
         placeholder='Search'
+        fetchDetails
         onPress={(data, details = null) => {
             onPlaceSelect(details)
         }}
@@ -14,6 +16,6 @@ const Search = ({ onPlaceSelect }) => {
             key: Google_API_Key,
             language: 'en',
         }}
-    />
+    />);
 }
 export default Search;

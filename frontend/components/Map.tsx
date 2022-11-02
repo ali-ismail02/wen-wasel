@@ -15,8 +15,19 @@ const INITIAL_POSITION = {latitude: LATITUDE, longitude: LONGITUDE, latitudeDelt
 
 
 const Map = () => {
-    const [destination, setDestination] = useState<LatLng | null>("");
-    const [origin, setOrigin] = useState<LatLng | null>("");
+    const [destination, setDestination] = useState<LatLng | null>();
+    const [origin, setOrigin] = useState<LatLng | null>();
+    const mapRef = React.useRef<MapView>(null);
+    
+
+    const moveTo = async (position: LatLng) => {
+        const camera = await mapRef.current?.getCamera();
+        if(camera) {
+            camera.center = position;
+            mapRef.current?.animateCamera(camera, {duration: 1000});
+        }
+    }
+
     const onPlaceSelect = (details, flag) => {
         const set = flag === "origin" ? setOrigin : setDestination;
         const position = {
@@ -24,13 +35,14 @@ const Map = () => {
             longitude: details.geometry.location.lng,
         }
         set(position);
+        moveTo(position);
     }
     return (
         <SafeAreaView>
             <View>
-                    <MapView style={styles.map} provider={PROVIDER_GOOGLE} initialRegion={INITIAL_POSITION} />
+                    <MapView ref={mapRef} style={styles.map} provider={PROVIDER_GOOGLE} initialRegion={INITIAL_POSITION} />
                     <View style={styles.searchContainer}>
-                        <Search onPlaceSelect={onPlaceSelect} />
+                        <Search onPlaceSelect={(details) => onPlaceSelect(details, "destination")} />
                     </View>
             </View>
         </SafeAreaView>

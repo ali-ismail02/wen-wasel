@@ -25,7 +25,7 @@ export default StyleSheet.create({
           shadowOpacity: 0.5, 
           elevation: 4,
           padding: 8,
-          borderRadius: 8
+          borderRadius: 8,
         },
         input: {
           borderColor: "#888",

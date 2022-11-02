@@ -10,19 +10,21 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen 
-          name="Home" 
-          component={HomeScreen}
-          options={{
-            title: 'Wen Wasel',
-            headerStyle: { backgroundColor: 'black' },
-            headerTintColor: '#fff',
-            headerTitleStyle: {
-              fontWeight: 'bold',
-              fontSize: 32,
-            },
-            headerTitleAlign: 'center',
-            headerLeft: () => (<Entypo onPress={() => (alert("xx"))} name="menu" size={40} color="white" />)
-          }}
+        name="Home" 
+        component={HomeScreen}
+        options={{
+          title: 'Wen Wasel',
+          headerStyle: {
+            backgroundColor: 'black',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 32,
+          },
+          headerTitleAlign: 'center',
+          headerLeft: () => (<Entypo onPress={() => (alert("xx"))} name="menu" size={40} color="white" />)
+        }}
         />
       </Stack.Navigator>
     </NavigationContainer>

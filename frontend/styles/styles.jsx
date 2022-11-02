@@ -1,4 +1,5 @@
 import { StyleSheet,Dimensions } from "react-native";
+import Constants from 'expo-constants';
 let ScreenHeight = Dimensions.get("window").height;
 let ScreenWidth = Dimensions.get("window").width;
 
@@ -30,5 +31,21 @@ export default StyleSheet.create({
         input: {
           borderColor: "#888",
           borderWidth: 1,
-        }
+        },
+        center: {
+          position: 'absolute',
+          bottom: 150,
+          right: 20,
+          width: 50,
+          height: 50,
+          borderRadius: 50,
+          elevation: 5,
+          zIndex: 100,
+          backgroundColor: "red",
+        },
+        centerImage: {
+          width: 50,
+          height: 50,
+          borderRadius: 50,
+        },
       });

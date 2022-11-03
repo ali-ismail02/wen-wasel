@@ -70,5 +70,6 @@ Route::group(['prefix' => 'admin'], function() {
         Route::get('get-one-time-routes', [AdminController::class, 'getOneTimeRoutes']);
         Route::get('get-fares', [AdminController::class, 'getFares']);
         Route::put('update-fare', [AdminController::class, 'updateFare']);
+        Route::get('get-popular-routes', [AdminController::class, 'getPopularRoutes']);
     });
 });

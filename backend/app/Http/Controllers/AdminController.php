@@ -406,5 +406,36 @@ class AdminController extends Controller
         ]);
     }
 
-    
+    // Api to update fare
+    public function updateFare(Request $request){
+        // Validate the request
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'fare' => 'required'
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => "Failed",
+                'message' => 'Validation error',
+                'errors' => $validator->errors()
+            ]);
+        }
+
+        $fare = Fare::find($request->id);
+        if(!$fare){
+            return response()->json([
+                'status' => "Failed",
+                'message' => 'Fare not found'
+            ]);
+        }
+
+        $fare->fare = $request->fare;
+        $fare->save();
+
+        return response()->json([
+            'status' => "Success",
+            'message' => 'Fare updated',
+            'fare' => $fare
+        ]);
+    }
 }

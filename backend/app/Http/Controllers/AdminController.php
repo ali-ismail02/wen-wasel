@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Driver;
 use App\Models\Route;
 use App\Models\PresavedRoute;
+use App\Models\Fare;
 use Validator;
 
 class AdminController extends Controller
@@ -387,4 +388,23 @@ class AdminController extends Controller
             'routes' => $one_time
         ]);
     }
+
+    // Api to get all fares
+    public function getFares(){
+        // Get all fares
+        $fares = Fare::all();
+        if($fares == []){
+            return response()->json([
+                'status' => "Failed",
+                'message' => 'No fares found'
+            ]);
+        }
+        return response()->json([
+            'status' => "Success",
+            'message' => 'Fares',
+            'fares' => $fares
+        ]);
+    }
+
+    
 }

@@ -463,11 +463,6 @@ class AdminController extends Controller
             }
             $countOfRoutes[$route->location] = 1;
         }
-        // Sort the array by value
-        arsort($countOfRoutes);
-        $most_popular = array_slice($countOfRoutes, 0, 5, true);
-        $least_popular = array_slice($countOfRoutes, -5, 5, true);
-        $least_popular = array_reverse($least_popular, true);
 
         $routes = Route::select(DB::raw('count(id) as total'), "driver_id")->where('route_type',1)->groupBy('driver_id')->get();
 
@@ -484,6 +479,24 @@ class AdminController extends Controller
             $driver = Driver::find($trip_record->driver_id);
             $service_drivers[] = [$driver, $trip_record->total];
         }
+        // sort van drivers by total
+        usort($van_drivers, function($a, $b) {
+            return $b[1] <=> $a[1];
+        });
+        // take top 5 van drivers
+        $van_drivers = array_slice($van_drivers, 0, 5);
+        // sort service drivers by total
+        usort($service_drivers, function($a, $b) {
+            return $b[1] <=> $a[1];
+        });
+        // take top 5 service drivers
+        $service_drivers = array_slice($service_drivers, 0, 5);
+        // Sort countOfRoutes by value
+        arsort($countOfRoutes);
+        $most_popular = array_slice($countOfRoutes, 0, 5, true);
+        $least_popular = array_slice($countOfRoutes, -5, 5, true);
+        $least_popular = array_reverse($least_popular, true);
+
 
         return response()->json([
             'status' => "Success",

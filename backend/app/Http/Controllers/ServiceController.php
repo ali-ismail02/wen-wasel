@@ -15,7 +15,7 @@ class ServiceController extends Controller
     // Api for service driver registration
     public function serviceSignup(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'email'=>'required|email:rfc,dns|unique:users',
             'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', // at least 1 uppercase, 1 lowercase, 1 number
             'phone' => 'required|min:8|max:8|unique:users',
@@ -28,13 +28,13 @@ class ServiceController extends Controller
             'make' => 'required',
             'model' => 'required',
             'year' => 'required',
-        ]);
+        ];
 
-        if($validator->fails()){
+        if($error = validate($request->all(), $rules)){
             return response()->json([
-                "status" => "0",
-                "message" =>"Validation Failed",
-                "errors" => $validator->errors()
+                "status" => "Failed",
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -98,16 +98,16 @@ class ServiceController extends Controller
     // Api to add a trip record
     public function addTripRecord(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'user_data' => 'required',
             'start_location' => 'required',
-        ]);
+        ];
 
-        if($validator->fails()){
+        if($error = validate($request->all(), $rules)){
             return response()->json([
-                "status" => "0",
-                "message" =>"Validation Failed",
-                "errors" => $validator->errors()
+                "status" => "Failed",
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -158,17 +158,17 @@ class ServiceController extends Controller
     // Api to end a trip record by id
     public function endTrip(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
+        $rules =  [
             'user_data' => 'required',
             'end_location' => 'required',
             'trip_record_id' => 'required',
-        ]);
+        ];
 
-        if($validator->fails()){
+        if($error = validate($request->all(), $rules)){
             return response()->json([
-                "status" => "0",
-                "message" =>"Validation Failed",
-                "errors" => $validator->errors()
+                "status" => "Failed",
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -215,15 +215,11 @@ class ServiceController extends Controller
     // Api to get all the trip records of a driver
     public function getTrips(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_data' => 'required',
-        ]);
-
-        if($validator->fails()){
+        if($error = validate($request->all(), ['user_data' => 'required'])){
             return response()->json([
-                "status" => "0",
-                "message" =>"Validation Failed",
-                "errors" => $validator->errors()
+                "status" => "Failed",
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -249,14 +245,11 @@ class ServiceController extends Controller
     // api to update van driver's profile
     public function updateProfile(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_data' => 'required',
-        ]);
-        if($validator->fails()){
+        if($error = validate($request->all(), ['user_data' => 'required'])){
             return response()->json([
-                "status" => "0",
-                "message" =>"Validation Failed",
-                "errors" => $validator->errors()
+                "status" => "Failed",
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -271,13 +264,11 @@ class ServiceController extends Controller
 
         if($request->email){
             if($request->email != $user->email){
-                $validator = Validator::make($request->all(), [
-                    'email' => 'required|email:rfc,dns|unique:users' // check if email is unique and valid
-                ]);
-                if($validator->fails()){
+                if($error = validate($request->all(), ["email" => "required|email:rfc,dns|unique:users"])){
                     return response()->json([
-                        'status' => 0,
-                        'message' => $validator->errors()->first()
+                        'status' => "Failed",
+                        'message' => 'Validation error',
+                        'errors' => $error
                     ]);
                 }
                 $user->email = $request->email;
@@ -287,13 +278,11 @@ class ServiceController extends Controller
         if($request->phone){
             // check if phone number is unique and 8 characters long
             if($request->phone != $user->phone){
-                $validator = Validator::make($request->all(), [
-                    'phone' => 'required|numeric|digits:8|unique:users'
-                ]);
-                if($validator->fails()){
+                if($error = validate($request->all(), ["phone" => "required|numeric|digits:8|unique:users"])){
                     return response()->json([
-                        'status' => 0,
-                        'message' => $validator->errors()->first()
+                        'status' => "Failed",
+                        'message' => 'Validation error',
+                        'errors' => $error
                     ]);
                 }
                 $user->phone = $request->phone;
@@ -302,17 +291,16 @@ class ServiceController extends Controller
 
         if($request->password){
             // check if password is strong
-            $validator = Validator::make($request->all(), [
-                'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/' // at least 1 uppercase, 1 lowercase, 1 number
-            ]);
-            if($validator->fails()){
+            if($error = validate($request->all(), ["password" => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'])){
                 return response()->json([
-                    'status' => 0,
-                    'message' => $validator->errors()->first()
+                    'status' => "Failed",
+                    'message' => 'Validation error',
+                    'errors' => $error
                 ]);
             }
             $user->password == bcrypt($request->password);
         }
+
 
         if($request->image){
             $img = $request->image;

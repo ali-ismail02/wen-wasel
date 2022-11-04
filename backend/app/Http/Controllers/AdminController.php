@@ -388,15 +388,15 @@ class AdminController extends Controller
     // Api to update fare
     public function updateFare(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'id' => 'required',
             'fare' => 'required'
-        ]);
-        if($validator->fails()){
+        ];
+        if($error = validate($request->all(), $rules)){
             return response()->json([
-                'status' => "Failed",
-                'message' => 'Validation error',
-                'errors' => $validator->errors()
+                "status" => "Failed",
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 

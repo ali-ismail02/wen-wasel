@@ -8,6 +8,8 @@ use App\Models\Driver;
 use App\Models\Route;
 use App\Models\PresavedRoute;
 use App\Models\Fare;
+use App\Models\TripRecord;
+use DB;
 use Validator;
 
 class AdminController extends Controller
@@ -436,6 +438,60 @@ class AdminController extends Controller
             'status' => "Success",
             'message' => 'Fare updated',
             'fare' => $fare
+        ]);
+    }
+
+    // Api to get popular routes
+
+    public function getAnalytics(Request $request){
+        $routes = Route::all();
+        $countOfRoutes = [];
+        foreach($routes as $route){
+            $flag = 0;
+            // foreach $countOfRoutes as key and value
+            foreach($countOfRoutes as $key => $value){
+                $route_corods = explode(',', $route->location);
+                $key_corods = explode(',', $key);
+                if(distance($route_corods[0], $route_corods[1], $key_corods[0], $key_corods[1], "k") < 0.1){
+                    $countOfRoutes[$key] += 1;
+                    $flag = 1;
+                    break;
+                }
+            }
+            if($flag){
+                continue;
+            }
+            $countOfRoutes[$route->location] = 1;
+        }
+        // Sort the array by value
+        arsort($countOfRoutes);
+        $most_popular = array_slice($countOfRoutes, 0, 5, true);
+        $least_popular = array_slice($countOfRoutes, -5, 5, true);
+        $least_popular = array_reverse($least_popular, true);
+
+        $routes = Route::select(DB::raw('count(id) as total'), "driver_id")->where('route_type',1)->groupBy('driver_id')->get();
+
+        $van_drivers = [];
+        foreach($routes as $route){
+            $driver = Driver::find($route->driver_id);
+            $van_drivers[] = [$driver, $route->total];
+        }
+
+        $trip_records = TripRecord::select(DB::raw('count(id) as total'), "driver_id")->groupBy('driver_id')->get();
+
+        $service_drivers = [];
+        foreach($trip_records as $trip_record){
+            $driver = Driver::find($trip_record->driver_id);
+            $service_drivers[] = [$driver, $trip_record->total];
+        }
+
+        return response()->json([
+            'status' => "Success",
+            'message' => 'Most and least popular routes',
+            'most_popular_routes' => $most_popular,
+            'least_popular_routes' => $least_popular,
+            'most_active_van_drivers' => $van_drivers,
+            'most_active_service_drivers' => $service_drivers   
         ]);
     }
 }

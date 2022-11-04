@@ -76,16 +76,14 @@ class AdminController extends Controller
     // Api to get user by id with driver info if he is a driver
     public function getUserById(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'required'
-        ]);
-        if($validator->fails()){
+        if($error = validate($request->all(), ["user_id" => "required"])){
             return response()->json([
                 'status' => "Failed",
                 'message' => 'Validation error',
-                'errors' => $validator->errors()
+                'errors' => $error
             ]);
         }
+
         // Get the user
         $user = User::find($request->id);
         if(!$user){
@@ -112,14 +110,11 @@ class AdminController extends Controller
     // Api to accept or reject driver
     public function acceptOrRejectDriver(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'required'
-        ]);
-        if($validator->fails()){
+        if($error = validate($request->all(), ["user_id" => "required"])){
             return response()->json([
                 'status' => "Failed",
                 'message' => 'Validation error',
-                'errors' => $validator->errors()
+                'errors' => $error
             ]);
         }
 
@@ -154,14 +149,11 @@ class AdminController extends Controller
     // Api to update passenger
     public function updatePassenger(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'required'
-        ]);
-        if($validator->fails()){
+        if($error = validate($request->all(), ["user_id" => "required"])){
             return response()->json([
                 'status' => "Failed",
                 'message' => 'Validation error',
-                'errors' => $validator->errors()
+                'errors' => $error
             ]);
         }
 
@@ -185,13 +177,11 @@ class AdminController extends Controller
 
         if($request->email){
             if($request->email != $user->email){
-                $validator = Validator::make($request->all(), [
-                    'email' => 'required|email:rfc,dns|unique:users' // check if email is unique and valid
-                ]);
-                if($validator->fails()){
+                if($error = validate($request->all(), ["email" => "required|email:rfc,dns|unique:users"])){
                     return response()->json([
                         'status' => "Failed",
-                        'message' => $validator->errors()->first()
+                        'message' => 'Validation error',
+                        'errors' => $error
                     ]);
                 }
                 $user->email = $request->email;
@@ -201,13 +191,11 @@ class AdminController extends Controller
         if($request->phone){
             // check if phone number is unique and 8 characters long
             if($request->phone != $user->phone){
-                $validator = Validator::make($request->all(), [
-                    'phone' => 'required|numeric|digits:8|unique:users'
-                ]);
-                if($validator->fails()){
+                if($error = validate($request->all(), ["phone" => "required|numeric|digits:8|unique:users"])){
                     return response()->json([
                         'status' => "Failed",
-                        'message' => $validator->errors()->first()
+                        'message' => 'Validation error',
+                        'errors' => $error
                     ]);
                 }
                 $user->phone = $request->phone;
@@ -216,16 +204,14 @@ class AdminController extends Controller
 
         if($request->password){
             // check if password is strong
-            $validator = Validator::make($request->all(), [
-                'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'
-            ]);
-            if($validator->fails()){
+            if($error = validate($request->all(), ["password" => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'])){
                 return response()->json([
                     'status' => "Failed",
-                    'message' => $validator->errors()->first()
+                    'message' => 'Validation error',
+                    'errors' => $error
                 ]);
             }
-            $user->password = bcrypt($request->password);
+            $user->password == bcrypt($request->password);
         }
 
         $user->save();
@@ -240,16 +226,13 @@ class AdminController extends Controller
     // Api to update van or service driver
     public function updateDriver(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_id' => 'required'
-        ]);
-        if($validator->fails()){
+        if($error = validate($request->all(), ["user_id" => "required"])){
             return response()->json([
                 'status' => "Failed",
                 'message' => 'Validation error',
-                'errors' => $validator->errors()
+                'errors' => $error
             ]);
-        }
+        } // this is called in the api
 
         $user = User::find($request->id);
         if(!$user){
@@ -275,13 +258,11 @@ class AdminController extends Controller
 
         if($request->email){
             if($request->email != $user->email){
-                $validator = Validator::make($request->all(), [
-                    'email' => 'required|email:rfc,dns|unique:users' // check if email is unique and valid
-                ]);
-                if($validator->fails()){
+                if($error = validate($request->all(), ["email" => "required|email:rfc,dns|unique:users"])){
                     return response()->json([
                         'status' => "Failed",
-                        'message' => $validator->errors()->first()
+                        'message' => 'Validation error',
+                        'errors' => $error
                     ]);
                 }
                 $user->email = $request->email;
@@ -291,13 +272,11 @@ class AdminController extends Controller
         if($request->phone){
             // check if phone number is unique and 8 characters long
             if($request->phone != $user->phone){
-                $validator = Validator::make($request->all(), [
-                    'phone' => 'required|numeric|digits:8|unique:users'
-                ]);
-                if($validator->fails()){
+                if($error = validate($request->all(), ["phone" => "required|numeric|digits:8|unique:users"])){
                     return response()->json([
                         'status' => "Failed",
-                        'message' => $validator->errors()->first()
+                        'message' => 'Validation error',
+                        'errors' => $error
                     ]);
                 }
                 $user->phone = $request->phone;
@@ -306,13 +285,11 @@ class AdminController extends Controller
 
         if($request->password){
             // check if password is strong
-            $validator = Validator::make($request->all(), [
-                'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/' // at least 1 uppercase, 1 lowercase, 1 number
-            ]);
-            if($validator->fails()){
+            if($error = validate($request->all(), ["password" => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'])){
                 return response()->json([
                     'status' => "Failed",
-                    'message' => $validator->errors()->first()
+                    'message' => 'Validation error',
+                    'errors' => $error
                 ]);
             }
             $user->password == bcrypt($request->password);
@@ -483,19 +460,17 @@ class AdminController extends Controller
         usort($van_drivers, function($a, $b) {
             return $b[1] <=> $a[1];
         });
-        // take top 5 van drivers
-        $van_drivers = array_slice($van_drivers, 0, 5);
         // sort service drivers by total
         usort($service_drivers, function($a, $b) {
             return $b[1] <=> $a[1];
         });
-        // take top 5 service drivers
-        $service_drivers = array_slice($service_drivers, 0, 5);
         // Sort countOfRoutes by value
         arsort($countOfRoutes);
         $most_popular = array_slice($countOfRoutes, 0, 5, true);
         $least_popular = array_slice($countOfRoutes, -5, 5, true);
         $least_popular = array_reverse($least_popular, true);
+        $service_drivers = array_slice($service_drivers, 0, 5);
+        $van_drivers = array_slice($van_drivers, 0, 5);
 
 
         return response()->json([

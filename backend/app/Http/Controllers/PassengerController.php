@@ -20,17 +20,17 @@ class PassengerController extends Controller
     // Api for passenger signup
     public function passengerSignUp(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'email'=>'required|email:rfc,dns|unique:users',
             'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', // at least 1 uppercase, 1 lowercase, 1 number
             'phone' => 'required|min:8|max:8',
             'name' => 'required',
-        ]);
-        if($validator->fails()){
+        ];
+        if($error = validate($request->all(), $rules)){
             return response()->json([
                 "status" => "Failed",
                 "message" => "Validation Failed",
-                "errors" => $validator->errors()
+                "errors" => $error
             ]);
         }
 
@@ -63,17 +63,17 @@ class PassengerController extends Controller
     public function addTrip(Request $request){
 
         // Validate the request
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'trip_infos' => 'required',
             'directions' => 'required',
             'transport_types' => 'required',
             'user_data' => 'required',
-        ]);
-        if($validator->fails()){
+        ];
+        if($error = validate($request->all(), $rules)){
             return response()->json([
                 "status" => "Failed",
                 "message" => "Validation Failed",
-                "errors" => $validator->errors()
+                "errors" => $error
             ]);
         }
 
@@ -145,14 +145,11 @@ class PassengerController extends Controller
     // Api to get trip by id
     public function getTripById(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_data' => 'required',
-        ]);
-        if($validator->fails()){
+        if($error = validate($request->all(), ['user_data' => 'required'])){
             return response()->json([
                 "status" => "Failed",
                 "message" => "Validation Failed",
-                "errors" => $validator->errors()
+                "errors" => $error
             ]);
         }
         if(!$request->trip_id){
@@ -200,15 +197,15 @@ class PassengerController extends Controller
     // Api to update trip info by id
     public function updateTrip(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'trip_id'=>'required',
             'user_data'=>'required',
-        ]);
-        if($validator->fails()){
+        ];
+        if($error = validate($request->all(), $rules)){
             return response()->json([
                 "status" => "Failed",
-                "message" => 'Validation Failed',
-                "errors" => $validator->errors()
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -276,14 +273,11 @@ class PassengerController extends Controller
     // Api to get all trips
     public function getTrips(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_data'=>'required',
-        ]);
-        if($validator->fails()){
+        if($error = validate($request->all(), ['user_data' => 'required'])){
             return response()->json([
                 "status" => "Failed",
-                "message" => 'Validation Failed',
-                "errors" => $validator->errors()
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -324,14 +318,11 @@ class PassengerController extends Controller
     // Api to get the cuurent trip if any
     public function getCurrentTrip(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_data'=>'required',
-        ]);
-        if($validator->fails()){
+        if($error = validate($request->all(), ['user_data' => 'required'])){
             return response()->json([
                 "status" => "Failed",
-                "message" => 'Validation Failed',
-                "errors" => $validator->errors()
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -393,15 +384,11 @@ class PassengerController extends Controller
     // Api to add reservation
     public function addReservation(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_data'=>'required',
-            'route_id'=>'required'
-        ]);
-        if($validator->fails()){
+        if($error = validate($request->all(), ['user_data' => 'required'])){
             return response()->json([
                 "status" => "Failed",
-                "message" => 'Validation Failed',
-                "errors" => $validator->errors()
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -454,14 +441,11 @@ class PassengerController extends Controller
     // Api to get the reservations
     public function getReservations(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_data'=>'required',
-        ]);
-        if($validator->fails()){
+        if($error = validate($request->all(), ['user_data' => 'required'])){
             return response()->json([
                 "status" => "Failed",
-                "message" => 'Validation Failed',
-                "errors" => $validator->errors()
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -491,15 +475,15 @@ class PassengerController extends Controller
     // Api to update reservation status to 1 (arrived)
     public function updateReservation(Requrest $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'user_data'=>'required',
             'reservation_id'=>'required'
-        ]);
-        if($validator->fails()){
+        ];
+        if($error = validate($request->all(), $rules)){
             return response()->json([
                 "status" => "Failed",
-                "message" => 'Validation Failed',
-                "errors" => $validator->errors()
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
         
@@ -529,10 +513,15 @@ class PassengerController extends Controller
 
     // Api to get all possible routes for a passenger to take
     public function getPossibleRoutes(Request $request){
-        if(!$request->start_location || !$request->end_location){
+        $rules = [
+            'start_location'=>'required',
+            'end_location'=>'required'
+        ];
+        if($error = validate($request->all(), $rules)){
             return response()->json([
                 "status" => "Failed",
-                "message" => "Missing Fields"
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -595,14 +584,11 @@ class PassengerController extends Controller
     // Api to update profile
     public function updateProfile(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_data' => 'required'
-        ]);
-        if($validator->fails()){
+        if($error = validate($request->all(), ['user_data' => 'required'])){
             return response()->json([
                 "status" => "Failed",
                 "message" => "Validation Failed",
-                "errors" => $validator->errors()
+                "errors" => $error
             ]);
         }
 
@@ -612,13 +598,11 @@ class PassengerController extends Controller
 
         if($request->email){
             if($request->email != $user->email){
-                $validator = Validator::make($request->all(), [
-                    'email' => 'required|email:rfc,dns|unique:users' // Check if the email is unique and valid
-                ]);
-                if($validator->fails()){
+                if($error = validate($request->all(), ["email" => "required|email:rfc,dns|unique:users"])){
                     return response()->json([
-                        'status' => 0,
-                        'message' => $validator->errors()->first()
+                        'status' => "Failed",
+                        'message' => 'Validation error',
+                        'errors' => $error
                     ]);
                 }
                 $user->email = $request->email;
@@ -628,13 +612,11 @@ class PassengerController extends Controller
         if($request->phone){
             // check if phone number is unique and 8 characters long
             if($request->phone != $user->phone){
-                $validator = Validator::make($request->all(), [
-                    'phone' => 'required|numeric|digits:8|unique:users'
-                ]);
-                if($validator->fails()){
+                if($error = validate($request->all(), ["phone" => "required|numeric|digits:8|unique:users"])){
                     return response()->json([
-                        'status' => 0,
-                        'message' => $validator->errors()->first()
+                        'status' => "Failed",
+                        'message' => 'Validation error',
+                        'errors' => $error
                     ]);
                 }
                 $user->phone = $request->phone;
@@ -643,17 +625,16 @@ class PassengerController extends Controller
 
         if($request->password){
             // check if password is strong
-            $validator = Validator::make($request->all(), [
-                'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/' // at least 8 characters, 1 uppercase, 1 lowercase, 1 number
-            ]);
-            if($validator->fails()){
+            if($error = validate($request->all(), ["password" => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'])){
                 return response()->json([
-                    'status' => 0,
-                    'message' => $validator->errors()->first()
+                    'status' => "Failed",
+                    'message' => 'Validation error',
+                    'errors' => $error
                 ]);
             }
-            $user->password = bcrypt($request->password);
+            $user->password == bcrypt($request->password);
         }
+
 
         if($request->image){
             // Convert the base64 image to a image file and save it

@@ -18,7 +18,7 @@ class VanController extends Controller
     // Api to signup van driver
     public function vanSignUp(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'email'=>'required|email:rfc,dns|unique:users',
             'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', // at least 1 uppercase, 1 lowercase, 1 number
             'phone' => 'required|min:8|max:8|unique:users',
@@ -31,13 +31,13 @@ class VanController extends Controller
             'make' => 'required',
             'model' => 'required',
             'year' => 'required',
-        ]);
+        ];
 
-        if($validator->fails()){
+        if($error = validate($request->all(), $rules)){
             return response()->json([
                 "status" => "Failed",
-                "message" =>"Validation Failed",
-                "errors" => $validator->errors()
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -102,17 +102,17 @@ class VanController extends Controller
 
     public function addOneTimeRoute(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'location' => 'required',
             'date_time' => 'required',
             'user_data' => 'required',
-        ]);
+        ];
 
-        if($validator->fails()){
+        if($error = validate($request->all(), $rules)){
             return response()->json([
                 "status" => "Failed",
-                "message" =>"Validation Failed",
-                "errors" => $validator->errors()
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -150,15 +150,11 @@ class VanController extends Controller
     // Get one time routes
     public function getOneTimeRoutes(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_data' => 'required',
-        ]);
-
-        if($validator->fails()){
+        if($error = validate($request->all(), ['user_data' => 'required'])){
             return response()->json([
                 "status" => "Failed",
-                "message" =>"Validation Failed",
-                "errors" => $validator->errors()
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -193,14 +189,11 @@ class VanController extends Controller
 
     // Get one time route by id
     public function getOneTimeRouteById(Request $request){
-        $validator = Validator::make($request->all(), [
-            'user_data' => 'required',
-        ]);
-
-        if(!$request->route_id){
+        if($error = validate($request->all(), ['user_data' => 'required'])){
             return response()->json([
                 "status" => "Failed",
-                "message" =>"Route id is required",
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -236,17 +229,17 @@ class VanController extends Controller
     // Add a recurring route
     public function addRecurringRoute(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
+        $rules = [
             'name' => 'required',
             'user_data' => 'required',
             'routes' => 'required',
-        ]);
+        ];
 
-        if($validator->fails()){
+        if($error = validate($request->all(), $rules)){
             return response()->json([
                 "status" => "Failed",
-                "message" =>"Validation Failed",
-                "errors" => $validator->errors()
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -306,15 +299,11 @@ class VanController extends Controller
     // Api to get all recurring routes
     public function getRecurringRoutes(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_data' => 'required',
-        ]);
-
-        if($validator->fails()){
+        if($error = validate($request->all(), ['user_data' => 'required'])){
             return response()->json([
                 "status" => "Failed",
-                "message" =>"Validation Failed",
-                "errors" => $validator->errors()
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -359,14 +348,11 @@ class VanController extends Controller
     // Api to get one recurring route by id
     public function getRecurringRouteById(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_data' => 'required',
-        ]);
-
-        if(!$request->presaved_route_id){
+        if($error = validate($request->all(), ['user_data' => 'required'])){
             return response()->json([
                 "status" => "Failed",
-                "message" =>"Presaved route id is required",
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -420,15 +406,11 @@ class VanController extends Controller
     // Api to set route's arrival status to 1 (arrived)
     public function arriveAtRoute(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_data' => 'required',
-        ]);
-
-        // Check if route id is sent
-        if(!$request->route_id){
+        if($error = validate($request->all(), ['user_data' => 'required'])){
             return response()->json([
                 "status" => "Failed",
-                "message" =>"Route id is required",
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -472,14 +454,11 @@ class VanController extends Controller
     // Api to set route's arrival status to 2 (departed)
     public function departureFromRoute(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_data' => 'required',
-        ]);
-
-        if(!$request->route_id){
+        if($error = validate($request->all(), ['user_data' => 'required'])){
             return response()->json([
                 "status" => "Failed",
-                "message" =>"Route id is required",
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -523,14 +502,11 @@ class VanController extends Controller
     // api to update van driver's profile
     public function updateProfile(Request $request){
         // Validate the request
-        $validator = Validator::make($request->all(), [
-            'user_data' => 'required',
-        ]);
-        if($validator->fails()){
+        if($error = validate($request->all(), ['user_data' => 'required'])){
             return response()->json([
                 "status" => "Failed",
-                "message" =>"Validation Failed",
-                "errors" => $validator->errors()
+                "message" => "Validation Failed",
+                "errors" => $error
             ]);
         }
 
@@ -545,13 +521,11 @@ class VanController extends Controller
 
         if($request->email){
             if($request->email != $user->email){
-                $validator = Validator::make($request->all(), [
-                    'email' => 'required|email:rfc,dns|unique:users' // check if email is unique and valid
-                ]);
-                if($validator->fails()){
+                if($error = validate($request->all(), ["email" => "required|email:rfc,dns|unique:users"])){
                     return response()->json([
-                        'status' => 0,
-                        'message' => $validator->errors()->first()
+                        'status' => "Failed",
+                        'message' => 'Validation error',
+                        'errors' => $error
                     ]);
                 }
                 $user->email = $request->email;
@@ -561,13 +535,11 @@ class VanController extends Controller
         if($request->phone){
             // check if phone number is unique and 8 characters long
             if($request->phone != $user->phone){
-                $validator = Validator::make($request->all(), [
-                    'phone' => 'required|numeric|digits:8|unique:users'
-                ]);
-                if($validator->fails()){
+                if($error = validate($request->all(), ["phone" => "required|numeric|digits:8|unique:users"])){
                     return response()->json([
-                        'status' => 0,
-                        'message' => $validator->errors()->first()
+                        'status' => "Failed",
+                        'message' => 'Validation error',
+                        'errors' => $error
                     ]);
                 }
                 $user->phone = $request->phone;
@@ -576,17 +548,16 @@ class VanController extends Controller
 
         if($request->password){
             // check if password is strong
-            $validator = Validator::make($request->all(), [
-                'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/' // at least 1 uppercase, 1 lowercase, 1 number
-            ]);
-            if($validator->fails()){
+            if($error = validate($request->all(), ["password" => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/'])){
                 return response()->json([
-                    'status' => 0,
-                    'message' => $validator->errors()->first()
+                    'status' => "Failed",
+                    'message' => 'Validation error',
+                    'errors' => $error
                 ]);
             }
             $user->password == bcrypt($request->password);
         }
+
 
         if($request->image){
             $img = $request->image;

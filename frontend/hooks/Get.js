@@ -1,5 +1,5 @@
 import axios from 'axios';
-let base_url = "http://127.0.0.1:3000/"
+let base_url = "http://192.168.1.2:8000/api/"
 const Get = async (api_url, api_token = null) => {
     try {
         return await axios.get(
@@ -7,7 +7,7 @@ const Get = async (api_url, api_token = null) => {
             {
                 headers: {
                     'Authorization': api_token,
-                    "Content-Type": "application/x-www-form-urlencoded"
+                    "Content-Type": "application/x-www-form-urlencoded", Accept: "application/json"
                 }
             }
         );

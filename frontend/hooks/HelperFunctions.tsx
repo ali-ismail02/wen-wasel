@@ -1,23 +1,24 @@
-// Calculate distance between two geo points
-export const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number, unit: string = "m") => {
-    const R = 6371e3; // metres
-    const φ1 = lat1 * Math.PI/180; // φ, λ in radians
-    const φ2 = lat2 * Math.PI/180;
-    const Δφ = (lat2-lat1) * Math.PI/180;
-    const Δλ = (lon2-lon1) * Math.PI/180;
-
-    const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-            Math.cos(φ1) * Math.cos(φ2) *
-            Math.sin(Δλ/2) * Math.sin(Δλ/2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
-    const d = R * c; // in metres
-    if (unit === 'km') {
-        return d / 1000;
+// Calculate distance between two geo points in many units 
+const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number, unit: string) => {
+    if ((lat1 === lat2) && (lon1 === lon2)) {
+        return 0;
     }
-    if (unit === 'mi') {
-        return d / 1609.344;
-    } 
-
-    return d;
+    else {
+        const radlat1 = Math.PI * lat1/180;
+        const radlat2 = Math.PI * lat2/180;
+        const theta = lon1-lon2;
+        const radtheta = Math.PI * theta/180;
+        let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+        if (dist > 1) {
+            dist = 1;
+        }
+        dist = Math.acos(dist);
+        dist = dist * 180/Math.PI;
+        dist = dist * 60 * 1.1515;
+        if (unit === "K") { dist = dist * 1.609344 }
+        if (unit === "N") { dist = dist * 0.8684 }
+        return dist;
+    }
 }
+
+export default {calculateDistance}; 

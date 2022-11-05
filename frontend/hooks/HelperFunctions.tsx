@@ -21,4 +21,40 @@ const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: numbe
     }
 }
 
-export default {calculateDistance}; 
+// Function to check if trip info is within 2 location points
+const checkTripInfo = (trip_start_location: string, trip_end_location: string, start_location: string, end_location: string) => {
+    const start_location_array = start_location.split(",");
+    const end_location_array = end_location.split(",");
+    const trip_info_start_location_array = trip_start_location.split(",");
+    const trip_info_end_location_array = trip_end_location.split(",");
+
+    const start_lat = parseFloat(start_location_array[0]);
+    const start_lng = parseFloat(start_location_array[1]);
+    const end_lat = parseFloat(end_location_array[0]);
+    const end_lng = parseFloat(end_location_array[1]);
+    const trip_info_start_lat = parseFloat(trip_info_start_location_array[0]);
+    const trip_info_start_lng = parseFloat(trip_info_start_location_array[1]);
+    const trip_info_end_lat = parseFloat(trip_info_end_location_array[0]);
+    const trip_info_end_lng = parseFloat(trip_info_end_location_array[1]);
+
+    // get center of 2 location points
+    const center_lat = (start_lat + end_lat) / 2;
+    const center_lng = (start_lng + end_lng) / 2;
+
+    let distance = calculateDistance(center_lat, center_lng, trip_info_start_lat, trip_info_start_lng, "K");
+    // Check if the trip info is within 2 the location points with 1 km radius added
+    if(distance < calculateDistance(center_lat, center_lng, start_lat, start_lng, "K") + 1){
+        distance = calculateDistance(center_lat, center_lng, trip_info_end_lat, trip_info_end_lng, "K");
+        if(distance < calculateDistance(center_lat, center_lng, end_lat, end_lng, "K") + 1 ){
+            distance = calculateDistance(end_lat, end_lng, trip_info_end_lat, trip_info_end_lng, "K");
+            // Check if the trip info end location is closer to the end location than the trip info start location
+            if(distance < calculateDistance(end_lat, end_lng, trip_info_start_lat, trip_info_start_lng, "K")){
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+
+export default {calculateDistance, checkTripInfo}; 

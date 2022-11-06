@@ -1,61 +1,133 @@
-import React, { useEffect } from "react";
-import Get from "./Get";
 import axios from "axios";
-import checkPoint from "./HelperFunctions";
-import calculateDistance from "./HelperFunctions";
-import checkTripInfo from "./HelperFunctions";
-import {Google_API_Key} from "../GoogleAPIKey";
+import React, { useEffect } from "react";
 import Graph from "../classes/Graph";
+import { Google_API_Key } from "../GoogleAPIKey";
+import Get from "./Get";
+import calculateDistance from "./HelperFunctions";
 
-const getDirections = async (start_location, end_location) => {
-    const config = {
-        method: 'get',
-        url: `https://maps.googleapis.com/maps/api/directions/json?origin=${start_location}&destination=${end_location}&mod=${trip_type}&key=${Google_API_Key}`,
-        headers: { }
-      };
-      
-      axios(config)
-      .then(function (response) {
-        return response.data;
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+const getDirections = async (start_location, end_location, trip_type = "driving") => {
+  const config = {
+    method: 'get',
+    url: `https://maps.googleapis.com/maps/api/directions/json?origin=${start_location}&destination=${end_location}&mode=${trip_type}&key=${Google_API_Key}`,
+    headers: {}
+  };
+
+  return await axios.get(config.url, config.headers)
+}
+
+const buildGraph = async (start_location, end_location, trip_type) => {
+  // get the routes from the backend
+  const jwt = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2Njc2NjUyMTIsImV4cCI6MTY2ODI3MDAxMiwibmJmIjoxNjY3NjY1MjEyLCJqdGkiOiJXOXFnNmRSajJoZFBLd0xtIiwic3ViIjoiMTUiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.i0O4BNcw8weGbhw81RDanJcpvXsde1xa1A2_uSsLtX8"
+  const response = await Get("user/get-possible-routes/" + start_location + "/" + end_location, jwt);
+  let graph = new Graph();
+  if (trip_type == 1) {
+    // add start location to graph as a node
+    const start = {
+      name: "start_location",
+      location: start_location,
+    }
+    graph.addVertex(start);
+    // add end location to graph as a node
+    const end = {
+      name: "end_location",
+      location: end_location,
+    }
+    graph.addVertex(end);
+    const directions = await getDirections(start_location, end_location, "walking");
+    const time = directions.data.routes[0].legs[0].duration.value;
+
+    // add edge between start and end
+    graph.addEdge(start, end, time);
+    // add all the possible routes to the graph
+    let service = response.data.trips.service
+    for(let i = 0; i < service.length; i++) {
+      const obj_start = {
+        name: service[i].id + "_start",
+        element: service[i],
+        location: start_location,
+      }
+      const obj_end = {
+        name: service[i].id + "_end",
+        element: service[i],
+        location: end_location,
+      }
+      graph.addVertex(obj_start);
+      graph.addVertex(obj_end);
+      let direction = await getDirections(service[i].start_location, service[i].end_location, "driving");
+      let time = direction.data.routes[0].legs[0].duration.value;
+      // add edge to graph with weight of time
+      graph.addEdge(obj_start, obj_end, time);
+      // add walking edge to graph from start to start of service
+      direction = await getDirections(start_location, service[i].start_location, "walking");
+      time = direction.data.routes[0].legs[0].duration.value;
+      graph.addEdge(start, obj_start, time);
+      // add walking edge to graph from end of service to end
+      direction = await getDirections(service[i].end_location, end_location, "walking");
+      time = direction.data.routes[0].legs[0].duration.value;
+      graph.addEdge(obj_end, end, time);
+    };
+    // add edge from end of service to end of other service if the first end is before the second end
+    for(let i = 0; i < service.length; i++){
+      for(let j = 0; j < service.length; j++){
+        if (Math.abs(calculateDistance(service[j].end_location, end_location)) < Math.abs(calculateDistance(service[i].end_location, end_location))) {
+          // find the nodes
+          let node1 = null;
+          let node2 = null;
+          graph.nodes.forEach((node) => {
+            if (node.name == service[i].id + "_end") {
+              node1 = node;
+            }
+            if (node.name == service[j].id + "_start") {
+              node2 = node;
+            }
+          });
+          const direction = await getDirections(service[i].end_location, service[j].end_location, "walking");
+          const time = direction.data.routes[0].legs[0].duration.value;
+          graph.addEdge(node1, node2, time);
+        }
+      }
+    }
+    console.log(graph);
+    return graph;
+  }
+  if (trip_type == 2) {
+  }
+  if (trip_type == 3) {
+  }
+  return null;
 }
 
 // function to get routes from the backend
 const getRoutes = async (start_location, end_location, trip_type) => {
-    const [res, setResponse] = React.useState(null);
-    const [x, setX] = React.useState(null);
-    const [trips, setTrips] = React.useState([]);
-    // get the routes from the backend
-    const jwt = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2Njc2NjUyMTIsImV4cCI6MTY2ODI3MDAxMiwibmJmIjoxNjY3NjY1MjEyLCJqdGkiOiJXOXFnNmRSajJoZFBLd0xtIiwic3ViIjoiMTUiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.i0O4BNcw8weGbhw81RDanJcpvXsde1xa1A2_uSsLtX8"
-    useEffect(() => {
-        const getTrips = async () => {
-            const response = await Get("user/get-possible-routes/" + start_location + "/" + end_location, jwt);
-            setResponse(response);
-        }
-        getTrips();
-    }, [res===null]);
-    
-    if(res == null) {
-        return null;
-    }
-    let graph = new Graph();
-
-    if(trip_type == 1){
-      res.data.trips.service.foreach((element) => {
-        
-      })
-    }
-    if(trip_type == 2){
-    }
-    if(trip_type == 3){
-    }
-
-    console.log(min_trip)
-    return min_trip
+  // make buildgraph function promise
+  new Promise((resolve, reject) => {
+    resolve(buildGraph(start_location, end_location, trip_type));
+  }).then((graph) => {
+    let start= null;
+    let end = null;
+    graph.nodes.forEach((node) => {
+      if (node.name == "start_location") {
+        start = node;
+      }
+      if (node.name == "end_location") {
+        end = node;
+      }
+    })
+    console.log(graph);
+    // set 1 second delay 
+    debugger;
+    console.log(end)
+    const paths = graph.DFS(start, end);
+    return paths;
+  })
 
 }
+
+
+const sum = () => {
+  // return the sum of the first 100 integers
+
+}
+
 
 export default getRoutes;

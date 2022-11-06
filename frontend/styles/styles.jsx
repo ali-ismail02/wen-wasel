@@ -13,7 +13,7 @@ export default StyleSheet.create({
         },
         map: {
           width: ScreenWidth,
-          height: ScreenHeight,
+          height: "100%",
         },
         searchContainer: {
           position: 'absolute',
@@ -34,7 +34,7 @@ export default StyleSheet.create({
         },
         center: {
           position: 'absolute',
-          bottom: 150,
+          bottom: 20,
           right: 20,
           width: 50,
           height: 50,

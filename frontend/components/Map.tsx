@@ -1,7 +1,11 @@
 import * as Location from 'expo-location';
 import React, { useEffect, useState } from "react";
+<<<<<<< Updated upstream
 import { Dimensions, SafeAreaView, View, Image, TouchableNativeFeedback, TouchableHighlight, BackHandler } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
+=======
+import { BackHandler, Dimensions, Image, SafeAreaView, TouchableHighlight, View } from "react-native";
+>>>>>>> Stashed changes
 import MapView, { LatLng, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import styles from "../styles/styles";
 import Search from "./Search";
@@ -58,11 +62,19 @@ const Map = () => {
         setSearchDisplay({ display: 'flex' });
         return true;
     }
+<<<<<<< Updated upstream
     
     const backHandler = BackHandler.addEventListener(
         "hardwareBackPress",
         backPressed
       );
+=======
+
+    const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backPressed
+    );
+>>>>>>> Stashed changes
 
     const onPlaceSelect = (details) => {
         const set = setDestination;
@@ -90,14 +102,23 @@ const Map = () => {
                     }}
                     ref={mapRef} style={styles.map} provider={PROVIDER_GOOGLE} initialRegion={INITIAL_POSITION}>
                     {destination && <Marker coordinate={destination} />}
+<<<<<<< Updated upstream
                 </MapView> 
+=======
+                </MapView>
+>>>>>>> Stashed changes
                 <View style={[styles.searchContainer, searchDisplay]}>
                     <Search onPlaceSelect={(details) => onPlaceSelect(details)} />
                 </View>
                 <TouchableHighlight style={styles.center} onPress={async () => {
                     moveTo(location?.coords);
+<<<<<<< Updated upstream
                     setCenterMap(true)}
                     }>
+=======
+                    setCenterMap(true)
+                }}>
+>>>>>>> Stashed changes
                     <Image source={require('../assets/images/center.jpg')} style={styles.centerImage} />
                 </TouchableHighlight>
             </View>

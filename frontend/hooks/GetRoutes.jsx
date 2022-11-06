@@ -5,6 +5,7 @@ import checkPoint from "./HelperFunctions";
 import calculateDistance from "./HelperFunctions";
 import checkTripInfo from "./HelperFunctions";
 import {Google_API_Key} from "../GoogleAPIKey";
+import Graph from "../classes/Graph";
 
 const getDirections = async (start_location, end_location) => {
     const config = {
@@ -40,9 +41,12 @@ const getRoutes = async (start_location, end_location, trip_type) => {
     if(res == null) {
         return null;
     }
-    let flag = 1
+    let graph = new Graph();
 
     if(trip_type == 1){
+      res.data.trips.service.foreach((element) => {
+        
+      })
     }
     if(trip_type == 2){
     }

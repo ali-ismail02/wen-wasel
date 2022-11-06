@@ -1,5 +1,5 @@
 import axios from 'axios';
-let base_url = "http://192.168.1.2:8000/api/"
+let base_url = "http://192.168.1.50:8000/api/"
 const Delete = async (api_url, api_data, api_token = null) => {
     try {
         return await axios.delete(

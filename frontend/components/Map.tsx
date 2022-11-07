@@ -1,10 +1,11 @@
 import * as Location from 'expo-location';
 import React, { useEffect, useState } from "react";
-import { Dimensions, SafeAreaView, View, Image, TouchableNativeFeedback, TouchableHighlight, BackHandler } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { BackHandler, Dimensions, Image, SafeAreaView, TouchableHighlight, View } from "react-native";
 import MapView, { LatLng, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import styles from "../styles/styles";
 import Search from "./Search";
+import CustomSlider from './CustomSlider';
+import CustomMap from './CustomMap';
 
 const Map = () => {
     const { width, height } = Dimensions.get('window');
@@ -17,6 +18,7 @@ const Map = () => {
     const [location, setLocation] = useState<Location.LocationObject | null>();
     const [centerMap, setCenterMap] = useState(true);
     const [searchDisplay, setSearchDisplay] = useState({})
+    const [sliderValue, setSliderValue] = useState(1);
 
     useEffect(() => {
         const getLocation = async () => {
@@ -79,18 +81,7 @@ const Map = () => {
     return (
         <SafeAreaView>
             <View>
-                <MapView
-                    showsUserLocation={true}
-                    onPanDrag={() => setCenterMap(false)}
-                    followsUserLocation={centerMap}
-                    showsMyLocationButton={false}
-                    userLocationUpdateInterval={1000}
-                    onUserLocationChange={(coordinate) => {
-                        centerMap === true && moveTo(coordinate.nativeEvent.coordinate);
-                    }}
-                    ref={mapRef} style={styles.map} provider={PROVIDER_GOOGLE} initialRegion={INITIAL_POSITION}>
-                    {destination && <Marker coordinate={destination} />}
-                </MapView> 
+                <CustomMap setCenterMap = {setCenterMap} centerMap = {centerMap} mapRef = {mapRef} destination = {destination} moveTo = {moveTo} INITIAL_POSITION = {INITIAL_POSITION}/>
                 <View style={[styles.searchContainer, searchDisplay]}>
                     <Search onPlaceSelect={(details) => onPlaceSelect(details)} />
                 </View>
@@ -100,6 +91,7 @@ const Map = () => {
                     }>
                     <Image source={require('../assets/images/center.jpg')} style={styles.centerImage} />
                 </TouchableHighlight>
+                <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />
             </View>
         </SafeAreaView>
     );

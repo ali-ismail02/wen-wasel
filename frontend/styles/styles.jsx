@@ -48,4 +48,19 @@ export default StyleSheet.create({
           height: 50,
           borderRadius: 50,
         },
+        sliderContainer: {
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          padding: 20,
+          width: "100%",
+          height: 100,
+          elevation: 5,
+          zIndex: 100,
+          backgroundColor: "white",
+          display: "flex",
+          alignItems: "stretch",
+          justifyContent: "center",
+        },
+
       });

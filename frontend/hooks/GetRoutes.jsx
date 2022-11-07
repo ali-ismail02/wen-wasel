@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect } from "react";
 import Graph from "../classes/Graph";
-import { Google_API_Key } from "../GoogleAPIKey";
+import { Google_API_Key } from "../constants/GoogleAPIKey";
 import Get from "./Get";
 import calculateDistance from "./HelperFunctions";
 

@@ -1,8 +1,8 @@
-
+import INITIAL_POSITION from '../constants/InitialPosition';
 import MapView, { LatLng, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import styles from '../styles/styles';
 
-const CustomMap = ({setCenterMap, centerMap, mapRef, destination, moveTo, INITIAL_POSITION}) => {
+const CustomMap = ({setCenterMap, centerMap, mapRef, destination, moveTo}) => {
     return (
 
         <MapView

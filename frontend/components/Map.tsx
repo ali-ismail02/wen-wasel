@@ -1,18 +1,13 @@
 import * as Location from 'expo-location';
 import React, { useEffect, useState } from "react";
 import { BackHandler, Dimensions, Image, SafeAreaView, TouchableHighlight, View } from "react-native";
-import MapView, { LatLng, Marker, PROVIDER_GOOGLE } from 'react-native-maps';
+import MapView, { LatLng } from 'react-native-maps';
 import styles from "../styles/styles";
-import Search from "./Search";
-import CustomSlider from './CustomSlider';
 import CustomMap from './CustomMap';
+import CustomSlider from './CustomSlider';
+import Search from "./Search";
 
 const Map = () => {
-    const { width, height } = Dimensions.get('window');
-    const ASPECT_RATIO = width / height;
-    const LATITUDE_DELTA = 0.0922;
-    const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-    const INITIAL_POSITION = { latitude: 33.872951, longitude: 35.514698, latitudeDelta: LATITUDE_DELTA, longitudeDelta: LONGITUDE_DELTA };
     const [destination, setDestination] = useState<LatLng | null>();
     const mapRef = React.useRef<MapView>(null);
     const [location, setLocation] = useState<Location.LocationObject | null>();
@@ -33,11 +28,6 @@ const Map = () => {
         }
         getLocation();
     }, []);
-
-    const getUserLocation = async () => {
-        let location = await Location.getCurrentPositionAsync({});
-        setLocation(location);
-    }
 
     const moveTo = async (position: LatLng) => {
         const camera = await mapRef.current?.getCamera();
@@ -81,7 +71,7 @@ const Map = () => {
     return (
         <SafeAreaView>
             <View>
-                <CustomMap setCenterMap = {setCenterMap} centerMap = {centerMap} mapRef = {mapRef} destination = {destination} moveTo = {moveTo} INITIAL_POSITION = {INITIAL_POSITION}/>
+                <CustomMap setCenterMap = {setCenterMap} centerMap = {centerMap} mapRef = {mapRef} destination = {destination} moveTo = {moveTo}/>
                 <View style={[styles.searchContainer, searchDisplay]}>
                     <Search onPlaceSelect={(details) => onPlaceSelect(details)} />
                 </View>

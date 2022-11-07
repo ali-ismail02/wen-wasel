@@ -3,9 +3,9 @@ import {Slider} from '@miblanchard/react-native-slider';
 import {AppRegistry, StyleSheet, View, Text} from 'react-native';
 import styles from '../styles/styles';
 
-const CustomSlider = ({sliderValue, setSliderValue}) => {
+const CustomSlider = ({sliderValue, setSliderValue, style}) => {
     return (
-        <View style={[styles.sliderContainer]}>
+        <View style={[styles.sliderContainer, style]}>
             <Slider
                 minimumValue={1}
                 maximumValue={3}

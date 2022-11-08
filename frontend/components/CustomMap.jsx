@@ -1,7 +1,7 @@
 import INITIAL_POSITION from '../constants/InitialPosition';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import styles from '../styles/styles';
-import {moveTo} from '../hooks/CamerChange';
+import {moveTo} from '../hooks/CameraChange';
 
 const CustomMap = ({setCenterMap, centerMap, mapRef, destination}) => {
     return (

@@ -9,7 +9,7 @@ const moveTo = async (position, mapRef) => {
 
 const centerScreen = (origin, destination, mapRef) => {
     mapRef.current?.fitToCoordinates([origin, destination], {
-        edgePadding: { top: 20, right: 20, bottom: 20, left: 20 },
+        edgePadding: { top: 20, right: 20, bottom: 90, left: 20 },
         animated: true,
     });
 }

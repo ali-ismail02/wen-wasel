@@ -8,6 +8,7 @@ import CustomSlider from './CustomSlider';
 import styles from "../styles/styles";
 import CustomMap from './CustomMap';
 import Search from "./Search";
+import NextButton from "./NextButton";
 
 const Map = () => {
     const [location, setLocation] = useState<Location.LocationObject | null>();
@@ -69,6 +70,7 @@ const Map = () => {
                     </View>}
                     {centerMapDisplay == true && <CenterMapButton setCenterMap={setCenterMap} moveTo={moveTo} mapRef={mapRef} location={location}/>}
                     {sliderDisplay == true && <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />}
+                    {sliderDisplay == true && <NextButton onPress={() => {}}/>}
                 </View>
         </SafeAreaView>
     );

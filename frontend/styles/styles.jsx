@@ -68,5 +68,25 @@ export default StyleSheet.create({
     backgroundColor: "#DDDDDD",
     borderRadius: 20,
   },
+  nextButton: {
+    position: 'absolute',
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    bottom: 90,
+    right: 20,
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    elevation: 5,
+    zIndex: 1000,
+    backgroundColor: "white",
+  },
+  nextButtonImage: {
+    width: 40,
+    height: 40,
+    borderRadius: 40,
+  },
+
 
 });

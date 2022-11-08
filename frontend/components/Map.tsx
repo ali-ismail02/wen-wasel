@@ -19,7 +19,6 @@ const Map = () => {
     const [centerMap, setCenterMap] = useState(true);
     const mapRef = React.useRef<MapView>(null);
 
-
     useEffect(() => {
         const getLocation = async () => {
             let { status } = await Location.requestForegroundPermissionsAsync();

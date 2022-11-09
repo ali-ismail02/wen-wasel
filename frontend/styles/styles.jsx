@@ -87,6 +87,15 @@ export default StyleSheet.create({
     height: 40,
     borderRadius: 40,
   },
+  button: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 20,
+  },
 
 
 });

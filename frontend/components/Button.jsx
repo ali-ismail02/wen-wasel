@@ -1,5 +1,5 @@
 import styles from '../styles/styles';
-import { Text, TouchableHighlight } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 
 const Button = ({onPress, text, color, height = 50, width}) => {
     if(color == "#FF9E0D"){
@@ -22,9 +22,9 @@ const Button = ({onPress, text, color, height = 50, width}) => {
     }
 
     return (
-    <TouchableHighlight style={buttonStyle} onPress={onPress}>
+    <TouchableOpacity style={buttonStyle} onPress={onPress}>
         <Text style={textStyle}>{text}</Text>
-    </TouchableHighlight>
+    </TouchableOpacity>
     );
 };
 

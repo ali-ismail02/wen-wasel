@@ -14,11 +14,18 @@ const getRoutes = async (start_location, end_location, trip_type) => {
         end = node;
       }
     })
-    console.log(graph);
-    // set 1 second delay 
-    debugger;
-    console.log(end)
     const paths = graph.DFS(start, end);
+    // sort paths by total time
+    paths.forEach((path) => {
+      let time = 0;
+      path.forEach((node) => {
+        time += node.weight;
+      })
+      path.time = time;
+    })
+    paths.sort((a, b) => {
+      return a.time - b.time;
+    })
     return paths;
   })
 }

@@ -13,12 +13,12 @@ import Button from "./Button";
 
 const Map = () => {
     const [location, setLocation] = useState<Location.LocationObject | null>();
-    const [searchDirsplay, setSearchDisplay] = useState<boolean>(true);
-    const [sliderDisplay, setSliderDisplay] = useState<boolean>(false);
-    const [centerMapDisplay, setCenterMapDisplay] = useState<boolean>(true);
+    const [allUserStates, setAllUserStates] = useState<string[]>(["none"]);
     const [destination, setDestination] = useState<LatLng | null>();
+    const [userState, setUserState] = useState<string>("none");
     const [sliderValue, setSliderValue] = useState(1);
     const [centerMap, setCenterMap] = useState(true);
+    const [paths, setPaths] = useState(undefined);
     const mapRef = React.useRef<MapView>(null);
 
     useEffect(() => {
@@ -35,11 +35,12 @@ const Map = () => {
     }, []);
 
     const backPressed = () => {
-        setDestination(null);
-        setCenterMap(true);
-        setSearchDisplay(true);
-        setSliderDisplay(false);
-        setCenterMapDisplay(true);
+        if (userState === "none") {
+            BackHandler.exitApp();
+        } else {
+            setUserState(allUserStates[allUserStates.length - 2]);
+            setAllUserStates(allUserStates.slice(0, allUserStates.length - 1));
+        }
         return true;
     }
 
@@ -57,29 +58,30 @@ const Map = () => {
         set(position);
         centerScreen(location.coords, position, mapRef);
         setCenterMap(false);
-        setSearchDisplay(false);
-        setSliderDisplay(true);
-        setCenterMapDisplay(false);
+        setAllUserStates([...allUserStates, "searched"]);
+        setUserState("searched");
     }
 
-    const rideSelect = () => {
-        getRoutes()
+    const rideSelect = async () => {
+        setPaths(await getRoutes(location, destination, sliderValue))
+        setAllUserStates([...allUserStates, "rideSelected"]);
+        setUserState("rideSelected");
     }
 
     return (
         <SafeAreaView>
-                <View>
-                    <CustomMap setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} />
-                    {centerMapDisplay == true && <View style={styles.searchContainer}>
-                        <Search onPlaceSelect={(details) => onPlaceSelect(details)} />
-                    </View>}
-                    {centerMapDisplay == true && <CenterMapButton setCenterMap={setCenterMap} moveTo={moveTo} mapRef={mapRef} location={location}/>}
-                    {sliderDisplay == true && <View style={styles.bottomPopupContainer}>
-                        <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />
-                        <Button text="Next" onPress={() => rideSelect()} width = {"100%"} color={"#FF9E0D"} />
-                        </View>
-                        }
+            <View>
+                <CustomMap setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} />
+                {userState == "none" && <View style={styles.searchContainer}>
+                    <Search onPlaceSelect={(details) => onPlaceSelect(details)} />
+                </View>}
+                {userState == "none" && <CenterMapButton setCenterMap={setCenterMap} moveTo={moveTo} mapRef={mapRef} location={location} />}
+                <View style={styles.bottomPopupContainer}>
+                {userState == "searched" && <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />}
+                {userState == "searched" && <Button text="Next" onPress={() => rideSelect()} width={"100%"} color={"#FF9E0D"} />}
+                {userState == "rideSelected" && paths != undefined && <></>}
                 </View>
+            </View>
         </SafeAreaView>
     );
 };

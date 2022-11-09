@@ -33,11 +33,13 @@ const buildGraph = async (start_location, end_location, trip_type) => {
                 name: service[i].id + "_start",
                 element: service[i],
                 location: start_location,
+                type: "service",
             }
             const obj_end = {
                 name: service[i].id + "_end",
                 element: service[i],
                 location: end_location,
+                type: "service",
             }
             graph.addVertex(obj_start);
             graph.addVertex(obj_end);

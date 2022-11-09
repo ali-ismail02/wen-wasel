@@ -61,6 +61,7 @@ export default StyleSheet.create({
     display: "flex",
     alignItems: "stretch",
     justifyContent: "center",
+    maxHeight : ScreenHeight * 0.4,
   },
   sliderMark: {
     width: 20,

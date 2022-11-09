@@ -48,13 +48,13 @@ export default StyleSheet.create({
     height: 50,
     borderRadius: 50,
   },
-  sliderContainer: {
+  bottomPopupContainer: {
     position: 'absolute',
     bottom: 0,
     left: 0,
     padding: 20,
     width: ScreenWidth,
-    height: 70,
+    height: "auto",
     elevation: 5,
     zIndex: 100,
     backgroundColor: "white",

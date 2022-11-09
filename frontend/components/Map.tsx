@@ -10,6 +10,7 @@ import CustomMap from './CustomMap';
 import Search from "./Search";
 import NextButton from "./NextButton";
 import getRoutes from "../hooks/GetRoutes";
+import Button from "./Button";
 
 const Map = () => {
     const [location, setLocation] = useState<Location.LocationObject | null>();
@@ -62,7 +63,7 @@ const Map = () => {
         setCenterMapDisplay(false);
     }
 
-    const onRideSelect = (value) => {
+    const rideSelect = () => {
         getRoutes()
     }
 
@@ -74,8 +75,11 @@ const Map = () => {
                         <Search onPlaceSelect={(details) => onPlaceSelect(details)} />
                     </View>}
                     {centerMapDisplay == true && <CenterMapButton setCenterMap={setCenterMap} moveTo={moveTo} mapRef={mapRef} location={location}/>}
-                    {sliderDisplay == true && <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />}
-                    {sliderDisplay == true && <NextButton onPress={() => {}}/>}
+                    {sliderDisplay == true && <View style={styles.bottomPopupContainer}>
+                        <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />
+                        <Button text="Next" onPress={() => rideSelect()} width = {"100%"} color={"#FF9E0D"} />
+                        </View>
+                        }
                 </View>
         </SafeAreaView>
     );

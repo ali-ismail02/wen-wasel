@@ -5,7 +5,7 @@ import styles from '../styles/styles';
 
 const CustomSlider = ({sliderValue, setSliderValue}) => {
     return (
-        <View style={styles.sliderContainer}>
+        <>
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <View style={{width:50}}>
                     <Text style={{textAlign: 'left'}}>Service</Text>
@@ -32,7 +32,7 @@ const CustomSlider = ({sliderValue, setSliderValue}) => {
                 thumbTouchSize={{width: 50, height: 50}}
                 step={1}
             />
-        </View>
+        </>
     );
 };
 

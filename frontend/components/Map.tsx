@@ -9,6 +9,7 @@ import styles from "../styles/styles";
 import CustomMap from './CustomMap';
 import Search from "./Search";
 import NextButton from "./NextButton";
+import getRoutes from "../hooks/GetRoutes";
 
 const Map = () => {
     const [location, setLocation] = useState<Location.LocationObject | null>();
@@ -59,6 +60,10 @@ const Map = () => {
         setSearchDisplay(false);
         setSliderDisplay(true);
         setCenterMapDisplay(false);
+    }
+
+    const onRideSelect = (value) => {
+        getRoutes()
     }
 
     return (

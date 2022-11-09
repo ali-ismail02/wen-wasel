@@ -77,7 +77,6 @@ const buildGraph = async (start_location, end_location, trip_type) => {
                 }
             }
         }
-        console.log(graph);
         return graph;
     }
     if (trip_type == 2) {

@@ -97,6 +97,42 @@ export default StyleSheet.create({
     color: "white",
     fontSize: 20,
   },
-
-
+  routeOption: {
+    width: "100%",
+    padding: 10,
+    display: "flex",
+  },
+  routeOptionInformation: {
+    display: "flex",
+    alignItems: "flex-start",
+    paddingVertical: 20,
+    paddingHorizontal: 10,
+  },
+  routeOptionTrips: {
+    width: "70%",
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "flex-start",
+  },
+  routeOptionTripText: {
+    fontSize: 20,
+    fontWeight: "bold",
+    paddingRight: 10,
+    paddingLeft: 5,
+  },
+  scrollViewBottom: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    width: ScreenWidth,
+    maxHeight: ScreenHeight * 0.4,
+    backgroundColor: "white",
+    zIndex: 1000,
+  },
+  flex: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  }
 });

@@ -16,7 +16,7 @@ const CustomMap = ({setCenterMap, centerMap, mapRef, destination}) => {
                 centerMap === true && moveTo(coordinate.nativeEvent.coordinate, mapRef);
             }}
             ref={mapRef} style={styles.map} provider={PROVIDER_GOOGLE} initialRegion={INITIAL_POSITION}>
-            {destination && <Marker coordinate={destination} />}
+            {destination != null && <Marker coordinate={destination} />}
         </MapView>
     );
 };

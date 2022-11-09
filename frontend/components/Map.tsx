@@ -10,6 +10,7 @@ import CustomMap from './CustomMap';
 import Search from "./Search";
 import getRoutes from "../hooks/GetRoutes";
 import Button from "./Button";
+import UserRouteOptions from "./UserRouteOptions";
 
 const Map = () => {
     const [location, setLocation] = useState<Location.LocationObject | null>();
@@ -35,6 +36,10 @@ const Map = () => {
     }, []);
 
     const backPressed = () => {
+        if (userState == "searched") {
+            setDestination(null);
+            setCenterMap(true);
+        }
         if (userState === "none") {
             BackHandler.exitApp();
         } else {
@@ -63,7 +68,7 @@ const Map = () => {
     }
 
     const rideSelect = async () => {
-        setPaths(await getRoutes(location, destination, sliderValue))
+        setPaths(await getRoutes(location.coords.latitude + "," + location.coords.longitude, destination.latitude + "," + destination.longitude, sliderValue))
         setAllUserStates([...allUserStates, "rideSelected"]);
         setUserState("rideSelected");
     }
@@ -76,11 +81,11 @@ const Map = () => {
                     <Search onPlaceSelect={(details) => onPlaceSelect(details)} />
                 </View>}
                 {userState == "none" && <CenterMapButton setCenterMap={setCenterMap} moveTo={moveTo} mapRef={mapRef} location={location} />}
-                <View style={styles.bottomPopupContainer}>
-                {userState == "searched" && <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />}
-                {userState == "searched" && <Button text="Next" onPress={() => rideSelect()} width={"100%"} color={"#FF9E0D"} />}
-                {userState == "rideSelected" && paths != undefined && <></>}
-                </View>
+                {allUserStates.includes("searched") == true && <View style={styles.bottomPopupContainer}>
+                    {userState == "searched" && <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />}
+                    {userState == "searched" && <Button text="Next" onPress={() => rideSelect()} width={"100%"} color={"#FF9E0D"} />}
+                </View>}
+                {userState == "rideSelected" && <UserRouteOptions routes={paths} />}
             </View>
         </SafeAreaView>
     );

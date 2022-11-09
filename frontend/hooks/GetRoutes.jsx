@@ -1,9 +1,7 @@
 import buildGraph from "./BuildGraph";
 
-const getRoutes = async (start_location, end_location, trip_type) => {
-  new Promise((resolve, reject) => {
-    resolve(buildGraph(start_location, end_location, trip_type));
-  }).then((graph) => {
+const getRoutes = async (start_location, end_location, trip_type) => { 
+  const graph = await buildGraph(start_location, end_location, trip_type)
     let start= null;
     let end = null;
     graph.nodes.forEach((node) => {
@@ -14,21 +12,25 @@ const getRoutes = async (start_location, end_location, trip_type) => {
         end = node;
       }
     })
-    const paths = graph.DFS(start, end);
+    const paths = await graph.DFS(start, end);
     // sort paths by total time
     paths.forEach((path) => {
       let time = 0;
-      path.forEach((node) => {
-        time += node.weight;
-      })
+      for(let i = 0; i < path.length; i++) {
+        if(i != path.length - 1) {
+          path[i].cost = Math.ceil(path[i+1].cost / 60);
+        }else {
+          path[i].cost = 0;
+        }
+        time += path[i].cost;
+      }
       path.time = time;
     })
     paths.sort((a, b) => {
       return a.time - b.time;
     })
+    console.log(paths);
     return paths;
-  })
 }
-
 
 export default getRoutes;

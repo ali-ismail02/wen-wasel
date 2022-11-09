@@ -14,7 +14,7 @@ class Graph {
         this.log += "Added edge ";
     }
     // DFS method with start and end node returns paths
-     DFS(start, end) {
+    async DFS(start, end) {
         this.log += "Ran DFS ";
         let paths = [];
         let currentPath = [];
@@ -26,14 +26,14 @@ class Graph {
             if (node.hasOwnProperty("element")) {
                 // check if node.name contains "end"
                 if (node.name.includes("end")) {
-                    currentPath.push({name: node.name, location: node.element.end_location, cost});
+                    currentPath.push({name: node.name, location: node.element.end_location, cost, type: node.type});
                 }
                 else {
-                    currentPath.push({name: node.name, location: node.element.start_location, cost});
+                    currentPath.push({name: node.name, location: node.element.start_location, cost, type: node.type});
                 }
             }else 
             {
-                currentPath.push({name: node.name, location: node.location, cost});
+                currentPath.push({name: node.name, location: node.location, cost, type: node.type});
             }
             if (node.name === end.name) {
                 paths.push(currentPath.slice());

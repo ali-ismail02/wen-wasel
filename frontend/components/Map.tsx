@@ -8,7 +8,6 @@ import CustomSlider from './CustomSlider';
 import styles from "../styles/styles";
 import CustomMap from './CustomMap';
 import Search from "./Search";
-import NextButton from "./NextButton";
 import getRoutes from "../hooks/GetRoutes";
 import Button from "./Button";
 

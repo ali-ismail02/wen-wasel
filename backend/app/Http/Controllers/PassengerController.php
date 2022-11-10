@@ -549,7 +549,7 @@ class PassengerController extends Controller
                 if($valid_van_routes[$i]->driver()->first()->id == $valid_van_routes[$j]->driver()->first()->id){
                     // Check if the 2 routes are valid for the passenger's trip using checkTripInfo function
                     if(($valid_van_routes[$i]->arrival_time < $valid_van_routes[$j]->arrival_time && checkTripInfo($valid_van_routes[$i]->location,$valid_van_routes[$j]->location,$request->start_location,$request->end_location)) || ($valid_van_routes[$i]->arrival_time > $valid_van_routes[$j]->arrival_time && checkTripInfo($valid_van_routes[$j]->location,$valid_van_routes[$i]->location,$request->start_location,$request->end_location))){
-                            $trips["van"][] = [$valid_van_routes[$i], $valid_van_routes[$j]];
+                            $trips["van"][] = [$valid_van_routes[$i], $valid_van_routes[$j], $valid_van_routes[$i]->driver()->first()];
                     }
                 }
             }

@@ -21,6 +21,7 @@ const Map = () => {
     const [centerMap, setCenterMap] = useState(true);
     const [paths, setPaths] = useState(undefined);
     const [path, setPath] = useState(undefined);
+    const [searchResult, setSearchResult] = useState(undefined);
     const mapRef = React.useRef<MapView>(null);
 
     useEffect(() => {
@@ -37,6 +38,9 @@ const Map = () => {
     }, []);
 
     const backPressed = () => {
+        if (userState === "pathConfirmed") {
+            centerScreen(location.coords, searchResult, mapRef);
+        }
         if (userState == "searched") {
             setDestination(null);
             setCenterMap(true);
@@ -63,6 +67,7 @@ const Map = () => {
             latitude: details.geometry.location.lat,
             longitude: details.geometry.location.lng,
         }
+        setSearchResult(position)
         setDestination(position);
         centerScreen(location.coords, position, mapRef);
         setCenterMap(false);
@@ -71,7 +76,7 @@ const Map = () => {
     }
 
     const rideSelect = async () => {
-        setPaths(await getRoutes(location.coords.latitude + "," + location.coords.longitude, destination.latitude + "," + destination.longitude, sliderValue))
+        setPaths(await getRoutes(location.coords.latitude + "," + location.coords.longitude, destination.latitude + "," + destination.longitude, sliderValue[0]));
         setAllUserStates([...allUserStates, "rideSelected"]);
         setUserState("rideSelected");
     }

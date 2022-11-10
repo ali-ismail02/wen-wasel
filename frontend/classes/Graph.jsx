@@ -26,14 +26,14 @@ class Graph {
             if (node.name.includes("service")) {
                 // check if node.name contains "end"
                 if (node.name.includes("end")) {
-                    currentPath.push({name: node.name, location: node.element.end_location, cost});
+                    currentPath.push({name: node.name, location: node.location, cost});
                 }
                 else {
-                    currentPath.push({name: node.name, location: node.element.start_location, cost});
+                    currentPath.push({name: node.name, location: node.location, element: node.element, cost});
                 }
             }else 
             {
-                currentPath.push({name: node.name, location: node.location, cost});
+                currentPath.push({name: node.name, location: node.location, element: node.element, cost});
             }
             if (node.name === end.name) {
                 let path = JSON.parse(JSON.stringify(currentPath));

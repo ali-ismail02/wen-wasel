@@ -1,6 +1,12 @@
 import React from "react";
 // Calculate distance between two geo points in many units 
-const calculateDistance = (lat1: number, lon1: number, lat2: number, lon2: number, unit: string) => {
+const calculateDistance = (start_location: string, end_location: string, unit: string) => {
+    const lat1 = parseFloat(start_location.split(",")[0]);
+    const lon1 = parseFloat(start_location.split(",")[1]);
+    const lat2 = parseFloat(end_location.split(",")[0]);
+    const lon2 = parseFloat(end_location.split(",")[1]);
+    // print all the above values
+
     if ((lat1 === lat2) && (lon1 === lon2)) {
         return 0;
     }

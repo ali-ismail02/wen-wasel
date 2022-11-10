@@ -1,7 +1,6 @@
 
 const moveTo = async (position, mapRef, altitude = null) => {
     const camera = await mapRef.current?.getCamera();
-    console.log(camera);
     if (camera) {
         camera.center = position;
         if(altitude != null) {

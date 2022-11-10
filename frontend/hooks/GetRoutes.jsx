@@ -29,7 +29,6 @@ const getRoutes = async (start_location, end_location, trip_type) => {
     paths.sort((a, b) => {
       return a.time - b.time;
     })
-    console.log(paths);
     return paths;
 }
 

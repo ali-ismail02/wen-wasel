@@ -1,8 +1,12 @@
 
-const moveTo = async (position, mapRef) => {
+const moveTo = async (position, mapRef, altitude = null) => {
     const camera = await mapRef.current?.getCamera();
+    console.log(camera);
     if (camera) {
         camera.center = position;
+        if(altitude != null) {
+            camera.zoom = altitude;
+        }
         mapRef.current?.animateCamera(camera, { duration: 1000 });
     }
 }

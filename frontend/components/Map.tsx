@@ -59,12 +59,11 @@ const Map = () => {
     );
 
     const onPlaceSelect = (details) => {
-        const set = setDestination;
         const position = {
             latitude: details.geometry.location.lat,
             longitude: details.geometry.location.lng,
         }
-        set(position);
+        setDestination(position);
         centerScreen(location.coords, position, mapRef);
         setCenterMap(false);
         setAllUserStates([...allUserStates, "searched"]);
@@ -81,6 +80,13 @@ const Map = () => {
         setPath(path);
         setAllUserStates([...allUserStates, "pathSelected"]);
         setUserState("pathSelected");
+    }
+
+    const onPathConfirm = () => {
+        setAllUserStates([...allUserStates, "pathConfirmed"]);
+        setUserState("pathConfirmed");
+        setCenterMap(true);
+        moveTo(location.coords, mapRef, 18);
     }
 
     return (
@@ -113,7 +119,12 @@ const Map = () => {
                 }
                 {userState == "pathSelected" &&
                     <View style={styles.bottomPopupContainer}>
-                        <Button text="Confirm Route" onPress={() => { }} width={"100%"} color={"#FF9E0D"} />
+                        <Button text="Confirm Route" onPress={onPathConfirm} width={"100%"} color={"#FF9E0D"} />
+                    </View>
+                }
+                {userState == "pathConfirmed" &&
+                    <View style={styles.bottomPopupContainer}>
+                        <Button text="Start Ride" onPress={() => { }} width={"100%"} color={"#FF9E0D"} />
                     </View>
                 }
             </View>

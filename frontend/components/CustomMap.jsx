@@ -18,7 +18,10 @@ const CustomMap = ({setCenterMap, centerMap, mapRef, destination, path}) => {
             onUserLocationChange={(coordinate) => {
                 centerMap === true && moveTo(coordinate.nativeEvent.coordinate, mapRef);
             }}
-            ref={mapRef} style={styles.map} provider={PROVIDER_GOOGLE} initialRegion={INITIAL_POSITION}>
+            ref={mapRef} 
+            style={styles.map} 
+            provider={PROVIDER_GOOGLE} 
+            initialRegion={INITIAL_POSITION}>
             {destination != null && <Marker coordinate={destination} />}
             {path != undefined && PathDraw(path)}
         </MapView>

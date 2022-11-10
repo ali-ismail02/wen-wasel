@@ -38,10 +38,10 @@ const buildServiceGraph = async (service, start_location, end_location, start, e
                 let node1 = null;
                 let node2 = null;
                 graph.nodes.forEach((node) => {
-                    if (node.name == service[i].id + "_end") {
+                    if (node.name == "service_" + service[i].id + "_end") {
                         node1 = node;
                     }
-                    if (node.name == service[j].id + "_start") {
+                    if (node.name == "service_" + service[j].id + "_start") {
                         node2 = node;
                     }
                 });
@@ -70,7 +70,6 @@ const buildVanGraph = async (van, start_location, end_location, start, end, grap
         // subtract van[i][1].arrival_time - van[i][0].departure_time (strings) and convert to timestamp
         let time = new Date(van[i][1].arrival_time) - new Date(van[i][0].arrival_time);
         time = time / 1000;
-        console.log(time);
         // add edge to graph with weight of time
         graph.addEdge(obj_start, obj_end, time);
         // add walking edge to graph from start to start of service
@@ -149,6 +148,7 @@ const buildVanAndServiceGraph = async (service, van, start_location, end_locatio
 }
 
 const buildGraph = async (start_location, end_location, trip_type) => {
+    console.log(trip_type)
     // get the routes from the backend
     const jwt = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2Njc2NjUyMTIsImV4cCI6MTY2ODI3MDAxMiwibmJmIjoxNjY3NjY1MjEyLCJqdGkiOiJXOXFnNmRSajJoZFBLd0xtIiwic3ViIjoiMTUiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.i0O4BNcw8weGbhw81RDanJcpvXsde1xa1A2_uSsLtX8"
     const response = await Get("user/get-possible-routes/" + start_location + "/" + end_location, jwt);
@@ -167,7 +167,6 @@ const buildGraph = async (start_location, end_location, trip_type) => {
     graph.addVertex(end);
     const directions = await getDirections(start_location, end_location, "walking");
     const time = directions.data.routes[0].legs[0].duration.value;
-    console.log(time);
 
     // add edge between start and end
     graph.addEdge(start, end, time);
@@ -185,8 +184,7 @@ const buildGraph = async (start_location, end_location, trip_type) => {
     if (trip_type == 3) {
         let service = response.data.trips.service
         let van = response.data.trips.van
-        await buildServiceGraph(service, start_location, end_location, start, end, graph);
-        await buildVanGraph(van, start_location, end_location, start, end, graph);
+        await buildVanAndServiceGraph(service, van, start_location, end_location, start, end, graph);
         return graph;
     }
     return null;

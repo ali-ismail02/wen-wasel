@@ -23,17 +23,17 @@ class Graph {
                 return null;
             }
     
-            if (node.hasOwnProperty("element")) {
+            if (node.name.includes("service")) {
                 // check if node.name contains "end"
                 if (node.name.includes("end")) {
-                    currentPath.push({name: node.name, location: node.element.end_location, cost, type: node.type});
+                    currentPath.push({name: node.name, location: node.element.end_location, cost});
                 }
                 else {
-                    currentPath.push({name: node.name, location: node.element.start_location, cost, type: node.type});
+                    currentPath.push({name: node.name, location: node.element.start_location, cost});
                 }
             }else 
             {
-                currentPath.push({name: node.name, location: node.location, cost, type: node.type});
+                currentPath.push({name: node.name, location: node.location, cost});
             }
             if (node.name === end.name) {
                 paths.push(currentPath.slice());

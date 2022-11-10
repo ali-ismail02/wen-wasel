@@ -1,5 +1,4 @@
 <?php
-use Validator;
 // Function to find the distance between two points
     function distance($lat1, $lon1, $lat2, $lon2, $unit) {
         if (($lat1 == $lat2) && ($lon1 == $lon2)) {

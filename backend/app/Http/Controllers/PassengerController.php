@@ -513,15 +513,11 @@ class PassengerController extends Controller
 
     // Api to get all possible routes for a passenger to take
     public function getPossibleRoutes(Request $request){
-        $rules = [
-            'start_location'=>'required',
-            'end_location'=>'required'
-        ];
-        if($error = validate($request->all(), $rules)){
+        if(!$request->start_location || !$request->end_location){
             return response()->json([
                 "status" => "Failed",
                 "message" => "Validation Failed",
-                "errors" => $error
+                "error" => "Missing Fields"
             ]);
         }
 
@@ -569,7 +565,7 @@ class PassengerController extends Controller
                 continue;
             }
             if(checkTripInfo($service_trip->tripInfo()->first()->start_location,$service_trip->tripInfo()->first()->end_location,$request->start_location,$request->end_location)){
-                $trips["service"][] = [$service_trip, $service_trip->tripInfo()->first()];
+                $trips["service"][] = $service_trip->tripInfo()->first();
             }
         }
 
@@ -658,6 +654,33 @@ class PassengerController extends Controller
             'message' => 'User updated',
             'user' => $user,
             'token' => $token
+        ]);
+    }
+
+    // Api to get fares
+
+    public function getFares(Request $request){
+        // Validate the request
+        if($error = validate($request->all(), ['user_data' => 'required'])){
+            return response()->json([
+                "status" => "Failed",
+                "message" => "Validation Failed",
+                "errors" => $error
+            ]);
+        }
+
+        // Get the fares for the distance
+        if(!$fares = Fare::all()){
+            return response()->json([
+                "status" => "Failed",
+                "message" => "No fares found"
+            ]);
+        }
+
+        return response()->json([
+            "status" => "success",
+            "message" => "Success",
+            "fares" => $fares
         ]);
     }
 }

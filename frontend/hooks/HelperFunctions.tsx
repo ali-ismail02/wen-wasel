@@ -5,7 +5,6 @@ const calculateDistance = (start_location: string, end_location: string, unit: s
     const lon1 = parseFloat(start_location.split(",")[1]);
     const lat2 = parseFloat(end_location.split(",")[0]);
     const lon2 = parseFloat(end_location.split(",")[1]);
-    // print all the above values
 
     if ((lat1 === lat2) && (lon1 === lon2)) {
         return 0;

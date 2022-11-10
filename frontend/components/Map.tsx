@@ -20,6 +20,7 @@ const Map = () => {
     const [sliderValue, setSliderValue] = useState(1);
     const [centerMap, setCenterMap] = useState(true);
     const [paths, setPaths] = useState(undefined);
+    const [path, setPath] = useState(undefined);
     const mapRef = React.useRef<MapView>(null);
 
     useEffect(() => {
@@ -85,7 +86,7 @@ const Map = () => {
                     {userState == "searched" && <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />}
                     {userState == "searched" && <Button text="Next" onPress={() => rideSelect()} width={"100%"} color={"#FF9E0D"} />}
                 </View>}
-                {userState == "rideSelected" && <UserRouteOptions routes={paths} />}
+                {userState == "rideSelected" && <UserRouteOptions routes={paths} onPress = {setPath}/>}
             </View>
         </SafeAreaView>
     );

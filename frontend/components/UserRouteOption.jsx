@@ -5,8 +5,6 @@ import styles from "../styles/styles";
 
 const UserRouteOption = ({ route, onPress }) => {
     const [time, setTime] = useState(undefined);
-    console.log(route);
-
     // calculating time for route
     useEffect(() => {
         let time = route.time;
@@ -23,28 +21,37 @@ const UserRouteOption = ({ route, onPress }) => {
             <View style={styles.routeOptionInformation}>
                 <View style={styles.routeOptionTrips}>
                     {route.map((trip, index) => {
-                        if (trip.type == "service") {
+                        console.log(trip);
+                        if (trip.name != "end_location") {
+                            if (trip.name.includes("service") && trip.name.includes("start")) {
+                                return (
+                                    <View key={index} style={styles.flex}>
+                                        <Image source={require("../assets/images/car.png")} style={{ width: 20, height: 20 }} />
+                                        <Text style={styles.routeOptionTripText}>{trip.cost}</Text>
+                                    </View>
+                                );
+                            } else if (trip.name.includes("van") && trip.name.includes("start")) {
+                                return (
+                                    <View key={index} style={styles.flex}>
+                                        <Image source={require("../assets/images/van.png")} style={{ width: 20, height: 20 }} />
+                                        <Text style={styles.routeOptionTripText}>{trip.cost}</Text>
+                                    </View>
+                                );
+                            } else {
+                                return (
+                                    <View key={index} style={styles.flex}>
+                                        <Image source={require("../assets/images/walking.png")} style={{ width: 10, height: 20 }} />
+                                        <Text style={styles.routeOptionTripText}>{trip.cost}</Text>
+                                    </View>
+                                );
+                            }
+                        }else {
                             return (
-                                <View key={index} style = {styles.flex}>
-                                    <Image source={require("../assets/images/car.png")} style={{width:20,height:20}} />
-                                    <Text style={styles.routeOptionTripText}>{trip.cost}</Text>
-                                </View>
-                            );
-                        } else if (trip.type == "van") {
-                            return (
-                                <View key={index} style = {styles.flex}>
-                                    <Image source={require("../assets/images/van.png")} style={{width:20,height:20}} />
-                                    <Text style={styles.routeOptionTripText}>{trip.cost}</Text>
-                                </View>
-                            );
-                        } else {
-                            return (
-                                <View key={index} style = {styles.flex}>
-                                    <Image source={require("../assets/images/walking.png")} style={{width:10,height:20}} />
-                                    <Text style={styles.routeOptionTripText}>{trip.cost}</Text>
-                                </View>
-                            );
-                        }
+                                <View key={index} style={styles.flex}>
+                                        <Image source={require("../assets/images/waypoint.png")} style={{ width: 20, height: 20 }} />
+                                    </View>
+                            )
+                        } 
                     }
                     )}
                 </View>

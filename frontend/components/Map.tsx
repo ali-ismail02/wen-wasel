@@ -2,15 +2,15 @@ import { BackHandler, SafeAreaView, View } from "react-native";
 import { centerScreen, moveTo } from '../hooks/CameraChange';
 import MapView, { LatLng } from 'react-native-maps';
 import React, { useEffect, useState } from "react";
+import UserRouteOptions from "./UserRouteOptions";
 import CenterMapButton from "./CenterMapButton";
+import getRoutes from "../hooks/GetRoutes";
 import * as Location from 'expo-location';
 import CustomSlider from './CustomSlider';
 import styles from "../styles/styles";
 import CustomMap from './CustomMap';
 import Search from "./Search";
-import getRoutes from "../hooks/GetRoutes";
 import Button from "./Button";
-import UserRouteOptions from "./UserRouteOptions";
 
 const Map = () => {
     const [location, setLocation] = useState<Location.LocationObject | null>();
@@ -41,7 +41,7 @@ const Map = () => {
             setDestination(null);
             setCenterMap(true);
         }
-        if(userState == "rideSelected") {
+        if (userState == "pathSelected") {
             setPath(undefined);
         }
         if (userState === "none") {
@@ -77,19 +77,45 @@ const Map = () => {
         setUserState("rideSelected");
     }
 
+    const onPathSelect = (path) => {
+        setPath(path);
+        setAllUserStates([...allUserStates, "pathSelected"]);
+        setUserState("pathSelected");
+    }
+
     return (
         <SafeAreaView>
             <View>
-                <CustomMap setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} path = {path} />
-                {userState == "none" && <View style={styles.searchContainer}>
-                    <Search onPlaceSelect={(details) => onPlaceSelect(details)} />
-                </View>}
-                {userState == "none" && <CenterMapButton setCenterMap={setCenterMap} moveTo={moveTo} mapRef={mapRef} location={location} />}
-                {allUserStates.includes("searched") == true && <View style={styles.bottomPopupContainer}>
-                    {userState == "searched" && <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />}
-                    {userState == "searched" && <Button text="Next" onPress={() => rideSelect()} width={"100%"} color={"#FF9E0D"} />}
-                </View>}
-                {userState == "rideSelected" && <UserRouteOptions routes={paths} onPress = {setPath}/>}
+                <CustomMap setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} path={path} />
+                {userState == "none" &&
+                    <View style={styles.searchContainer}>
+                        <Search onPlaceSelect={(details) => onPlaceSelect(details)} />
+                    </View>
+                }
+                {userState == "none" &&
+                    <CenterMapButton setCenterMap={setCenterMap}
+                        moveTo={moveTo}
+                        mapRef={mapRef}
+                        location={location} />
+                }
+                {allUserStates.includes("searched") == true &&
+                    <View style={styles.bottomPopupContainer}>
+                        {userState == "searched" &&
+                            <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />
+                        }
+                        {userState == "searched" &&
+                            <Button text="Next" onPress={() => rideSelect()} width={"100%"} color={"#FF9E0D"} />
+                        }
+                    </View>
+                }
+                {userState == "rideSelected" &&
+                    <UserRouteOptions routes={paths} onPress={onPathSelect} />
+                }
+                {userState == "pathSelected" &&
+                    <View style={styles.bottomPopupContainer}>
+                        <Button text="Confirm Route" onPress={() => { }} width={"100%"} color={"#FF9E0D"} />
+                    </View>
+                }
             </View>
         </SafeAreaView>
     );

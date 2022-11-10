@@ -21,7 +21,6 @@ const UserRouteOption = ({ route, onPress }) => {
             <View style={styles.routeOptionInformation}>
                 <View style={styles.routeOptionTrips}>
                     {route.map((trip, index) => {
-                        console.log(trip);
                         if (trip.name != "end_location") {
                             if (trip.name.includes("service") && trip.name.includes("start")) {
                                 return (

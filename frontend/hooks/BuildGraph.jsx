@@ -167,6 +167,7 @@ const buildGraph = async (start_location, end_location, trip_type) => {
     graph.addVertex(end);
     const directions = await getDirections(start_location, end_location, "walking");
     const time = directions.data.routes[0].legs[0].duration.value;
+    console.log(time);
 
     // add edge between start and end
     graph.addEdge(start, end, time);

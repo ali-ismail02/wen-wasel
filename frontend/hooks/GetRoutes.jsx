@@ -12,19 +12,19 @@ const getRoutes = async (start_location, end_location, trip_type) => {
         end = node;
       }
     })
-    const paths = await graph.DFS(start, end);
+    let paths = await graph.DFS(start, end);
     // sort paths by total time
     paths.forEach((path) => {
       let time = 0;
       for(let i = 0; i < path.length; i++) {
         if(i != path.length - 1) {
-          path[i].cost = Math.ceil(path[i+1].cost / 60);
+          path[i].cost = parseInt(path[i+1].cost/60);
         }else {
           path[i].cost = 0;
         }
         time += path[i].cost;
       }
-      path.time = time;
+      path.time = time
     })
     paths.sort((a, b) => {
       return a.time - b.time;

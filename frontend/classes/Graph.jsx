@@ -36,7 +36,8 @@ class Graph {
                 currentPath.push({name: node.name, location: node.location, cost});
             }
             if (node.name === end.name) {
-                paths.push(currentPath.slice());
+                let path = JSON.parse(JSON.stringify(currentPath));
+                paths.push(path);
             }
             else {
                 for(let i = 0; i < this.adjacencyList[node.name].length; i++) {

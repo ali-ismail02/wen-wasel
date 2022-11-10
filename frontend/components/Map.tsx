@@ -41,6 +41,9 @@ const Map = () => {
             setDestination(null);
             setCenterMap(true);
         }
+        if(userState == "rideSelected") {
+            setPath(undefined);
+        }
         if (userState === "none") {
             BackHandler.exitApp();
         } else {
@@ -77,7 +80,7 @@ const Map = () => {
     return (
         <SafeAreaView>
             <View>
-                <CustomMap setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} />
+                <CustomMap setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} path = {path} />
                 {userState == "none" && <View style={styles.searchContainer}>
                     <Search onPlaceSelect={(details) => onPlaceSelect(details)} />
                 </View>}

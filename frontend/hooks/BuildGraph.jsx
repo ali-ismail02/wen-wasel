@@ -2,6 +2,7 @@ import Graph from "../classes/Graph";
 import Get from "./Get";
 import calculateDistance from "./CalculateDistance";
 import getDirections from "./GetGoogleDirections";
+import isLess from "./IsLess";
 
 const buildServiceGraph = async (service, start_location, end_location, start, end, graph) => {
     for (let i = 0; i < service.length; i++) {
@@ -33,7 +34,7 @@ const buildServiceGraph = async (service, start_location, end_location, start, e
     // add edge from end of service to end of other service if the first end is before the second end
     for (let i = 0; i < service.length; i++) {
         for (let j = 0; j < service.length; j++) {
-            if (Math.abs(calculateDistance(service[j].end_location, end_location)) < Math.abs(calculateDistance(service[i].end_location, end_location))) {
+            if (isLess(service[j].end_location, service[i].end_location, end_location)) {
                 // find the nodes
                 let node1 = null;
                 let node2 = null;
@@ -86,7 +87,7 @@ const buildVanGraph = async (van, start_location, end_location, start, end, grap
         for (let j = 0; j < van.length; j++) {
             if (i == j) continue;
 
-            if (Math.abs(calculateDistance(van[j][1].location, end_location)) < Math.abs(calculateDistance(van[i][1].location, end_location))) {
+            if (isLess(van[j][1].location, van[i][1].location, end_location)) {
                 // find the nodes
                 let node1 = null;
                 let node2 = null;
@@ -111,7 +112,7 @@ const buildVanAndServiceGraph = async (service, van, start_location, end_locatio
     await buildVanGraph(van, start_location, end_location, start, end, graph);
     for (let i = 0; i < service.length; i++) {
         for (let j = 0; j < van.length; j++) {
-            if (Math.abs(calculateDistance(van[j][1].location, end_location)) < Math.abs(calculateDistance(service[i].end_location, end_location))) {
+            if (isLess(van[j][1].location, service[i].end_location, end_location)) {
                 // find the nodes
                 let node1 = null;
                 let node2 = null;
@@ -127,7 +128,7 @@ const buildVanAndServiceGraph = async (service, van, start_location, end_locatio
                 const time = direction.data.routes[0].legs[0].duration.value;
                 graph.addEdge(node1, node2, time);
             }
-            if(Math.abs(calculateDistance(service[i].end_location, end_location)) < Math.abs(calculateDistance(van[j][1].location, end_location))){
+            if(isLess(service[i].end_location, van[j][1].location, end_location)){
                 // find the nodes
                 let node1 = null;
                 let node2 = null;

@@ -1,6 +1,6 @@
 import Graph from "../classes/Graph";
 import Get from "./Get";
-import calculateDistance from "./HelperFunctions";
+import calculateDistance from "./CalculateDistance";
 import getDirections from "./GetGoogleDirections";
 
 const buildServiceGraph = async (service, start_location, end_location, start, end, graph) => {

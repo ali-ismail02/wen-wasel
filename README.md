@@ -33,7 +33,7 @@ Note that i didn't use any styling library or theme, all from scratch and using 
 
 | Landing  | Home/Search  | Routes  |
 | -----------------| -----| -----|
-| ![Landing](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/Landing.png) | ![Home/Search](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/Expanded_Passenger.png) | ![Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/main_passenger.png) |
+| ![Landing](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Landing.png) | ![Home/Search](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Main_passenger.png) | ![Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Expanded_Passenger.png) |
 
 | Artists results  | Artist's Albums  |
 | -----------------| -----|

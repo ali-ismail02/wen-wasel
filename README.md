@@ -47,6 +47,9 @@ Note that i didn't use any styling library or theme, all from scratch and using 
 | -----| -----| -----|
 | ![Van Driver](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Main%20(van).png) | ![Viewing Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Expanded%20(van).png) | ![Adding Route](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Adding%20Route.png) |
 
+| Admin Panel  | Admin Analytics  |
+| -----| -----| -----|
+| ![Admin Panel](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/admin_panel.png) | ![Admin Analytics](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/admin_analytics.png) |
 
 <br><br>
 
@@ -54,11 +57,12 @@ Note that i didn't use any styling library or theme, all from scratch and using 
 
 Here's a brief high-level overview of the tech stack the Well app uses:
 
-- This project uses the [Flutter app development framework](https://flutter.dev/). Flutter is a cross-platform hybrid app development platform which allows us to use a single codebase for apps on mobile, desktop, and the web.
-- For persistent storage (database), the app uses the [Hive](https://hivedb.dev/) package which allows the app to create a custom storage schema and save it to a local database.
-- To send local push notifications, the app uses the [flutter_local_notifications](https://pub.dev/packages/flutter_local_notifications) package which supports Android, iOS, and macOS.
-  - 🚨 Currently, notifications aren't working on macOS. This is a known issue that we are working to resolve!
-- The app uses the font ["Work Sans"](https://fonts.google.com/specimen/Work+Sans) as its main font, and the design of the app adheres to the material design guidelines.
+- This project uses [React Native mobile app framework](https://reactnative.dev/). React Native is an open-source UI software framework created by Meta Platforms, Inc. It is used to develop mobile applications by enabling developers to use the React framework along with native platform capabilities.
+- This project uses [Angular web app framework](https://angular.io/). Angular is a TypeScript-based free and open-source web application framework led by the Angular Team at Google and by a community of individuals and corporations.
+- This project uses [Laravel PHP web framework](https://laravel.com/). Laravel is a free and open-source PHP web framework intended for the development of web applications following the model–view–controller architectural pattern and based on Symfony.
+- For persistent storage (database), the app uses [MySQL](https://www.mysql.com/). MySQL is an open-source relational database management system.
+- To view driver's live location, the app uses the a [NodeJS runtime environment](https://nodejs.org/en/) server.
+- In order to use [Google Maps API](https://developers.google.com/maps) for location and map services, the app uses [react-native-maps library](https://github.com/react-native-maps/react-native-maps)
 
 
 
@@ -89,20 +93,62 @@ This is an example of how to list things you need to use the software and how to
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+- Download and Install [Node.js](https://nodejs.org/en/)
+- Download and Install [Composer](https://getcomposer.org/download/)
+- Download and Install [XAMPP](https://www.apachefriends.org/download.html)
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
+- npm
+  ```sh
+  npm install npm@latest -g
+  ```
+- Expo CLI
+  ```sh
+  npm install --global expo-cli
+  ```
+- Expo Go app for iOS and Android
+  > 🤖 [Android Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent) - Android Lollipop (5) and greater.  
+  > 🍎 [iOS App Store](https://apps.apple.com/app/expo-go/id982107779) - iOS 11 and greater.
+
+### Installation
+
+1. Clone the repo
+
    ```sh
-   git clone https://github.com/your_username_/Project-Name.git
+   git clone https://github.com/Hamze-Ammar/Parking-Finder.git
    ```
-3. Install NPM packages
+
+#### To Run The Mobile App
+
+1. Navigate to the Frontend folder and install dependencies
    ```sh
+   cd frontend
    npm install
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+2. Run the start up command
+   ```sh
+   expo start
    ```
 
 
+#### To Run Laravel Server on your machine
+
+1. Create a database locally named wen_waseldb
+
+2. Navigate to the backend folder
+   ```sh
+   cd Parking-Finder/backend
+   ```
+3. Inside the .env file in your backend folder
+   - Insert the db name as follow -> DB_DATABASE= -> DB_DATABASE=wen_waseldb
+4. Run migration
+   ```sh
+   php artisan migrate
+   ```
+5. Run the seeder
+   ```sh
+   php artisan db:seed
+   ```
+6. Start the Server
+   ```sh
+   php artisan serve --port 8000 --host 192.168.1.50
+   ```

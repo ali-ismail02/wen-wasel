@@ -39,9 +39,13 @@ Note that i didn't use any styling library or theme, all from scratch and using 
 | -----| -----| -----|
 | ![Van Driver](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Main%20(van).png) | ![Viewing Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Expanded%20(van).png) | ![Adding Route](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Adding%20Route.png) |
 
-| Artists results  | Artist's Albums  |
-| -----------------| -----|
-| ![Artists results](https://github.com/julescript/spotifyndr/blob/master/demo/Artists_Page.jpg) | ![Artist's Albums](https://github.com/julescript/spotifyndr/blob/master/demo/Albums_Page.jpg) |
+| Landing  | Home/Search  | Routes  |
+| -----| -----| -----|
+| ![Landing](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Landing.png) | ![Home/Search](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Main%20npassenger.png) | ![Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Expanded%20Passenger.png) |
+
+| Van Driver  | Viewing Routes  | Adding Route  |
+| -----| -----| -----|
+| ![Van Driver](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Main%20(van).png) | ![Viewing Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Expanded%20(van).png) | ![Adding Route](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Adding%20Route.png) |
 
 
 <br><br>

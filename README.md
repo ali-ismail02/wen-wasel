@@ -31,9 +31,9 @@
 > This design was planned before on paper, then moved to Figma app for the fine details.
 Note that i didn't use any styling library or theme, all from scratch and using pure css modules
 
-| Landing  | Home/Search  |
-| -----------------| -----|
-| ![Landing](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/landing_page_wireframe.png) | ![Home/Search](https://github.com/julescript/spotifyndr/blob/master/demo/Search_Page.jpg) |
+| Landing  | Home/Search  | Routes  |
+| -----------------| -----| -----|
+| ![Landing](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/Landing.png) | ![Home/Search](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/Expanded_Passenger.png) | ![Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/main_passenger.png) |
 
 | Artists results  | Artist's Albums  |
 | -----------------| -----|

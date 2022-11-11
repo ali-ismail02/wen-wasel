@@ -32,8 +32,12 @@
 Note that i didn't use any styling library or theme, all from scratch and using pure css modules
 
 | Landing  | Home/Search  | Routes  |
-| -----------------| -----| -----|
+| -----| -----| -----|
 | ![Landing](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Landing.png) | ![Home/Search](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Main_passenger.png) | ![Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Expanded_Passenger.png) |
+
+| Van Driver  | Viewing Routes  | Adding Route  |
+| -----| -----| -----|
+| ![Van Driver](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Main%20(van).png) | ![Viewing Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Expanded%20(van).png) | ![Adding Route](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Adding%20Route.png) |
 
 | Artists results  | Artist's Albums  |
 | -----------------| -----|

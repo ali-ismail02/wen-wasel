@@ -151,7 +151,7 @@ const buildVanAndServiceGraph = async (service, van, start_location, end_locatio
 const buildGraph = async (start_location, end_location, trip_type) => {
     console.log(trip_type)
     // get the routes from the backend
-    const jwt = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2Njc2NjUyMTIsImV4cCI6MTY2ODI3MDAxMiwibmJmIjoxNjY3NjY1MjEyLCJqdGkiOiJXOXFnNmRSajJoZFBLd0xtIiwic3ViIjoiMTUiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.i0O4BNcw8weGbhw81RDanJcpvXsde1xa1A2_uSsLtX8"
+    const jwt = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2NjgyNzEwNDQsImV4cCI6MTY2ODg3NTg0NCwibmJmIjoxNjY4MjcxMDQ0LCJqdGkiOiJWb2lpYmJXSmRnSGVwQ01WIiwic3ViIjoiMTUiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.c-biRZEXOjFmKsNG8_8S_6eMxylbuZo-bZdqswadhnY"
     const response = await Get("user/get-possible-routes/" + start_location + "/" + end_location, jwt);
     let graph = new Graph();
     // add start location to graph as a node

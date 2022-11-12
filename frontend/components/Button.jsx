@@ -1,20 +1,20 @@
 import styles from '../styles/styles';
-import { Text, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity, Image } from 'react-native';
 
 const Button = ({ onPress, text, color, height = 50, width, image = null }) => {
     if (color == "#FF9E0D") {
-        textStyle = {
+        var textStyle = {
             ...styles.buttonText,
             color: "black"
         }
     } else {
-        textStyle = {
+        var textStyle = {
             ...styles.buttonText,
             color: "white"
         }
     }
 
-    buttonStyle = {
+    var buttonStyle = {
         ...styles.button,
         height: height,
         width: width,
@@ -24,7 +24,9 @@ const Button = ({ onPress, text, color, height = 50, width, image = null }) => {
     if (image != null) {
         return (
             <TouchableOpacity style={buttonStyle} onPress={onPress}>
-                <Image source={image} style={styles.buttonImage} />
+                {image == "car" ? <Image source={require('../assets/images/car.png')} style={{width:40, height:20}} /> : 
+                image == "van" ? <Image source={require('../assets/images/van.png')} style={{width:40, height:20}} /> : 
+                <Image source={require('../assets/images/walking.png')} style={{width:20, height:40}} />}
             </TouchableOpacity>
         );
     }

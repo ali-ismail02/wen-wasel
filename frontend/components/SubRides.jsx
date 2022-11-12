@@ -3,14 +3,16 @@ import styles from '../styles/styles';
 import { Google_API_Key } from '../constants/GoogleAPIKey';
 import { useEffect, useState } from 'react';
 import Button from './Button';
+import GetTripType from '../hooks/GetTripType';
 
 const SubRides = ({ path, setPath }) => {
     const [destination, setDestination] = useState('');
     const [time, setTime] = useState('');
     const [imageName, setImageName] = useState('');
+    const [buttonImage, setButtonImage] = useState('');
 
-    const update = async (coords) => {
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${coords}&key=${Google_API_Key}`;
+    const update = async (path) => {
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${path[1].location}&key=${Google_API_Key}`;
         await fetch(url)
             .then((response) => response.json())
             .then((data) => {
@@ -26,41 +28,53 @@ const SubRides = ({ path, setPath }) => {
         setTime(time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
         setTime(path[0].cost)
 
-        if(path[1].name.includes('service') && path[1].name.includes('start')) {
+        if (GetTripType(path[0]) == 'service') {
             setImageName('car');
-        } else if (path[1].name.includes('van') && path[1].name.includes('start')) {
-            console.log(path[1].name)
+        } else if (GetTripType(path[0]) == 'van') {
             setImageName('van');
-        } else  setImageName('walking');
-    
+        } else setImageName('walking');
+
+
+        if(path[1].name == "end_location"){
+            setButtonImage('waypoint')
+        }else if (GetTripType(path[1]) == 'service') {
+            setButtonImage('car');
+        } else if (GetTripType(path[1]) == 'van') {
+            setButtonImage('van');
+        } else setButtonImage('walking');
+        console.log(path[2])
+
     };
 
     useEffect(() => {
         if (path.length > 1) {
-            update(path[1].location);
+            console.log(path.length)
+            update(path);
         }
     }, []);
 
     // remove first element from path array using setPath
     const removePath = () => {
-        setPath(path.slice(1));
-        update(path[2].location);
-        console.log(path);
+        if(path.length > 1){
+            setPath(path.slice(1));
+            let path1 = path.slice(1)
+            update(path1);
+        }
     };
 
     if (path.length > 1) {
         return (<>
             <View style={styles.subRides}>
-                {imageName == "car" ? <Image source={require("../assets/images/car.png")} style={{width:40, height:30}} /> : 
-                imageName == "van" ? <Image source={require("../assets/images/van.png")} style={{width:40, height:30}} /> : 
-                <Image source={require("../assets/images/walking.png")} style={{width:20, height:40}} />}
-                <View style={styles.subRidesText}>
-                    <Text style={styles.subRidesTextDestination}>To {destination}</Text>
-                    <Text style={styles.subRidesTextTime}>Arrive at {time}</Text>
+                {imageName == "car" ? <Image source={require("../assets/images/car.png")} style={{ width: 40, height: 30 }} /> :
+                    imageName == "van" ? <Image source={require("../assets/images/van.png")} style={{ width: 40, height: 30 }} /> :
+                        <Image source={require("../assets/images/walking.png")} style={{ width: 20, height: 40 }} />}
+                <View style={styles.subRideText}>
+                    <Text style={styles.subRideTextDestination}>To {destination}</Text>
+                    <Text style={styles.subRideTextTime}>Arrive at {time}</Text>
                 </View>
             </View>
-            <Button text={'Change destination'} image={imageName} color={'#FF9E0D'} width={"100%"} onPress={removePath} />
-            </>
+            <Button text={'Change destination'} image={buttonImage} color={'#FF9E0D'} width={"100%"} onPress={removePath} />
+        </>
         )
     }
 };

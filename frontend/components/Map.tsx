@@ -59,27 +59,28 @@ const Map = () => {
         setDestination(position);
         centerScreen(location.coords, position, mapRef);
         setCenterMap(false);
-        setAllUserStates([...allUserStates, "searched"]);
-        setUserState("searched");
+        setState("searched");
     }
 
     const rideSelect = async () => {
         setPaths(await getRoutes(location.coords.latitude + "," + location.coords.longitude, destination.latitude + "," + destination.longitude, sliderValue[0]));
-        setAllUserStates([...allUserStates, "rideSelected"]);
-        setUserState("rideSelected");
+        setState("rideSelected");
     }
 
     const onPathSelect = (path) => {
         setPath(path);
-        setAllUserStates([...allUserStates, "pathSelected"]);
-        setUserState("pathSelected");
+        setState("pathSelected");
     }
 
     const onPathConfirm = () => {
-        setAllUserStates([...allUserStates, "pathConfirmed"]);
-        setUserState("pathConfirmed");
+        setState("pathConfirmed");
         setCenterMap(true);
         moveTo(location.coords, mapRef, 18);
+    }
+
+    const setState = (state) => {
+        setAllUserStates([...allUserStates, state])
+        setUserState(state);
     }
 
     const comps = {
@@ -110,7 +111,7 @@ const Map = () => {
     return (
         <SafeAreaView>
             <View>
-                <CustomMap setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} path={path} />
+                <CustomMap setState = {setState} setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} path={path} setDestination ={setDestination} userState = {userState}/>
                 {comps[userState]}
             </View>
         </SafeAreaView>

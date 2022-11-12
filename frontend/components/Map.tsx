@@ -25,19 +25,6 @@ const Map = () => {
     const [searchResult, setSearchResult] = useState(undefined);
     const mapRef = React.useRef<MapView>(null);
 
-    useEffect(() => {
-        const getLocation = async () => {
-            let { status } = await Location.requestForegroundPermissionsAsync();
-            if (status !== 'granted') {
-                console.log('Permission to access location was denied');
-                return;
-            }
-            let location = await Location.getCurrentPositionAsync({});
-            setLocation(location);
-        }
-        getLocation();
-    }, []);
-
     const backPressed = () => {
         if (userState === "pathConfirmed") {
             centerScreen(location.coords, searchResult, mapRef);
@@ -123,7 +110,7 @@ const Map = () => {
     return (
         <SafeAreaView>
             <View>
-                <CustomMap setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} path={path} />
+                <CustomMap setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} path={path} />
                 {comps[userState]}
             </View>
         </SafeAreaView>

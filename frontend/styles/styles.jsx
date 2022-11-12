@@ -52,7 +52,7 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    padding: 20,
+    padding: 30,
     width: ScreenWidth,
     height: "auto",
     elevation: 5,
@@ -134,5 +134,25 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+  },
+  subRides: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+  },
+  subRideText: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  subRideTextDestination: {
+    fontSize: 20,
+    fontWeight: "bold",
+  },
+  subRideTextTime: {
+    fontSize: 20,
+    color: "#DDD",
   }
 });

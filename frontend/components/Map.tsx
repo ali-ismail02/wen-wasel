@@ -4,6 +4,7 @@ import MapView, { LatLng } from 'react-native-maps';
 import React, { useEffect, useState } from "react";
 import UserRouteOptions from "./UserRouteOptions";
 import CenterMapButton from "./CenterMapButton";
+import SubRide from "./SubRides";
 import getRoutes from "../hooks/GetRoutes";
 import * as Location from 'expo-location';
 import CustomSlider from './CustomSlider';
@@ -94,44 +95,36 @@ const Map = () => {
         moveTo(location.coords, mapRef, 18);
     }
 
+    const comps = {
+        none: <><View style={styles.searchContainer}>
+                    <Search onPlaceSelect={(details) => onPlaceSelect(details)} />
+                </View>
+                    <CenterMapButton setCenterMap={setCenterMap}
+                        moveTo={moveTo}
+                        mapRef={mapRef}
+                        location={location} /></>,
+
+        searched: <View style={styles.bottomPopupContainer}>
+                        <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />
+                        <Button text="Next" onPress={() => rideSelect()} width={"100%"} color={"#FF9E0D"} />
+                    </View>,
+
+        rideSelected: <UserRouteOptions routes={paths} onPress={onPathSelect} />,
+
+        pathSelected: <View style={styles.bottomPopupContainer}>
+                        <Button text="Confirm Route" onPress={onPathConfirm} width={"100%"} color={"#FF9E0D"} />
+                    </View>,
+
+        pathConfirmed: <View style={styles.bottomPopupContainer}>
+                            <SubRide path={path} setPath = {setPath} />
+                        </View>
+    }
+
     return (
         <SafeAreaView>
             <View>
                 <CustomMap setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} path={path} />
-                {userState == "none" &&
-                    <View style={styles.searchContainer}>
-                        <Search onPlaceSelect={(details) => onPlaceSelect(details)} />
-                    </View>
-                }
-                {userState == "none" &&
-                    <CenterMapButton setCenterMap={setCenterMap}
-                        moveTo={moveTo}
-                        mapRef={mapRef}
-                        location={location} />
-                }
-                {allUserStates.includes("searched") == true &&
-                    <View style={styles.bottomPopupContainer}>
-                        {userState == "searched" &&
-                            <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />
-                        }
-                        {userState == "searched" &&
-                            <Button text="Next" onPress={() => rideSelect()} width={"100%"} color={"#FF9E0D"} />
-                        }
-                    </View>
-                }
-                {userState == "rideSelected" &&
-                    <UserRouteOptions routes={paths} onPress={onPathSelect} />
-                }
-                {userState == "pathSelected" &&
-                    <View style={styles.bottomPopupContainer}>
-                        <Button text="Confirm Route" onPress={onPathConfirm} width={"100%"} color={"#FF9E0D"} />
-                    </View>
-                }
-                {userState == "pathConfirmed" &&
-                    <View style={styles.bottomPopupContainer}>
-                        <Button text="Start Ride" onPress={() => { }} width={"100%"} color={"#FF9E0D"} />
-                    </View>
-                }
+                {comps[userState]}
             </View>
         </SafeAreaView>
     );

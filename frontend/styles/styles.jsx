@@ -52,7 +52,8 @@ export default StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     left: 0,
-    padding: 30,
+    paddingHorizontal: 30,
+    paddingVertical: 20,
     width: ScreenWidth,
     height: "auto",
     elevation: 5,
@@ -107,6 +108,9 @@ export default StyleSheet.create({
     alignItems: "flex-start",
     paddingVertical: 20,
     paddingHorizontal: 10,
+    // add border bottom
+    borderBottomColor: "#DDDDDD",
+    borderBottomWidth: 1,
   },
   routeOptionTrips: {
     width: "70%",
@@ -141,11 +145,14 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
+    paddingBottom: 20,
+    paddingTop: 0,
   },
   subRideText: {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    paddingLeft: 20,
   },
   subRideTextDestination: {
     fontSize: 20,

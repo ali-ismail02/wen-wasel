@@ -11,6 +11,7 @@ use App\Models\TripInfo;
 use App\Models\TripRecord;
 use App\Models\Reservation;
 use App\Models\Route;
+use App\Models\Fare;
 use Auth;
 use JWTAuth;
 use Validator;

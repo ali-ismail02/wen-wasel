@@ -1,6 +1,6 @@
 import Graph from "../classes/Graph";
+import { jwt } from "../constants/JWT";
 import Get from "./Get";
-import calculateDistance from "./CalculateDistance";
 import getDirections from "./GetGoogleDirections";
 import isLess from "./IsLess";
 
@@ -128,7 +128,7 @@ const buildVanAndServiceGraph = async (service, van, start_location, end_locatio
                 const time = direction.data.routes[0].legs[0].duration.value;
                 graph.addEdge(node1, node2, time);
             }
-            if(isLess(service[i].end_location, van[j][1].location, end_location)){
+            if (isLess(service[i].end_location, van[j][1].location, end_location)) {
                 // find the nodes
                 let node1 = null;
                 let node2 = null;
@@ -151,7 +151,7 @@ const buildVanAndServiceGraph = async (service, van, start_location, end_locatio
 const buildGraph = async (start_location, end_location, trip_type) => {
     console.log(trip_type)
     // get the routes from the backend
-    const jwt = "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vMTI3LjAuMC4xOjgwMDAvYXBpL2F1dGgvbG9naW4iLCJpYXQiOjE2NjgyNzEwNDQsImV4cCI6MTY2ODg3NTg0NCwibmJmIjoxNjY4MjcxMDQ0LCJqdGkiOiJWb2lpYmJXSmRnSGVwQ01WIiwic3ViIjoiMTUiLCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.c-biRZEXOjFmKsNG8_8S_6eMxylbuZo-bZdqswadhnY"
+
     const response = await Get("user/get-possible-routes/" + start_location + "/" + end_location, jwt);
     let graph = new Graph();
     // add start location to graph as a node

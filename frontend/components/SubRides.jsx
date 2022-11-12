@@ -42,7 +42,6 @@ const SubRides = ({ path, setPath }) => {
         } else if (GetTripType(path[1]) == 'van') {
             setButtonImage('van');
         } else setButtonImage('walking');
-        console.log(path[2])
 
     };
 

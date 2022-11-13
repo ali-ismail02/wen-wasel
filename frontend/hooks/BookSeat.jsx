@@ -1,11 +1,11 @@
 import Post from "./Post"
 import { jwt } from "../constants/JWT";
 
-const BookSeats = async (route) => {
+const BookSeatsHook = async (route) => {
     const data = {
         "route_id": route.id,
     }
-    const response = await Post("user/bookSeats", data, jwt);
+    const response = await Post("user/add-reservation", data, jwt);
 
     if (response.data.status == "success") {
         return true;
@@ -13,4 +13,4 @@ const BookSeats = async (route) => {
     return false;
 }
 
-export default BookSeats;
+export default BookSeatsHook;

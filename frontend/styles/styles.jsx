@@ -108,8 +108,8 @@ export default StyleSheet.create({
     justifyContent: "space-between",
   },
   RouteFormat : {
-    borderBottomColor: "#DDD",
-    borderBottomWidth: 1,
+    borderTopColor: "#DDD",
+    borderTopWidth: 1,
     paddingRight: 10,
   },
   borderBottom: {
@@ -124,7 +124,7 @@ export default StyleSheet.create({
   routeOptionInformation: {
     display: "flex",
     alignItems: "flex-start",
-    paddingVertical: 20,
+    paddingVertical: 13,
     paddingHorizontal: 10,
   },
   routeOptionTrips: {
@@ -208,5 +208,16 @@ export default StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
     textAlign: "center",
+  },
+  subTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "black",
+    paddingBottom: 5,
+  },
+  flatList: {
+    width: "100%",
+    height: "100%",
+    maxHeight: ScreenHeight * 0.4 
   },
 });

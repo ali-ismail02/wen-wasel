@@ -1,10 +1,9 @@
-import { View, Image, Text } from 'react-native';
-import styles from '../styles/styles';
-import GetTripType from '../hooks/GetTripType';
-import UserRouteOption from './UserRouteOption';
-import Button from './Button';
+import { Text, View } from 'react-native';
 import BookSeatsHook from '../hooks/BookSeat';
-import Booked from './Booked';
+import GetTripType from '../hooks/GetTripType';
+import styles from '../styles/styles';
+import Button from './Button';
+import UserRouteOption from './UserRouteOption';
 
 const BookSeats = ({ path, setState, setPath }) => {
 

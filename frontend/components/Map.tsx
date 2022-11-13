@@ -13,6 +13,7 @@ import CustomMap from './CustomMap';
 import Search from "./Search";
 import Button from "./Button";
 import BookSeats from "./BookSeats";
+import Booked from "./Booked";
 
 const Map = () => {
     const [location, setLocation] = useState(undefined);
@@ -105,7 +106,16 @@ const Map = () => {
                     </View>,
 
         pathConfirmed: <BookSeats path={path} setState = {setState}/>,
-        booked: <SubRide path={path} setPath = {setPath} />
+
+        booked:<>
+                <SubRide path={path} setPath = {setPath} />
+                <Booked status = {1}/>
+            </>,
+        faliedBooking:<>
+                <SubRide path={path} setPath = {setPath} />
+                <Booked status = {0}/>
+            </>,
+        noBooking: <SubRide path={path} setPath = {setPath} />
     }
 
     return (

@@ -1,19 +1,18 @@
-import { BackHandler, SafeAreaView, View } from "react-native";
-import { centerScreen, moveTo } from '../hooks/CameraChange';
+import React, { useState } from "react";
+import { BackHandler, SafeAreaView, Text, View } from "react-native";
 import MapView, { LatLng } from 'react-native-maps';
-import React, { useEffect, useState } from "react";
-import UserRouteOptions from "./UserRouteOptions";
-import CenterMapButton from "./CenterMapButton";
-import SubRide from "./SubRides";
+import { centerScreen, moveTo } from '../hooks/CameraChange';
 import getRoutes from "../hooks/GetRoutes";
-import * as Location from 'expo-location';
-import CustomSlider from './CustomSlider';
 import styles from "../styles/styles";
-import CustomMap from './CustomMap';
-import Search from "./Search";
-import Button from "./Button";
-import BookSeats from "./BookSeats";
 import Booked from "./Booked";
+import BookSeats from "./BookSeats";
+import Button from "./Button";
+import CenterMapButton from "./CenterMapButton";
+import CustomSlider from './CustomSlider';
+import Search from "./Search";
+import SubRide from "./SubRides";
+import UserRouteOptions from "./UserRouteOptions";
+import CustomMap from "./CustomMap";
 
 const Map = () => {
     const [location, setLocation] = useState(undefined);
@@ -102,6 +101,7 @@ const Map = () => {
         rideSelected: <UserRouteOptions routes={paths} onPress={onPathSelect} />,
 
         pathSelected: <View style={styles.bottomPopupContainer}>
+                        <Text style = {styles.instructions}>Confirm your route?</Text>
                         <Button text="Confirm Route" onPress={onPathConfirm} width={"100%"} color={"#FF9E0D"} />
                     </View>,
 

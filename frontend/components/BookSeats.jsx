@@ -8,10 +8,11 @@ import Booked from './Booked';
 
 const BookSeats = ({ path, setState }) => {
 
-    const bookSeat = async (route) => {
-        const response = await BookSeatsHook(route);
+    const bookSeat = async (route, i) => {
+        const response = await BookSeatsHook(route.element.trip);
         console.log(response);
         if (response) {
+            path[i].resrvation = response;
             console.log("Booking Successful");
             setState("booked");
             return
@@ -29,7 +30,7 @@ const BookSeats = ({ path, setState }) => {
                         </View>
                         <Text style={styles.instructions}>A van is available at this route with empty seats, would you like to book a seat?</Text>
                         <View style={styles.flex}>
-                            <Button text="Yes" onPress={() => { bookSeat(path[i].element.trip) }} width={"48%"} color={"#FF9E0D"} />
+                            <Button text="Yes" onPress={() => { bookSeat(path[i], i) }} width={"48%"} color={"#FF9E0D"} />
                             <Button text="No" onPress={() => { setState("noBooking") }} width={"48%"} color={"black"} />
                         </View>
                     </View>

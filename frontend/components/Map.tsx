@@ -103,9 +103,7 @@ const Map = () => {
                         <Button text="Confirm Route" onPress={onPathConfirm} width={"100%"} color={"#FF9E0D"} />
                     </View>,
 
-        pathConfirmed: <View style={styles.bottomPopupContainer}>
-                            <SubRide path={path} setPath = {setPath} />
-                        </View>
+        pathConfirmed: <SubRide path={path} setPath = {setPath} />
     }
 
     return (

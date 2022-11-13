@@ -35,9 +35,9 @@ const SubRides = ({ path, setPath }) => {
         } else setImageName('walking');
 
 
-        if(path[1].name == "end_location"){
+        if (path[1].name == "end_location") {
             setButtonImage('waypoint')
-        }else if (GetTripType(path[1]) == 'service') {
+        } else if (GetTripType(path[1]) == 'service') {
             setButtonImage('car');
         } else if (GetTripType(path[1]) == 'van') {
             setButtonImage('van');
@@ -54,7 +54,7 @@ const SubRides = ({ path, setPath }) => {
 
     // remove first element from path array using setPath
     const removePath = () => {
-        if(path.length > 1){
+        if (path.length > 1) {
             setPath(path.slice(1));
             let path1 = path.slice(1)
             update(path1);
@@ -62,18 +62,19 @@ const SubRides = ({ path, setPath }) => {
     };
 
     if (path.length > 1) {
-        return (<>
-            <View style={styles.subRides}>
-                {imageName == "car" ? <Image source={require("../assets/images/car.png")} style={{ width: 40, height: 30 }} /> :
-                    imageName == "van" ? <Image source={require("../assets/images/van.png")} style={{ width: 40, height: 30 }} /> :
-                        <Image source={require("../assets/images/walking.png")} style={{ width: 20, height: 40 }} />}
-                <View style={styles.subRideText}>
-                    <Text style={styles.subRideTextDestination}>To {destination}</Text>
-                    <Text style={styles.subRideTextTime}>Arrive at {time}</Text>
+        return (
+            <View style={styles.bottomPopupContainer}>
+                <View style={styles.subRides}>
+                    {imageName == "car" ? <Image source={require("../assets/images/car.png")} style={{ width: 40, height: 30 }} /> :
+                        imageName == "van" ? <Image source={require("../assets/images/van.png")} style={{ width: 40, height: 30 }} /> :
+                            <Image source={require("../assets/images/walking.png")} style={{ width: 20, height: 40 }} />}
+                    <View style={styles.subRideText}>
+                        <Text style={styles.subRideTextDestination}>To {destination}</Text>
+                        <Text style={styles.subRideTextTime}>Arrive at {time}</Text>
+                    </View>
                 </View>
+                <Button text={'Change destination'} image={buttonImage} color={'#FF9E0D'} width={"100%"} onPress={removePath} />
             </View>
-            <Button text={'Change destination'} image={buttonImage} color={'#FF9E0D'} width={"100%"} onPress={removePath} />
-        </>
         )
     }
 };

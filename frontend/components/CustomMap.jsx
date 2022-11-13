@@ -20,7 +20,6 @@ const CustomMap = ({setCenterMap, centerMap, mapRef, destination, path, setLocat
                 setLocation(coordinate.nativeEvent.coordinate);
             }}
             onPress={(e) => {
-                setCenterMap(false);
                 if(userState != "searched") setState("searched")
                 setDestination(e.nativeEvent.coordinate)
             }}

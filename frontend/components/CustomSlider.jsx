@@ -6,6 +6,7 @@ import styles from '../styles/styles';
 const CustomSlider = ({sliderValue, setSliderValue}) => {
     return (
         <>
+            <Text style={[styles.instructions, {paddingBottom: 10}]}>Please select your desired trip type:</Text>
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <View style={{width:50}}>
                     <Text style={{textAlign: 'left'}}>Service</Text>

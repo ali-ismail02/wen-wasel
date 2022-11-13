@@ -53,7 +53,7 @@ export default StyleSheet.create({
     bottom: 0,
     left: 0,
     paddingHorizontal: 30,
-    paddingVertical: 20,
+    paddingVertical: 10,
     width: ScreenWidth,
     height: "auto",
     elevation: 5,
@@ -177,7 +177,7 @@ export default StyleSheet.create({
     fontSize: 20,
     color: "#DDD",
   },
-  bookSeatsText: {
+  instructions: {
     fontSize: 14,
     color: "black",
   },

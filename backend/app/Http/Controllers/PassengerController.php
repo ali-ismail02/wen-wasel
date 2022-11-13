@@ -435,7 +435,8 @@ class PassengerController extends Controller
 
         return response()->json([
             "status" => "success",
-            "message" => "Reservation added successfully"
+            "message" => "Reservation added successfully",
+            "reservation" => $reservation
         ]);
     }
     

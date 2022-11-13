@@ -8,7 +8,7 @@ const BookSeatsHook = async (route) => {
     const response = await Post("user/add-reservation", data, jwt);
 
     if (response.data.status == "success") {
-        return true;
+        return response.data.reservation.id;
     }
     return false;
 }

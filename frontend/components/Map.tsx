@@ -14,7 +14,7 @@ import Search from "./Search";
 import Button from "./Button";
 
 const Map = () => {
-    const [location, setLocation] = useState<Location.LocationObject | null>();
+    const [location, setLocation] = useState(undefined);
     const [allUserStates, setAllUserStates] = useState<string[]>(["none"]);
     const [destination, setDestination] = useState<LatLng | null>();
     const [userState, setUserState] = useState<string>("none");
@@ -57,13 +57,13 @@ const Map = () => {
         }
         setSearchResult(position)
         setDestination(position);
-        centerScreen(location.coords, position, mapRef);
+        centerScreen(location, position, mapRef);
         setCenterMap(false);
         setState("searched");
     }
 
     const rideSelect = async () => {
-        setPaths(await getRoutes(location.coords.latitude + "," + location.coords.longitude, destination.latitude + "," + destination.longitude, sliderValue[0]));
+        setPaths(await getRoutes(location.latitude + "," + location.longitude, destination.latitude + "," + destination.longitude, sliderValue[0]));
         setState("rideSelected");
     }
 

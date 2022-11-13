@@ -6,13 +6,14 @@ import Button from './Button';
 import BookSeatsHook from '../hooks/BookSeat';
 import Booked from './Booked';
 
-const BookSeats = ({ path, setState }) => {
+const BookSeats = ({ path, setState, setPath }) => {
 
     const bookSeat = async (route, i) => {
         const response = await BookSeatsHook(route.element.trip);
         console.log(response);
         if (response) {
             path[i].resrvation = response;
+            setState(path);
             console.log("Booking Successful");
             setState("booked");
             return

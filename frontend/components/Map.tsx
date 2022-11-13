@@ -12,6 +12,7 @@ import styles from "../styles/styles";
 import CustomMap from './CustomMap';
 import Search from "./Search";
 import Button from "./Button";
+import BookSeats from "./BookSeats";
 
 const Map = () => {
     const [location, setLocation] = useState(undefined);
@@ -103,7 +104,8 @@ const Map = () => {
                         <Button text="Confirm Route" onPress={onPathConfirm} width={"100%"} color={"#FF9E0D"} />
                     </View>,
 
-        pathConfirmed: <SubRide path={path} setPath = {setPath} />
+        pathConfirmed: <BookSeats path={path} setState = {setState}/>,
+        booked: <SubRide path={path} setPath = {setPath} />
     }
 
     return (

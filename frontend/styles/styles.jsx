@@ -93,6 +93,7 @@ export default StyleSheet.create({
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    borderRadius: 3
   },
   buttonText: {
     color: "white",
@@ -180,5 +181,6 @@ export default StyleSheet.create({
   instructions: {
     fontSize: 14,
     color: "black",
+    paddingBottom: 10,
   },
 });

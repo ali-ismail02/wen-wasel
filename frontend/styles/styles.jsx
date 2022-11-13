@@ -102,15 +102,25 @@ export default StyleSheet.create({
     width: "100%",
     padding: 10,
     display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  RouteFormat : {
+    borderBottomColor: "#DDD",
+    borderBottomWidth: 1,
+    paddingRight: 10,
+  },
+  routeOptionPrice: {
+    color: "black",
+    fontSize: 20,
+    fontWeight: "bold",
   },
   routeOptionInformation: {
     display: "flex",
     alignItems: "flex-start",
     paddingVertical: 20,
     paddingHorizontal: 10,
-    // add border bottom
-    borderBottomColor: "#DDDDDD",
-    borderBottomWidth: 1,
   },
   routeOptionTrips: {
     width: "70%",
@@ -138,6 +148,7 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    padding: 0
   },
   subRides: {
     display: "flex",
@@ -161,5 +172,5 @@ export default StyleSheet.create({
   subRideTextTime: {
     fontSize: 20,
     color: "#DDD",
-  }
+  },
 });

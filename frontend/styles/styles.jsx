@@ -111,6 +111,10 @@ export default StyleSheet.create({
     borderBottomWidth: 1,
     paddingRight: 10,
   },
+  borderBottom: {
+    borderBottomColor: "#DDD",
+    borderBottomWidth: 1,
+  },
   routeOptionPrice: {
     color: "black",
     fontSize: 20,
@@ -172,5 +176,9 @@ export default StyleSheet.create({
   subRideTextTime: {
     fontSize: 20,
     color: "#DDD",
+  },
+  bookSeatsText: {
+    fontSize: 14,
+    color: "black",
   },
 });

@@ -259,7 +259,7 @@ class VanController extends Controller
             ]);
         }
 
-        $route->date_time = $request->date_time;
+        $route->arrival_time = $request->date_time;
         $route->save();
 
         return response()->json([

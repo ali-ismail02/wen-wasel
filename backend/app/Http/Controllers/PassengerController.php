@@ -475,7 +475,7 @@ class PassengerController extends Controller
     }
 
     // Api to update reservation status to 1 (arrived)
-    public function updateReservation(Requrest $request){
+    public function updateReservation(Request $request){
         // Validate the request
         $rules = [
             'user_data'=>'required',

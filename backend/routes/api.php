@@ -34,7 +34,7 @@ Route::group(['prefix' => 'van'], function() {
     Route::group(['middleware' => 'VanJWT'], function() {
         Route::POST('add-one-route', [VanController::class, 'addOneTimeRoute']);
         Route::get('get-one-routes', [VanController::class, 'getOneTimeRoutes']);
-        Route::get('get-route/{route_id}',[VanController::class, 'getOneTimeRouteById']);
+        Route::get('get-route/{route_id}',[VanController::class, 'getRouteById']);
         Route::put('update-one-route', [VanController::class, 'updateOneTimeRoute']);
         Route::post('add-recurring-route', [VanController::class, 'addRecurringRoute']);
         Route::get('get-recurring-routes', [VanController::class, 'getRecurringRoutes']);

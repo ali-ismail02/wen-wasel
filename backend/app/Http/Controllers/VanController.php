@@ -188,20 +188,13 @@ class VanController extends Controller
     }
 
     // Get one time route by id
-    public function getOneTimeRouteById(Request $request){
+    public function getRouteById(Request $request){
+        // Validate the request
         if($error = validate($request->all(), ['user_data' => 'required'])){
             return response()->json([
                 "status" => "Failed",
                 "message" => "Validation Failed",
                 "errors" => $error
-            ]);
-        }
-
-        if($validator->fails()){
-            return response()->json([
-                "status" => "Failed",
-                "message" =>"Validation Failed",
-                "errors" => $validator->errors()
             ]);
         }
 
@@ -215,7 +208,7 @@ class VanController extends Controller
         }
 
         // Get route for the driver of type one time by id
-        $route = $driver->routes()->where('route_type', 1)->where('id', $request->route_id)->first();
+        $route = $driver->routes()->where('id', $request->route_id)->first();
         $reservations = $route->reservations()->count();
 
         return response()->json([

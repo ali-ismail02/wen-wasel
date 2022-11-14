@@ -5,17 +5,18 @@ import SelectDropdown from 'react-native-select-dropdown'
 import UpdateOneTimeRoute from '../../hooks/van/UpdateOneTimeRoute';
 
 const DelayingDestinations = ({ setDestinations, setState, destinations }) => {
+    const [minutes, setMinutes] = React.useState(null);
+    const [disabled, setDisabled] = React.useState(true);
     const mins = new Array(60).fill(1).map((_, i) => i);
 
-    const delayAllDestinations = async (selectedItem) => {
-        for(let i = 0; i < destinations.length; i++) {
+    const delayAllDestinations = async () => {
+        for (let i = 0; i < destinations.length; i++) {
             const date = new Date(destinations[i][1]);
-            const date2 = new Date(date.getTime() + selectedItem * 60000);
+            const date2 = new Date(date.getTime() + minutes * 60000);
             let time = date2.toLocaleTimeString();
             let dateStr = date2.toLocaleDateString();
             destinations[i][1] = dateStr + " " + time;
             const response = await UpdateOneTimeRoute(destinations[i][0].id, dateStr + " " + time);
-            console.log(response);
             if (!response) {
                 return;
             }
@@ -23,7 +24,7 @@ const DelayingDestinations = ({ setDestinations, setState, destinations }) => {
         setDestinations(destinations);
         setState("destinationsSet");
     }
-    
+
     return (
         <View style={styles.bottomPopupContainer}>
             <Text style={styles.instructions}>Please press on the mins menu and choose how many minutes are left till you arrive at your route </Text>
@@ -31,9 +32,10 @@ const DelayingDestinations = ({ setDestinations, setState, destinations }) => {
                 <Image style={{ width: 50, height: 30 }} source={require('../../assets/images/van.png')} />
                 <Image style={{ width: 50, height: 20 }} source={require('../../assets/images/3dots.png')} />
                 <Image style={{ width: 30, height: 35 }} source={require('../../assets/images/waypoint.png')} />
-                <SelectDropdown data = {mins} 
-                    onSelect={(selectedItem, index) => { 
-                        delayAllDestinations(selectedItem);
+                <SelectDropdown data={mins}
+                    onSelect={(selectedItem, index) => {
+                        setMinutes(selectedItem);
+                        delayAllDestinations
                     }}
                     buttonStyle={styles.selectButton}
                     dropdownIconPosition={"right"}
@@ -47,6 +49,10 @@ const DelayingDestinations = ({ setDestinations, setState, destinations }) => {
                     }}
 
                 />
+                <View style={styles.flex}>
+                    <Button text="Cancel" onPress={() => setState("destinationsSet")} color={"black"} width={"47%"} />
+                    <Button text="Add" onPress={delayAllDestinations} color={"#FF9E0D"} width={"47%"} disabled={disabled} />
+                </View>
             </View>
         </View>
     );

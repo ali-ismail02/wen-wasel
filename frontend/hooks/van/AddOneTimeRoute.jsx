@@ -2,9 +2,17 @@ import Post from "../Post";
 import { JWT } from "../../constants/vanJWT";
 
 const AddOneTimeRoute = async (location,date_time) => {
-    date_time = date_time.replace(/\//g, "-");
+    // convert date_time to sql input format
+    const date = new Date(date_time);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const day = date.getDate();
+    const hour = date.getHours();
+    const minute = date.getMinutes();
+    const second = date.getSeconds();
+    const sqlDate = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
     let loc = location.latitude + "," + location.longitude;
-    const response = await Post('van/add-one-route', {location:loc,date_time}, JWT);
+    const response = await Post('van/add-one-route', {location:loc,date_time:sqlDate}, JWT);
     if(response.data.status === "Success") {
         return response.data.route.id;
     }

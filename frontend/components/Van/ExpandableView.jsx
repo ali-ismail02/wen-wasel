@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Animated } from "react-native";
+import { FlatList } from "react-native-gesture-handler";
+import RouteDescription from "./RouteDescription";
 
-const ExpandableView = ({ expanded = false }) => {
+const ExpandableView = ({ expanded = false, routes }) => {
     const [height] = useState(new Animated.Value(0));
 
     useEffect(() => {
@@ -15,9 +17,12 @@ const ExpandableView = ({ expanded = false }) => {
     // console.log('rerendered');
 
     return (
-        <Animated.View
-            style={{ height, backgroundColor: "orange" }}
-        ></Animated.View>
+        <Animated.View style={{ height, backgroundColor: "orange" }}>
+            <FlatList 
+                data={routes}
+                renderItem={({ item }) => <Text>{item.name}</Text>}
+            />
+        </Animated.View>
     );
 };
 

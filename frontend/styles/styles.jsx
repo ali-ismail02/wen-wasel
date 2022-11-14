@@ -3,6 +3,7 @@ let ScreenHeight = Dimensions.get("window").height;
 let ScreenWidth = Dimensions.get("window").width;
 
 export default StyleSheet.create({
+  // Utility Styles
   container: {
     flex: 1,
     backgroundColor: 'red',
@@ -31,22 +32,6 @@ export default StyleSheet.create({
     borderColor: "#888",
     borderWidth: 1,
   },
-  center: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
-    width: 50,
-    height: 50,
-    borderRadius: 50,
-    elevation: 5,
-    zIndex: 100,
-    backgroundColor: "red",
-  },
-  centerImage: {
-    width: 50,
-    height: 50,
-    borderRadius: 50,
-  },
   bottomPopupContainer: {
     position: 'absolute',
     bottom: 0,
@@ -63,31 +48,54 @@ export default StyleSheet.create({
     justifyContent: "center",
     maxHeight: ScreenHeight * 0.4,
   },
+  flex: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    padding: 0
+  },
+  instructions: {
+    fontSize: 14,
+    color: "black",
+    paddingBottom: 10,
+  },
+  subTitle: {
+    fontSize: 20,
+    fontWeight: "bold",
+    color: "black",
+    paddingBottom: 5,
+  },
+  flatList: {
+    width: "100%",
+    height: "100%",
+    maxHeight: ScreenHeight * 0.4
+  },
+  // Center Button Styles
+  center: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+    elevation: 5,
+    zIndex: 100,
+    backgroundColor: "red",
+  },
+  centerImage: {
+    width: 50,
+    height: 50,
+    borderRadius: 50,
+  },
+  // Slider Styles
   sliderMark: {
     width: 20,
     height: 20,
     backgroundColor: "#DDDDDD",
     borderRadius: 20,
   },
-  nextButton: {
-    position: 'absolute',
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    bottom: 90,
-    right: 20,
-    width: 50,
-    height: 50,
-    borderRadius: 50,
-    elevation: 5,
-    zIndex: 1000,
-    backgroundColor: "white",
-  },
-  nextButtonImage: {
-    width: 40,
-    height: 40,
-    borderRadius: 40,
-  },
+  // Button Styles
   button: {
     display: "flex",
     alignItems: "center",
@@ -98,6 +106,7 @@ export default StyleSheet.create({
     color: "white",
     fontSize: 20,
   },
+  // User Route Option Styles
   routeOption: {
     width: "100%",
     padding: 10,
@@ -147,13 +156,7 @@ export default StyleSheet.create({
     backgroundColor: "white",
     zIndex: 1000,
   },
-  flex: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: 0
-  },
+  // SubRides Styles
   subRides: {
     display: "flex",
     flexDirection: "row",
@@ -177,11 +180,7 @@ export default StyleSheet.create({
     fontSize: 20,
     color: "#DDD",
   },
-  instructions: {
-    fontSize: 14,
-    color: "black",
-    paddingBottom: 10,
-  },
+  // Booking Styles
   BookingPopup: {
     position: 'absolute',
     bottom: ScreenHeight * 0.5 - 100,
@@ -208,15 +207,6 @@ export default StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
   },
-  subTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "black",
-    paddingBottom: 5,
-  },
-  flatList: {
-    width: "100%",
-    height: "100%",
-    maxHeight: ScreenHeight * 0.4
-  },
+  // Van Styles
+
 });

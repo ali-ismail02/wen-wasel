@@ -2,17 +2,23 @@ import { View, Text, Image } from 'react-native';
 import React from 'react';
 import styles from '../../styles/styles';
 import SelectDropdown from 'react-native-select-dropdown'
+import UpdateOneTimeRoute from '../../hooks/van/UpdateOneTimeRoute';
 
 const DelayingDestinations = ({ setDestinations, setState, destinations }) => {
     const mins = new Array(60).fill(1).map((_, i) => i);
 
-    const delayAllDestinations = (selectedItem) => {
+    const delayAllDestinations = async (selectedItem) => {
         for(let i = 0; i < destinations.length; i++) {
             const date = new Date(destinations[i][1]);
             const date2 = new Date(date.getTime() + selectedItem * 60000);
             let time = date2.toLocaleTimeString();
             let dateStr = date2.toLocaleDateString();
             destinations[i][1] = dateStr + " " + time;
+            const response = await UpdateOneTimeRoute(destinations[i][0].id, dateStr + " " + time);
+            console.log(response);
+            if (!response) {
+                return;
+            }
         }
         setDestinations(destinations);
         setState("destinationsSet");

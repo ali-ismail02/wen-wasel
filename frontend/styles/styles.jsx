@@ -254,8 +254,41 @@ export default StyleSheet.create({
     routes: {
       width: "100%",
       height: "100%",
+    },
+    // route description
+    routeDescription: {
+      borderBottomColor: "#DDD",
+      borderBottomWidth: 1,
+      borderTopColor: "#DDD",
+      borderTopWidth: 1,
+      marginBottom: -15,
+      width: "100%",
+      height: "auto",
+      paddingVertical: 10,
       paddingHorizontal: 30,
-
+    },
+    routeDescriptionText : {
+      fontSize: 20,
+      fontWeight: "bold",
+      color: "black",
+      padding:0,
+      margin:0,
+    },
+    routeDescriptionAddress : {
+      fontSize: 20,
+      color: "black",
+      width: 100,
+      textAlign: "center",
+      padding:0,
+      margin:0,
+    },
+    routeDescriptionTime : {
+      fontSize: 14,
+      color: "#777",
+      width: 100,
+      textAlign: "center",
+      padding:0,
+      margin:0,
     },
   }
 });

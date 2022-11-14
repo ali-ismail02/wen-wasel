@@ -1,12 +1,12 @@
 import { View, Text, Image } from 'react-native';
-import styles from '../styles/styles';
-import { Google_API_Key } from '../constants/GoogleAPIKey';
+import styles from '../../styles/styles';
+import { Google_API_Key } from '../../constants/GoogleAPIKey';
 import { useEffect, useState } from 'react';
-import Button from './Button';
-import GetTripType from '../hooks/GetTripType';
-import UpdateBooking from '../hooks/UpdateBooking';
+import Button from '../Button';
+import GetTripType from '../../hooks/passenger/GetTripType';
+import UpdateBooking from '../../hooks/passenger/UpdateBooking';
 
-const SubRides = ({ path, setPath }) => {
+const SubRides = ({ path, setPath, setState }) => {
     const [destination, setDestination] = useState('');
     const [time, setTime] = useState('');
     const [imageName, setImageName] = useState('');
@@ -48,18 +48,21 @@ const SubRides = ({ path, setPath }) => {
 
     useEffect(() => {
         if (path.length > 1) {
-            console.log(path.length)
             update(path);
         }
     }, []);
 
     // remove first element from path array using setPath
     const removePath = async () => {
-        console.log(path[0].reservation)
+        if(path.length === 2){
+            console.log("path length is 2")
+            setPath([]);
+            setState('done');
+            return;
+        }
+
         if(path[0].reservation != undefined){
-            console.log("hello")
             const response = await UpdateBooking(path[0].reservation);
-            console.log(response);
         }
 
         if (path.length > 1) {
@@ -73,9 +76,9 @@ const SubRides = ({ path, setPath }) => {
         return (
             <View style={styles.bottomPopupContainer}>
                 <View style={styles.subRides}>
-                    {imageName == "car" ? <Image source={require("../assets/images/car.png")} style={{ width: 40, height: 30 }} /> :
-                        imageName == "van" ? <Image source={require("../assets/images/van.png")} style={{ width: 40, height: 30 }} /> :
-                            <Image source={require("../assets/images/walking.png")} style={{ width: 20, height: 40 }} />}
+                    {imageName == "car" ? <Image source={require("../../assets/images/car.png")} style={{ width: 40, height: 30 }} /> :
+                        imageName == "van" ? <Image source={require("../../assets/images/van.png")} style={{ width: 40, height: 30 }} /> :
+                            <Image source={require("../../assets/images/walking.png")} style={{ width: 20, height: 40 }} />}
                     <View style={styles.subRideText}>
                         <Text style={styles.subRideTextDestination}>To {destination}</Text>
                         <Text style={styles.subRideTextTime}>Arrive at {time}</Text>

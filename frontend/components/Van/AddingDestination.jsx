@@ -18,7 +18,7 @@ const AddingDestination = ({ setDestinations, setState, destination }) => {
         const response = await AddOneTimeRoute(destination, dateStr + " " + time);
         if (response) {
             destination.id = response;
-            const dest = { latitude: destination.latitude, longitude:destination.longitude, id: response };
+            const dest = { latitude: destination.latitude, longitude:destination.longitude, id: response, arrived: false };
             setDestinations(dest, dateStr + " " + time);
             setState("destinationsSet");
             return;

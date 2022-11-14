@@ -105,6 +105,14 @@ export default StyleSheet.create({
     justifyContent: "center",
     maxHeight: ScreenHeight * 0.4,
   },
+  selectButton: {
+    width: 100,
+    height: 50,
+    backgroundColor: "#DDD",
+    borderRadius: 5,
+    borderColor: "#888",
+    borderWidth: 1,
+  },
   // Center Button Styles
   center: {
     position: 'absolute',

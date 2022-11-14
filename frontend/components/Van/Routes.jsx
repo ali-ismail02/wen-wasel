@@ -7,14 +7,6 @@ import Button from '../Button';
 
 const Routes = ({ destination, destinations, setState }) => {
 
-    const delay = () => {
-    }
-    
-    const addRoute = () => {
-        setState("addingRoute");
-    }
-
-    console.log("called", destination);
     if (destinations != null && destinations.length > 0) {
         return (
             <View style={styles.bottomPopupContainerNoPadding}>
@@ -27,8 +19,8 @@ const Routes = ({ destination, destinations, setState }) => {
                         <Text style={styles.subTitle}>Routes:</Text>
                         {destination == null ? <Button text="Delay" onPress={delay} color={"black"} width={"80%"} /> :
                             <View style={styles.flex}>
-                                <Button text="Delay" onPress={delay} color={"black"} width={"40%"} />
-                                <Button text="Add Route" onPress={addRoute} color={"#FF9E0D"} width={"40%"} />
+                                <Button text="Delay" onPress={setState("delaying")} color={"black"} width={"40%"} />
+                                <Button text="Add Route" onPress={() => setState("addingRoute")} color={"#FF9E0D"} width={"40%"} />
                             </View>
                         }
                     </View>

@@ -4,12 +4,13 @@ import MapView, { LatLng } from 'react-native-maps';
 import CustomMap from "./CustomMap";
 import Routes from "./Routes";
 import { centerScreen } from "../../hooks/CameraChange";
+import AddingDestination from "./AddingDestination";
 
 const Main = () => {
     const [userState, setUserState] = useState("none");
     const [allUserStates, setAllUserStates] = useState(["none"]);
     const [destination, setDestination] = useState<LatLng | null>(null);
-    const [allDestinations, setAllDestinations] = useState(null);
+    const [allDestinations, setAllDestinations] = useState([]);
     const [location, setLocation] = useState(undefined);
     const [centerMap, setCenterMap] = useState(true);
     const mapRef = React.useRef<MapView>(null);
@@ -30,7 +31,7 @@ const Main = () => {
         setAllUserStates([...allUserStates, state]);
     }
 
-    const setDestinations = (destination: LatLng, time: string) => {
+    const setDestinations = (destination, time) => {
         setDestination(null);
         setAllDestinations([...allDestinations, [destination, time]]);
         setState("destinationsSet");
@@ -38,6 +39,7 @@ const Main = () => {
 
     const components = {
         destinationsSet: <Routes destination={destination} setState={setState} destinations= {allDestinations}/>,
+        addingRoute: <AddingDestination setDestinations={setDestinations} setState={setState} destination={destination}/>,
     }
 
     return (

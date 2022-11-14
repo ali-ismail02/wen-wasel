@@ -15,7 +15,6 @@ const Main = () => {
     const [location, setLocation] = useState(undefined);
     const [centerMap, setCenterMap] = useState(true);
     const mapRef = React.useRef<MapView>(null);
-    console.log("allDestinations", allDestinations);
 
     const onPlaceSelect = (details) => {
         const position = {
@@ -40,7 +39,7 @@ const Main = () => {
     }
 
     const components = {
-        destinationsSet: <Routes destination={destination} setState={setState} destinations= {allDestinations}/>,
+        destinationsSet: <Routes destination={destination} setState={setState} destinations= {allDestinations} setDestinations={setAllDestinations}/>,
         addingRoute: <AddingDestination setDestinations={setDestinations} setState={setState} destination={destination}/>,
         delaying: <DelayingDestinations destinations={allDestinations} setDestinations={setAllDestinations} setState={setState}/>,
     }

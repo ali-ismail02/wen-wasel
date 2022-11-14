@@ -1,8 +1,8 @@
 import React from "react";
 import { View } from "react-native";
-import Main from "../components/Van";
+import Main from "../components/Van/Main";
 
-const HomeScreen = () => {
+const VanScreen = () => {
     return (
         <View>
             <Main />
@@ -10,4 +10,4 @@ const HomeScreen = () => {
     );
 };
 
-export default HomeScreen;
+export default VanScreen;

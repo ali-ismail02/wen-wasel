@@ -15,7 +15,7 @@ import SubRide from "./SubRides";
 import UserRouteOptions from "./UserRouteOptions";
 import CompletedTrip from "./CompletedTrip";
 
-const Map = () => {
+const Main = () => {
     const [location, setLocation] = useState(undefined);
     const [allUserStates, setAllUserStates] = useState<string[]>(["none"]);
     const [destination, setDestination] = useState<LatLng | null>();
@@ -139,4 +139,4 @@ const Map = () => {
     );
 };
 
-export default Map; 
+export default Main; 

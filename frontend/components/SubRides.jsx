@@ -4,6 +4,7 @@ import { Google_API_Key } from '../constants/GoogleAPIKey';
 import { useEffect, useState } from 'react';
 import Button from './Button';
 import GetTripType from '../hooks/GetTripType';
+import UpdateBooking from '../hooks/UpdateBooking';
 
 const SubRides = ({ path, setPath }) => {
     const [destination, setDestination] = useState('');
@@ -53,7 +54,14 @@ const SubRides = ({ path, setPath }) => {
     }, []);
 
     // remove first element from path array using setPath
-    const removePath = () => {
+    const removePath = async () => {
+        console.log(path[0].reservation)
+        if(path[0].reservation != undefined){
+            console.log("hello")
+            const response = await UpdateBooking(path[0].reservation);
+            console.log(response);
+        }
+
         if (path.length > 1) {
             setPath(path.slice(1));
             let path1 = path.slice(1)

@@ -7,11 +7,12 @@ const Booked = ({ status }) => {
 
     // set display to false after 2 seconds
     useEffect(() => {
-        setTimeout(() => {
-            setDisplay(false);
-        }, 2000);
+        if (display) {
+            setTimeout(() => {
+                setDisplay(false);
+            }, 2000);
+        }
     }, []);
-    console.log(display,status);
 
     if (status == 1) {
         return (<>

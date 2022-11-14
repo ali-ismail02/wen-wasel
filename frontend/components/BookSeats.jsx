@@ -10,7 +10,7 @@ const BookSeats = ({ path, setState, setPath }) => {
     const bookSeat = async (route, i) => {
         const response = await BookSeatsHook(route.element.trip);
         if (response != false) {
-            path[i].resrvation = response;
+            path[i].reservation = response;
             setState(path);
             setState("booked");
             return
@@ -36,6 +36,7 @@ const BookSeats = ({ path, setState, setPath }) => {
             )
         }
     }
+    setState("noBooking") 
     return null;
 }
 

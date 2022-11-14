@@ -14,7 +14,6 @@ const CustomMap = ({setCenterMap, centerMap, mapRef, destination, path, setLocat
             onPanDrag={() => setCenterMap(false)}
             followsUserLocation={centerMap}
             showsMyLocationButton={false}
-            userLocationUpdateInterval={1000}
             onUserLocationChange={(coordinate) => {
                 centerMap === true && moveTo(coordinate.nativeEvent.coordinate, mapRef);
                 setLocation(coordinate.nativeEvent.coordinate);

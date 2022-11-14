@@ -11,16 +11,23 @@ const Routes = ({ destination, destinations, setState, setDestinations }) => {
     const [expanded, setExpanded] = useState(false);
     // get first destination from destinations where arrived is false
     const [firstDestination, setFirstDestination] = useState(destinations.find(destination => destination[0].arrived === false));
+    const [finished, setFinished] = useState(true);
 
     React.useEffect(() => {
         const getFirstDestination = () => {
             const firstDestination = destinations.find(destination => destination[0].arrived === false);
             setFirstDestination(firstDestination);
         }
+        destinations.forEach(destination => {
+            if(destination[0].arrived === false){
+                setFinished(false);
+                return;
+            }
+        });
         getFirstDestination();
     }, [destinations]);
 
-    if (destinations != null && destinations.length > 0) {
+    if (destinations != null && destinations.length > 0 && !finished) {
         return (
             <View style={styles.bottomPopupContainerNoPadding}>
                 <TouchableWithoutFeedback style={styles.bottomPopupExpander} onPress={() => setExpanded(true)}>

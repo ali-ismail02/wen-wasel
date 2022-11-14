@@ -7,18 +7,41 @@ const Button = ({ onPress, text, color, height = 50, width, image = null, disabl
             ...styles.buttonText,
             color: "black"
         }
+        if(disabled) {
+            var buttonStyle = {
+                ...styles.button,
+                height: height,
+                width: width,
+                backgroundColor: "#6F4609",
+            }
+        }else {
+            var buttonStyle = {
+                ...styles.button,
+                height: height,
+                width: width,
+                backgroundColor: color,
+            }
+        }
     } else {
         var textStyle = {
             ...styles.buttonText,
             color: "white"
         }
-    }
-
-    var buttonStyle = {
-        ...styles.button,
-        height: height,
-        width: width,
-        backgroundColor: color
+        if(disabled) {
+            var buttonStyle = {
+                ...styles.button,
+                height: height,
+                width: width,
+                backgroundColor: "#DDD",
+            }
+        }else {
+            var buttonStyle = {
+                ...styles.button,
+                height: height,
+                width: width,
+                backgroundColor: color,
+            }
+        }
     }
 
     if (image != null) {

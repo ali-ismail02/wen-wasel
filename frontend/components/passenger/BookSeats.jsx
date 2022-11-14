@@ -1,9 +1,9 @@
 import { Text, View } from 'react-native';
 import BookSeatsHook from '../../hooks/passenger/BookSeat';
-import GetTripType from '../../hooks/GetTripType';
+import GetTripType from '../../hooks/passenger/GetTripType';
 import styles from '../../styles/styles';
 import Button from '../Button';
-import UserRouteOption from '../UserRouteOption';
+import UserRouteOption from './UserRouteOption';
 
 const BookSeats = ({ path, setState, setPath }) => {
 

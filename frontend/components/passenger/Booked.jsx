@@ -18,7 +18,7 @@ const Booked = ({ status }) => {
         return (<>
             {display == true &&
                 <View style={styles.BookingPopup} >
-                    <Image source={require('../assets/images/tick.png')} style={styles.bookingImage} />
+                    <Image source={require('../../assets/images/tick.png')} style={styles.bookingImage} />
                     <Text style={styles.bookingText}>Booking Successful</Text>
                 </View>}
         </>
@@ -27,7 +27,7 @@ const Booked = ({ status }) => {
     return (<>
         {display == true &&
             <View style={styles.BookingPopup} >
-                <Image source={require('../assets/images/x.png')} style={styles.bookingImage} />
+                <Image source={require('../../assets/images/x.png')} style={styles.bookingImage} />
                 <Text style={styles.bookingText}>Booking Failed</Text>
             </View>}
     </>

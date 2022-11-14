@@ -1,8 +1,8 @@
-import Graph from "../classes/Graph";
-import { jwt } from "../constants/JWT";
-import Get from "./Get";
-import getDirections from "./GetGoogleDirections";
-import isLess from "./IsLess";
+import Graph from "../../classes/Graph";
+import { jwt } from "../../constants/JWT";
+import Get from "../Get";
+import getDirections from "../GetGoogleDirections";
+import isLess from "../IsLess";
 
 const buildServiceGraph = async (service, start_location, end_location, start, end, graph) => {
     for (let i = 0; i < service.length; i++) {

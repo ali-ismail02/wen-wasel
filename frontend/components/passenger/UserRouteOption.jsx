@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Image, Text, TouchableNativeFeedback, View } from "react-native";
-import styles from "../styles/styles";
-import GetFares from "../hooks/GetFares";
+import styles from "../../styles/styles";
+import GetFares from "../../hooks/passenger/GetFares";
 
 const UserRouteOption = ({ route, onPress }) => {
     const [time, setTime] = useState(undefined);
@@ -11,7 +11,6 @@ const UserRouteOption = ({ route, onPress }) => {
         const getPrice = async () => {
             const price = await GetFares(route);
             setPrice(price);
-            console.log(price);
         };
         getPrice();
         let time = route.time;
@@ -36,21 +35,21 @@ const UserRouteOption = ({ route, onPress }) => {
                                 if (trip.name.includes("service") && trip.name.includes("start")) {
                                     return (
                                         <View key={index} style={styles.flex}>
-                                            <Image source={require("../assets/images/car.png")} style={{ width: 20, height: 20 }} />
+                                            <Image source={require("../../assets/images/car.png")} style={{ width: 20, height: 20 }} />
                                             <Text style={styles.routeOptionTripText}>{trip.cost}</Text>
                                         </View>
                                     );
                                 } else if (trip.name.includes("van") && trip.name.includes("start")) {
                                     return (
                                         <View key={index} style={styles.flex}>
-                                            <Image source={require("../assets/images/van.png")} style={{ width: 20, height: 20 }} />
+                                            <Image source={require("../../assets/images/van.png")} style={{ width: 20, height: 20 }} />
                                             <Text style={styles.routeOptionTripText}>{trip.cost}</Text>
                                         </View>
                                     );
                                 } else {
                                     return (
                                         <View key={index} style={styles.flex}>
-                                            <Image source={require("../assets/images/walking.png")} style={{ width: 10, height: 20 }} />
+                                            <Image source={require("../../assets/images/walking.png")} style={{ width: 10, height: 20 }} />
                                             <Text style={styles.routeOptionTripText}>{trip.cost}</Text>
                                         </View>
                                     );
@@ -58,7 +57,7 @@ const UserRouteOption = ({ route, onPress }) => {
                             } else {
                                 return (
                                     <View key={index} style={styles.flex}>
-                                        <Image source={require("../assets/images/waypoint.png")} style={{ width: 20, height: 20 }} />
+                                        <Image source={require("../../assets/images/waypoint.png")} style={{ width: 20, height: 20 }} />
                                     </View>
                                 )
                             }

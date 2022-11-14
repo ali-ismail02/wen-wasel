@@ -1,5 +1,5 @@
-import { jwt } from '../constants/JWT';
-import Get from './Get';
+import { jwt } from '../../constants/JWT';
+import Get from '../Get';
 
 const GetFares = async (path) => {
     const response = await Get("user/get-fares", jwt);

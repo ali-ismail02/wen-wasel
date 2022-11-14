@@ -1,5 +1,5 @@
-import jwt from "../constants/JWT";
-import Put from "./Put";
+import {jwt} from "../../constants/JWT";
+import Put from "../Put";
 
 const UpdateBooking = async (booking) => {
     const data = {

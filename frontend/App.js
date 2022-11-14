@@ -1,5 +1,5 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import HomeScreen from './screens/HomeScreen';
+import UserScreen from './screens/UserScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { Entypo } from '@expo/vector-icons';
 
@@ -11,7 +11,7 @@ export default function App() {
       <Stack.Navigator>
         <Stack.Screen 
         name="Home" 
-        component={HomeScreen}
+        component={UserScreen}
         options={{
           title: 'Wen Wasel',
           headerStyle: {

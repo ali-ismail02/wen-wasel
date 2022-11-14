@@ -1,11 +1,11 @@
 import React from "react";
 import { View } from "react-native";
-import Map from "../components/passenger/Map";
+import Main from "../components/Van";
 
 const HomeScreen = () => {
     return (
         <View>
-            <Map />
+            <Main />
         </View>
     );
 };

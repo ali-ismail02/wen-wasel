@@ -226,6 +226,49 @@ class VanController extends Controller
         ]);
     }
 
+    public function updateOneTimeRoute(Request $request){
+        // Validate the request
+        $rules = [
+            'date_time' => 'required',
+            'user_data' => 'required',
+            'route_id' => 'required'
+        ];
+
+        if($error = validate($request->all(), $rules)){
+            return response()->json([
+                "status" => "Failed",
+                "message" => "Validation Failed",
+                "errors" => $error
+            ]);
+        }
+
+        $user = $request->user_data;
+        $driver = $user->drivers()->first();
+        if(!$driver){
+            return response()->json([
+                "status" => "Failed",
+                "message" =>"Driver not found",
+            ]);
+        }
+
+        $route = $driver->routes()->where('route_type', 1)->where('id', $request->route_id)->first();
+        if(!$route){
+            return response()->json([
+                "status" => "Failed",
+                "message" =>"Route not found",
+            ]);
+        }
+
+        $route->date_time = $request->date_time;
+        $route->save();
+
+        return response()->json([
+            "status" => "Success",
+            "message" =>"Route updated successfully",
+            "route" => $route
+        ]);
+    }
+
     // Add a recurring route
     public function addRecurringRoute(Request $request){
         // Validate the request

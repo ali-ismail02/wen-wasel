@@ -71,6 +71,40 @@ export default StyleSheet.create({
     height: "100%",
     maxHeight: ScreenHeight * 0.4
   },
+  bottomPopupExpander: {
+    height:20,
+    width: "100%",
+    backgroundColor: "white",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 7.5,
+    borderBottomColor: "#888",
+    borderBottomWidth: 1,
+    marginBottom: 10,
+  },
+  bottomPopupLine: {
+    width: 50,
+    height: 5,
+    backgroundColor: "#888",
+    borderRadius: 5,
+  },
+  bottomPopupContainerNoPadding: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    paddingHorizontal: 0,
+    paddingVertical: 0,
+    width: ScreenWidth,
+    height: "auto",
+    elevation: 5,
+    zIndex: 100,
+    backgroundColor: "white",
+    display: "flex",
+    alignItems: "stretch",
+    justifyContent: "center",
+    maxHeight: ScreenHeight * 0.4,
+  },
   // Center Button Styles
   center: {
     position: 'absolute',
@@ -208,5 +242,12 @@ export default StyleSheet.create({
     textAlign: "center",
   },
   // Van Styles
+  van: {
+    routes: {
+      width: "100%",
+      height: "100%",
+      paddingHorizontal: 30,
 
+    },
+  }
 });

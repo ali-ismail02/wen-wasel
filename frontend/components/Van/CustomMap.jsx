@@ -1,15 +1,17 @@
 import INITIAL_POSITION from '../../constants/InitialPosition';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import styles from '../../styles/styles';
-import {moveTo} from '../../hooks/CameraChange';
-import PathDraw from './PathDraw';
+import { moveTo } from '../../hooks/CameraChange';
 import { Google_API_Key } from '../../constants/GoogleAPIKey';
+import Search from '../Search';
+import { View } from 'react-native';
 
-const CustomMap = ({setCenterMap, centerMap, mapRef, destination, path, setLocation, setState, setDestinations, userState}) => {
-    return (
+const CustomMap = ({ setCenterMap, centerMap, mapRef, destination, path, setLocation, setState, setDestination, userState, onPlaceSelect }) => {
+
+    return (<>
         <MapView
             apikey={Google_API_Key}
-            provider={PROVIDER_GOOGLE} 
+            provider={PROVIDER_GOOGLE}
             showsUserLocation={true}
             onPanDrag={() => setCenterMap(false)}
             followsUserLocation={centerMap}
@@ -20,15 +22,18 @@ const CustomMap = ({setCenterMap, centerMap, mapRef, destination, path, setLocat
             }}
             onPress={(e) => {
                 setCenterMap(false);
-                if(userState != "searched") setState("searched")
-                setDestinations(e.nativeEvent.coordinate)
+                setState('initialDestination');
+                setDestination(e.nativeEvent.coordinate)
             }}
-            ref={mapRef} 
-            style={styles.map} 
+            ref={mapRef}
+            style={styles.map}
             initialRegion={INITIAL_POSITION}>
             {destination != null && <Marker coordinate={destination} />}
-            {path != undefined && PathDraw(path)}
         </MapView>
+        <View style={styles.searchContainer}>
+            <Search onPlaceSelect={(details) => onPlaceSelect(details)} />
+        </View>
+    </>
     );
 };
 

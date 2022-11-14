@@ -1,6 +1,6 @@
 import react from 'react';
 import MapViewDirections from 'react-native-maps-directions';
-import {Google_API_Key} from '../constants/GoogleAPIKey';
+import {Google_API_Key} from '../../constants/GoogleAPIKey';
 
 const PathDraw = (path) => {
     return (

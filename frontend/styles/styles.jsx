@@ -1,5 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
-import Constants from 'expo-constants';
+import { Dimensions, StyleSheet } from "react-native";
 let ScreenHeight = Dimensions.get("window").height;
 let ScreenWidth = Dimensions.get("window").width;
 
@@ -62,7 +61,7 @@ export default StyleSheet.create({
     display: "flex",
     alignItems: "stretch",
     justifyContent: "center",
-    maxHeight : ScreenHeight * 0.4,
+    maxHeight: ScreenHeight * 0.4,
   },
   sliderMark: {
     width: 20,
@@ -107,7 +106,7 @@ export default StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
   },
-  RouteFormat : {
+  RouteFormat: {
     borderTopColor: "#DDD",
     borderTopWidth: 1,
     paddingRight: 10,
@@ -218,6 +217,6 @@ export default StyleSheet.create({
   flatList: {
     width: "100%",
     height: "100%",
-    maxHeight: ScreenHeight * 0.4 
+    maxHeight: ScreenHeight * 0.4
   },
 });

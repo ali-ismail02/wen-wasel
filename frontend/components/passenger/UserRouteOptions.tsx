@@ -1,6 +1,6 @@
 import { View, Text } from "react-native";
 import UserRouteOption from "./UserRouteOption";
-import styles from "../styles/styles";
+import styles from "../../styles/styles";
 import { FlatList } from "react-native-gesture-handler";
 
 const UserRouteOptions = ({ routes, onPress }) => {

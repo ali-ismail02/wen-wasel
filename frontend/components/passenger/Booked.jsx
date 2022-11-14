@@ -1,5 +1,5 @@
 import { View, Text, Image } from 'react-native';
-import styles from '../styles/styles';
+import styles from '../../styles/styles';
 import { useState, useEffect } from 'react';
 
 const Booked = ({ status }) => {

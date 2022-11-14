@@ -17,4 +17,4 @@ const Delete = async (api_url, api_data, api_token = null) => {
         console.log("Error from POST API", error);
     }
 };
-export default Post
+export default Delete

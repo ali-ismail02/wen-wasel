@@ -1,5 +1,5 @@
-import Post from "./Post"
-import { jwt } from "../constants/JWT";
+import { jwt } from "../../constants/JWT";
+import Post from "../Post";
 
 const BookSeatsHook = async (route) => {
     const data = {

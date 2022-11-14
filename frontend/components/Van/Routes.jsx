@@ -4,15 +4,18 @@ import styles from '../../styles/styles';
 import { TouchableHighlight, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Button from '../Button';
 
-const delay = () => {
-}
 
-const addRoute = () => {
-}
+const Routes = ({ destination, destinations, setState }) => {
 
-const Routes = ({ destination, userState, path }) => {
+    const delay = () => {
+    }
+    
+    const addRoute = () => {
+        setState("addingRoute");
+    }
+
     console.log("called", destination);
-    if (path != null && path.length > 0) {
+    if (destinations != null && destinations.length > 0) {
         return (
             <View style={styles.bottomPopupContainerNoPadding}>
                 <View style={styles.bottomPopupExpander}>

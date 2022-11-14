@@ -6,7 +6,7 @@ import { Google_API_Key } from '../../constants/GoogleAPIKey';
 import Search from '../Search';
 import { View } from 'react-native';
 
-const CustomMap = ({ setCenterMap, centerMap, mapRef, destination, path, setLocation, setState, setDestination, userState, onPlaceSelect }) => {
+const CustomMap = ({ setCenterMap, centerMap, mapRef, destination, setLocation, setState, setDestination, userState, onPlaceSelect }) => {
 
     return (<>
         <MapView
@@ -22,7 +22,7 @@ const CustomMap = ({ setCenterMap, centerMap, mapRef, destination, path, setLoca
             }}
             onPress={(e) => {
                 setCenterMap(false);
-                setState('initialDestination');
+                setState('destinationsSet');
                 setDestination(e.nativeEvent.coordinate)
             }}
             ref={mapRef}

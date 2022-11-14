@@ -17,9 +17,9 @@ const Routes = ({ destination, destinations, setState }) => {
                 <View style={styles.van.routes}>
                     <View style={styles.flex}>
                         <Text style={styles.subTitle}>Routes:</Text>
-                        {destination == null ? <Button text="Delay" onPress={delay} color={"black"} width={"80%"} /> :
+                        {destination == null ? <Button text="Delay" onPress={() => setState("delaying")} color={"black"} width={"80%"} /> :
                             <View style={styles.flex}>
-                                <Button text="Delay" onPress={setState("delaying")} color={"black"} width={"40%"} />
+                                <Button text="Delay" onPress={() => setState("delaying")} color={"black"} width={"40%"} />
                                 <Button text="Add Route" onPress={() => setState("addingRoute")} color={"#FF9E0D"} width={"40%"} />
                             </View>
                         }
@@ -37,7 +37,7 @@ const Routes = ({ destination, destinations, setState }) => {
                 <View style={styles.van.routes}>
                     <View style={styles.flex}>
                         <Text style={styles.subTitle}>Routes:</Text>
-                        <Button text="Add Route" onPress={addRoute} color={"#FF9E0D"} width={"80%"} />
+                        <Button text="Add Route" onPress={() => setState("addingRoute")} color={"#FF9E0D"} width={"80%"} />
                     </View>
                 </View>
             </View>

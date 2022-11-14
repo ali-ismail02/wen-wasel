@@ -4,7 +4,7 @@ import styles from '../../styles/styles';
 import SelectDropdown from 'react-native-select-dropdown'
 
 const AddingDestination = ({ setDestinations, setState, destination }) => {
-    const mins = new Array(60).fill(0).map((_, i) => i);
+    const mins = new Array(60).fill(1).map((_, i) => i);
     return (
         <View style={styles.bottomPopupContainer}>
             <Text style={styles.instructions}>Please press on the mins menu and choose how many minutes are left till you arrive at your route </Text>

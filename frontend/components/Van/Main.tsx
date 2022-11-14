@@ -5,6 +5,7 @@ import CustomMap from "./CustomMap";
 import Routes from "./Routes";
 import { centerScreen } from "../../hooks/CameraChange";
 import AddingDestination from "./AddingDestination";
+import DelayingDestinations from "./DelayingDestinations";
 
 const Main = () => {
     const [userState, setUserState] = useState("none");
@@ -14,6 +15,7 @@ const Main = () => {
     const [location, setLocation] = useState(undefined);
     const [centerMap, setCenterMap] = useState(true);
     const mapRef = React.useRef<MapView>(null);
+    console.log("allDestinations", allDestinations);
 
     const onPlaceSelect = (details) => {
         const position = {
@@ -40,6 +42,7 @@ const Main = () => {
     const components = {
         destinationsSet: <Routes destination={destination} setState={setState} destinations= {allDestinations}/>,
         addingRoute: <AddingDestination setDestinations={setDestinations} setState={setState} destination={destination}/>,
+        delaying: <DelayingDestinations destinations={allDestinations} setDestinations={setAllDestinations} setState={setState}/>,
     }
 
     return (

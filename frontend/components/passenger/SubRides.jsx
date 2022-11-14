@@ -55,7 +55,6 @@ const SubRides = ({ path, setPath, setState }) => {
     // remove first element from path array using setPath
     const removePath = async () => {
         if(path.length === 2){
-            console.log("path length is 2")
             setPath([]);
             setState('done');
             return;

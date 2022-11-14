@@ -149,7 +149,7 @@ const buildVanAndServiceGraph = async (service, van, start_location, end_locatio
 }
 
 const buildGraph = async (start_location, end_location, trip_type) => {
-    console.log(trip_type)
+    if(!trip_type) trip_type = 1;
     // get the routes from the backend
 
     const response = await Get("user/get-possible-routes/" + start_location + "/" + end_location, jwt);

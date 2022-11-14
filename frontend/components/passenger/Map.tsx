@@ -29,7 +29,6 @@ const Map = () => {
 
     const backPressed = () => {
         if (allUserStates.length > 5) {
-            console.log(allUserStates);
             return true;
         }
         if (userState === "pathConfirmed") {

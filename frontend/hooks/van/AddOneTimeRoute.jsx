@@ -8,3 +8,5 @@ const AddOneTimeRoute = async (location,date_time) => {
     }
     return false;
 }
+
+export default AddOneTimeRoute;

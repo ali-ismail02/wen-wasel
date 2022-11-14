@@ -1,21 +1,34 @@
-import { View, Text, Image } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
+import { Text, View } from 'react-native';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import styles from '../../styles/styles';
-import { TouchableHighlight, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import Button from '../Button';
+import ExpandableView from './ExpandableView';
+import RouteDescription from './RouteDescription';
 
 
-const Routes = ({ destination, destinations, setState }) => {
+const Routes = ({ destination, destinations, setState, setDestinations }) => {
+    const [expanded, setExpanded] = useState(false);
+    // get first destination from destinations where arrived is false
+    const [firstDestination, setFirstDestination] = useState(destinations.find(destination => destination[0].arrived === false));
+
+    React.useEffect(() => {
+        const getFirstDestination = () => {
+            const firstDestination = destinations.find(destination => destination[0].arrived === false);
+            setFirstDestination(firstDestination);
+        }
+        getFirstDestination();
+    }, [destinations]);
 
     if (destinations != null && destinations.length > 0) {
         return (
             <View style={styles.bottomPopupContainerNoPadding}>
-                <View style={styles.bottomPopupExpander}>
+                <TouchableWithoutFeedback style={styles.bottomPopupExpander} onPress={() => setExpanded(true)}>
                     <View style={styles.bottomPopupLine}>
                     </View>
-                </View>
+                </TouchableWithoutFeedback>
                 <View style={styles.van.routes}>
-                    <View style={styles.flex}>
+                    <View style={[styles.flex, {paddingHorizontal: 30, paddingBottom:10}]}>
                         <Text style={styles.subTitle}>Routes:</Text>
                         {destination == null ? <Button text="Delay" onPress={() => setState("delaying")} color={"black"} width={"80%"} /> :
                             <View style={styles.flex}>
@@ -24,10 +37,12 @@ const Routes = ({ destination, destinations, setState }) => {
                             </View>
                         }
                     </View>
+                    {expanded == true ? <ExpandableView expanded={expanded} routes={destinations} /> :
+                        <RouteDescription destination={firstDestination} setDestinations={setDestinations} allDestionations={destinations} />}
                 </View>
             </View>
         );
-    } else if(destination != null) {
+    } else if (destination != null) {
         return (
             <View style={styles.bottomPopupContainerNoPadding}>
                 <View style={styles.bottomPopupExpander}>

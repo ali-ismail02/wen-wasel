@@ -5,7 +5,7 @@ import {moveTo} from '../../hooks/CameraChange';
 import PathDraw from './PathDraw';
 import { Google_API_Key } from '../../constants/GoogleAPIKey';
 
-const CustomMap = ({setCenterMap, centerMap, mapRef, destination, path, setLocation, setState, setDestination, userState}) => {
+const CustomMap = ({setCenterMap, centerMap, mapRef, destination, path, setLocation, setState, setDestinations, userState}) => {
     return (
         <MapView
             apikey={Google_API_Key}
@@ -21,7 +21,7 @@ const CustomMap = ({setCenterMap, centerMap, mapRef, destination, path, setLocat
             onPress={(e) => {
                 setCenterMap(false);
                 if(userState != "searched") setState("searched")
-                setDestination(e.nativeEvent.coordinate)
+                setDestinations(e.nativeEvent.coordinate)
             }}
             ref={mapRef} 
             style={styles.map} 

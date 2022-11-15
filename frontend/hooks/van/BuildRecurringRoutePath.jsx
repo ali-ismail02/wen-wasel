@@ -1,3 +1,5 @@
+import SortPath from "./SortPath";
+
 const BuildRecurringRoutePath = async ( presaved_route, setPath ) => {
     const path = [];
     presaved_route.routes.forEach(route => {
@@ -15,9 +17,10 @@ const BuildRecurringRoutePath = async ( presaved_route, setPath ) => {
             },
             dateStr + " " + time
         ]
+
         path.push(destination);
     });
-    setPath(path);
+    setPath(SortPath(path));
     return path;
 }
 

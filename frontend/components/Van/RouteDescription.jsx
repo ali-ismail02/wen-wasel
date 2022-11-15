@@ -1,11 +1,12 @@
-import { TouchableHighlight, View, Image, Text } from "react-native";
+import { TouchableOpacity, View, Image, Text } from "react-native";
 import styles from "../../styles/styles";
 import GetRouteById from "../../hooks/van/GetRouteById";
 import { useEffect, useState } from "react";
 import { Google_API_Key } from "../../constants/GoogleAPIKey";
+import SetTripArrived from "../../hooks/van/setTripArrived";
 
 const RouteDescription = ({ destination, setDestionations, allDestionations }) => {
-    if(destination != null){
+    if(destination == null){
         return null;
     }
     const [route, setRoute] = useState(destination);
@@ -40,18 +41,22 @@ const RouteDescription = ({ destination, setDestionations, allDestionations }) =
         getRoute();
     }, []);
 
-    const onPress = () => {
+    const onPress = async () => {
         for(let i = 0; i < allDestionations.length; i++){
             if(allDestionations[i][0].id === destination[0].id){
                 allDestionations[i][0].arrived = true;
-                return;
+                break;
             }
         }
-        setDestionations(allDestionations);
+        const response = await SetTripArrived(destination[0].id);
+        console.log(response);
+        if(response){
+            setDestionations(allDestionations);
+        }
     }
 
     return (
-        <TouchableHighlight style={styles.van.routeDescription} onPress={onPress}>
+        <TouchableOpacity style={styles.van.routeDescription} onPress={onPress}>
             <View style={styles.flex}>
                 {destination[0].arrived ? <Image style={{ width: 30, height: 30 }} source={require("../../assets/images/tick.png")} /> :
                     <Image style={{ width: 30, height: 30 }} source={require("../../assets/images/hourglass.png")} />}
@@ -63,7 +68,7 @@ const RouteDescription = ({ destination, setDestionations, allDestionations }) =
                 <Text style={styles.van.routeDescriptionAddress}>{destinationAddress}</Text>
                 <Text style={styles.van.routeDescriptionTime}>Scheduled at {time}</Text>
             </View>
-        </TouchableHighlight>
+        </TouchableOpacity>
     );
 }
 

@@ -5,8 +5,8 @@ import { useEffect, useState } from "react";
 import { Google_API_Key } from "../../constants/GoogleAPIKey";
 import SetTripArrived from "../../hooks/van/setTripArrived";
 
-const RouteDescription = ({ destination, setDestionations, allDestionations }) => {
-    if(destination == null){
+const RouteDescription = ({ destination, setDestinations, allDestionations, update }) => {
+    if (destination == null) {
         return null;
     }
     const [route, setRoute] = useState(destination);
@@ -22,8 +22,8 @@ const RouteDescription = ({ destination, setDestionations, allDestionations }) =
     }
 
     useEffect(() => {
-        const getLocation =async () => {
-            const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${destination[0].latitude+","+destination[0].longitude}&key=${Google_API_Key}`;
+        const getLocation = async () => {
+            const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${destination[0].latitude + "," + destination[0].longitude}&key=${Google_API_Key}`;
             await fetch(url)
                 .then((response) => response.json())
                 .then((data) => {
@@ -42,33 +42,37 @@ const RouteDescription = ({ destination, setDestionations, allDestionations }) =
     }, []);
 
     const onPress = async () => {
-        for(let i = 0; i < allDestionations.length; i++){
-            if(allDestionations[i][0].id === destination[0].id){
+        for (let i = 0; i < allDestionations.length; i++) {
+            if (allDestionations[i][0].id === destination[0].id) {
                 allDestionations[i][0].arrived = true;
                 break;
             }
         }
         const response = await SetTripArrived(destination[0].id);
         console.log(response);
-        if(response){
-            setDestionations(allDestionations);
+        if (response) {
+            setDestinations(allDestionations);
+            update();
         }
     }
 
-    return (
-        <TouchableOpacity style={styles.van.routeDescription} onPress={onPress}>
-            <View style={styles.flex}>
-                {destination[0].arrived ? <Image style={{ width: 30, height: 30 }} source={require("../../assets/images/tick.png")} /> :
-                    <Image style={{ width: 30, height: 30 }} source={require("../../assets/images/hourglass.png")} />}
-                {destination[0].arrived == false &&
-                    <View style={styles.flex}>
-                        <Image style={{ width: 20, height: 30 }} source={require("../../assets/images/standing.png")} />
-                        <Text style={styles.van.routeDescriptionText}>{route.reservations}</Text>
-                    </View>}
+    return (<>
+        {destination[0].arrived == false ?
+            <TouchableOpacity style={styles.van.routeDescription} onPress={onPress}>
+                <Image style={{ width: 30, height: 30 }} source={require("../../assets/images/hourglass.png")} />
+                <View style={styles.flex}>
+                    <Image style={{ width: 20, height: 30 }} source={require("../../assets/images/standing.png")} />
+                    <Text style={styles.van.routeDescriptionText}>{route.reservations}</Text>
+                </View>
                 <Text style={styles.van.routeDescriptionAddress}>{destinationAddress}</Text>
                 <Text style={styles.van.routeDescriptionTime}>Scheduled at {time}</Text>
-            </View>
-        </TouchableOpacity>
+            </TouchableOpacity> :
+            <View style={styles.van.routeDescription}>
+                <Image style={{ width: 30, height: 30 }} source={require("../../assets/images/black-tick.png")} />
+                <Text style={styles.van.routeDescriptionAddress}>{destinationAddress}</Text>
+                <Text style={styles.van.routeDescriptionTime}>Scheduled at {time}</Text>
+            </View>}
+    </>
     );
 }
 

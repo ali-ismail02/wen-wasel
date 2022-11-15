@@ -38,10 +38,14 @@ const Main = () => {
         setState("destinationsSet");
     }
 
+    const updateAllDestinations = (destinations) => {
+        setAllDestinations(destinations);
+    }
+
     const components = {
-        destinationsSet: <Routes destination={destination} setState={setState} destinations= {allDestinations} setDestinations={setAllDestinations}/>,
+        destinationsSet: <Routes destination={destination} setState={setState} destinations= {allDestinations} setDestinations={updateAllDestinations}/>,
         addingRoute: <AddingDestination setDestinations={setDestinations} setState={setState} destination={destination}/>,
-        delaying: <DelayingDestinations destinations={allDestinations} setDestinations={setAllDestinations} setState={setState}/>,
+        delaying: <DelayingDestinations destinations={allDestinations} setDestinations={updateAllDestinations} setState={setState}/>,
     }
 
     return (

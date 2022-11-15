@@ -53,7 +53,6 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: 0
   },
   instructions: {
     fontSize: 14,
@@ -72,7 +71,7 @@ export default StyleSheet.create({
     maxHeight: ScreenHeight * 0.4
   },
   bottomPopupExpander: {
-    height:20,
+    height: 20,
     width: "100%",
     backgroundColor: "white",
     display: "flex",
@@ -257,38 +256,34 @@ export default StyleSheet.create({
     },
     // route description
     routeDescription: {
+      width: "100%",
+      padding: 10,
+      display: "flex",
+      flexDirection: "row",
+      alignItems: "center",
+      justifyContent: "space-between",
+      paddingHorizontal: 20,
       borderBottomColor: "#DDD",
       borderBottomWidth: 1,
       borderTopColor: "#DDD",
       borderTopWidth: 1,
-      marginBottom: -15,
-      width: "100%",
-      height: "auto",
-      paddingVertical: 10,
-      paddingHorizontal: 30,
     },
-    routeDescriptionText : {
+    routeDescriptionText: {
       fontSize: 20,
       fontWeight: "bold",
       color: "black",
-      padding:0,
-      margin:0,
     },
-    routeDescriptionAddress : {
+    routeDescriptionAddress: {
       fontSize: 20,
       color: "black",
       width: 100,
       textAlign: "center",
-      padding:0,
-      margin:0,
     },
-    routeDescriptionTime : {
+    routeDescriptionTime: {
       fontSize: 14,
       color: "#777",
       width: 100,
       textAlign: "center",
-      padding:0,
-      margin:0,
     },
   }
 });

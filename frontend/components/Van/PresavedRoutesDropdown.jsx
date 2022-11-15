@@ -3,22 +3,28 @@ import styles from "../../styles/styles";
 import BuildRecurringRoutePath from "../../hooks/van/BuildRecurringRoutePath";
 import { View, Text, Image } from "react-native";
 import Button from "../Button";
+import React from "react";
 
 const PresavedRoutesDropdown = ({ presaved_routes, setAllDestinations, setUserState }) => {
     const [selectedRoute, setSelectedRoute] = React.useState(null);
+
+    const startRoute = async () => {
+        BuildRecurringRoutePath(selectedRoute, setAllDestinations);
+        setUserState("destinationsSet");
+    }
+
     names = [];
     for (let i = 0; i < presaved_routes.length; i++) {
         names.push(presaved_routes[i].presaved_route.name);
     }
     return (
         <View style={styles.bottomPopupContainerNoPadding}>
-            <View style={[styles.flex, { paddingHorizontal: 30, paddingVertical: 10 }]}>
-                <Text style={[styles.subTitle, { paddingRight: 20 }]}>Presaved Routes:</Text>
+            <View style={[styles.flex, { paddingHorizontal: 30, paddingVertical: 10, borderBottomColor:"#DDD", borderBottomWidth:1 }]}>
+                <Text style={styles.subTitle}>Presaved Routes:</Text>
                 <SelectDropdown
                     data={names}
                     onSelect={(selectedItem, index) => {
-                        BuildRecurringRoutePath(presaved_routes[index], setAllDestinations);
-                        setUserState("destinationsSet");
+                        setSelectedRoute(presaved_routes[index]);
                     }}
                     buttonStyle={styles.selectButtonRoutes}
                     dropdownIconPosition={"right"}
@@ -36,7 +42,7 @@ const PresavedRoutesDropdown = ({ presaved_routes, setAllDestinations, setUserSt
                 />
             </View>
             <View style={[styles.flex, { paddingHorizontal: 30, paddingVertical: 10 }]}>
-                <Button text="Start Route" onPress={() => setUserState("destinationsSet")} color={"#FF9E0D"} width={"100%"} />
+                <Button text="Start Route" onPress={startRoute} color={"#FF9E0D"} width={"100%"} />
             </View>
         </View>
     );

@@ -38,10 +38,10 @@ const Routes = ({ destination, destinations, setState, setDestinations }) => {
                     <View style={[styles.flex, {paddingHorizontal: 30, paddingBottom:10}]}>
                         <Text style={styles.subTitle}>Routes:</Text>
                         {destination == null ? <Button text="Delay" onPress={() => setState("delaying")} color={"black"} width={"80%"} /> :
-                            <View style={styles.flex}>
-                                <Button text="Delay" onPress={() => setState("delaying")} color={"black"} width={"40%"} />
-                                <Button text="Add Route" onPress={() => setState("addingRoute")} color={"#FF9E0D"} width={"40%"} />
-                            </View>
+                            <>
+                                <Button text="Delay" onPress={() => setState("delaying")} color={"black"} width={"35%"} />
+                                <Button text="Add Route" onPress={() => setState("addingRoute")} color={"#FF9E0D"} width={"35%"} />
+                            </>
                         }
                     </View>
                     {expanded == true ? <ExpandableView expanded={expanded} routes={destinations} /> :
@@ -57,7 +57,7 @@ const Routes = ({ destination, destinations, setState, setDestinations }) => {
                     </View>
                 </View>
                 <View style={styles.van.routes}>
-                    <View style={styles.flex}>
+                    <View style={[styles.flex, {paddingHorizontal:30}]}>
                         <Text style={styles.subTitle}>Routes:</Text>
                         <Button text="Add Route" onPress={() => setState("addingRoute")} color={"#FF9E0D"} width={"80%"} />
                     </View>

@@ -4,6 +4,7 @@ import styles from '../../styles/styles';
 import SelectDropdown from 'react-native-select-dropdown'
 import UpdateOneTimeRoute from '../../hooks/van/UpdateOneTimeRoute';
 import Button from '../Button';
+import SortPath from '../../hooks/van/SortPath';
 
 const DelayingDestinations = ({ setDestinations, setState, destinations }) => {
     const [minutes, setMinutes] = React.useState(null);
@@ -18,11 +19,8 @@ const DelayingDestinations = ({ setDestinations, setState, destinations }) => {
             let dateStr = date2.toLocaleDateString();
             destinations[i][1] = dateStr + " " + time;
             const response = await UpdateOneTimeRoute(destinations[i][0].id, dateStr + " " + time);
-            if (!response) {
-                return;
-            }
         }
-        setDestinations(destinations);
+        setDestinations(SortPath(destinations));
         setState("destinationsSet");
     }
 

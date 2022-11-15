@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View } from "react-native";
+import { View, BackHandler } from "react-native";
 import MapView, { LatLng } from 'react-native-maps';
 import CustomMap from "./CustomMap";
 import Routes from "./Routes";
@@ -15,7 +15,7 @@ const Main = () => {
     const [recurringRoutes, setRecurringRoutes] = useState([]);
     const [allUserStates, setAllUserStates] = useState(["none"]);
     const [destination, setDestination] = useState<LatLng | null>(null);
-    const [allDestinations, setAllDestinations] = useState<[Object, string][]>(undefined);
+    const [allDestinations, setAllDestinations] = useState<[Object, string][]>([]);
     const [location, setLocation] = useState(undefined);
     const [centerMap, setCenterMap] = useState(true);
     const mapRef = React.useRef<MapView>(null);
@@ -29,6 +29,41 @@ const Main = () => {
         }
         getRecurringRoutes();
     }, []);
+
+    const backPressed = () => {
+        if(userState == "none") {
+            BackHandler.exitApp();
+            return true;
+        } else if(userState == "addingRoute" || userState == "delayingRoute") {
+            if(allUserStates.length == 2) {
+                setUserState("none");
+                setAllUserStates(["none"]);
+                return true;
+            }
+            setUserState(allUserStates[allUserStates.length - 2]);
+            setAllUserStates(allUserStates.slice(0, allUserStates.length - 1));
+            return true;
+        }else {
+            let flag = 1;
+            for(let i = 0; i < allDestinations.length; i++) {
+                if(allDestinations[i][0]['arrived'] == false) {
+                    flag = 0;
+                    break;
+                }
+            }
+            if(flag == 1) {
+                setUserState("none");
+                setAllUserStates(["none"]);
+                setAllDestinations([]);
+                return true;
+            }
+            return true;
+        }
+    }
+    const backHandler = BackHandler.addEventListener(
+        "hardwareBackPress",
+        backPressed
+    );
 
     const onPlaceSelect = (details) => {
         const position = {

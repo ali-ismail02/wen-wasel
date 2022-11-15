@@ -15,7 +15,7 @@ const Main = () => {
     const [recurringRoutes, setRecurringRoutes] = useState([]);
     const [allUserStates, setAllUserStates] = useState(["none"]);
     const [destination, setDestination] = useState<LatLng | null>(null);
-    const [allDestinations, setAllDestinations] = useState<[Object, string][]>([]);
+    const [allDestinations, setAllDestinations] = useState<[Object, string][]>(undefined);
     const [location, setLocation] = useState(undefined);
     const [centerMap, setCenterMap] = useState(true);
     const mapRef = React.useRef<MapView>(null);
@@ -66,7 +66,7 @@ const Main = () => {
 
     return (
         <View>
-            <CustomMap setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} setDestination={setDestination} userState={userState} onPlaceSelect={onPlaceSelect}/>
+            <CustomMap allDestinations={allDestinations} location={location}  setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} setDestination={setDestination} onPlaceSelect={onPlaceSelect}/>
             {components[userState]}
         </View>
     );

@@ -7,6 +7,7 @@ import React from "react";
 
 const PresavedRoutesDropdown = ({ presaved_routes, setAllDestinations, setUserState }) => {
     const [selectedRoute, setSelectedRoute] = React.useState(null);
+    const [disabled, setDisabled] = React.useState(true);
 
     const startRoute = async () => {
         BuildRecurringRoutePath(selectedRoute, setAllDestinations);
@@ -25,6 +26,7 @@ const PresavedRoutesDropdown = ({ presaved_routes, setAllDestinations, setUserSt
                     data={names}
                     onSelect={(selectedItem, index) => {
                         setSelectedRoute(presaved_routes[index]);
+                        setDisabled(false);
                     }}
                     buttonStyle={styles.selectButtonRoutes}
                     dropdownIconPosition={"right"}
@@ -42,7 +44,7 @@ const PresavedRoutesDropdown = ({ presaved_routes, setAllDestinations, setUserSt
                 />
             </View>
             <View style={[styles.flex, { paddingHorizontal: 30, paddingVertical: 10 }]}>
-                <Button text="Start Route" onPress={startRoute} color={"#FF9E0D"} width={"100%"} />
+                <Button text="Start Route" onPress={startRoute} color={"#FF9E0D"} width={"100%"} disabled={disabled}/>
             </View>
         </View>
     );

@@ -3,6 +3,7 @@ import React from 'react';
 import styles from '../../styles/styles';
 import SelectDropdown from 'react-native-select-dropdown'
 import UpdateOneTimeRoute from '../../hooks/van/UpdateOneTimeRoute';
+import Button from '../Button';
 
 const DelayingDestinations = ({ setDestinations, setState, destinations }) => {
     const [minutes, setMinutes] = React.useState(null);
@@ -35,6 +36,7 @@ const DelayingDestinations = ({ setDestinations, setState, destinations }) => {
                 <SelectDropdown data={mins}
                     onSelect={(selectedItem, index) => {
                         setMinutes(selectedItem);
+                        setDisabled(false);
                         delayAllDestinations
                     }}
                     buttonStyle={styles.selectButton}
@@ -49,11 +51,11 @@ const DelayingDestinations = ({ setDestinations, setState, destinations }) => {
                     }}
 
                 />
-                <View style={styles.flex}>
-                    <Button text="Cancel" onPress={() => setState("destinationsSet")} color={"black"} width={"47%"} />
-                    <Button text="Add" onPress={delayAllDestinations} color={"#FF9E0D"} width={"47%"} disabled={disabled} />
-                </View>
             </View>
+            <View style={[styles.flex, {paddingTop: 10}]}>
+                    <Button text="Cancel" onPress={() => setState("destinationsSet")} color={"black"} width={"47%"} />
+                    <Button text="Delay" onPress={delayAllDestinations} color={"#FF9E0D"} width={"47%"} disabled={disabled} />
+                </View>
         </View>
     );
 }

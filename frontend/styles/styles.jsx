@@ -70,7 +70,7 @@ export default StyleSheet.create({
     fontWeight: "bold",
     color: "black",
     width: "100%",
-    paddingHorizontal:30,
+    paddingHorizontal: 30,
     paddingVertical: 10,
     borderBottomWidth: 1,
     borderBottomColor: "#888",
@@ -303,5 +303,35 @@ export default StyleSheet.create({
       width: 100,
       textAlign: "center",
     },
+  },
+  // Login Styles
+  login: {
+    container: {
+      width: ScreenWidth,
+      height: ScreenHeight,
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "white",
+      paddingHorizontal: "5%",
+    },
+    logo: {
+      width: 200,
+      height: 200,
+    },
+    input: {
+      width: "100%",
+      height: 50,
+      backgroundColor: "white",
+      borderRadius: 5,
+      borderColor: "#888",
+      borderWidth: 1,
+    },
+    links: {
+      width: "100%",
+      textAlign: "center",
+      color: "white",
+      fontSize: 12,
+    },
   }
-});
+  });

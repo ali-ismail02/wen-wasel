@@ -392,14 +392,6 @@ class VanController extends Controller
             ]);
         }
 
-        if($validator->fails()){
-            return response()->json([
-                "status" => "Failed",
-                "message" =>"Validation Failed",
-                "errors" => $validator->errors()
-            ]);
-        }
-
         $user = $request->user_data;
         $driver = $user->drivers()->first();
         if(!$driver){
@@ -450,14 +442,6 @@ class VanController extends Controller
             ]);
         }
 
-        if($validator->fails()){
-            return response()->json([
-                "status" => "Failed",
-                "message" =>"Validation Failed",
-                "errors" => $validator->errors()
-            ]);
-        }
-
         $user = $request->user_data;
         $driver = $user->drivers()->first();
         if(!$driver){
@@ -495,14 +479,6 @@ class VanController extends Controller
                 "status" => "Failed",
                 "message" => "Validation Failed",
                 "errors" => $error
-            ]);
-        }
-
-        if($validator->fails()){
-            return response()->json([
-                "status" => "Failed",
-                "message" =>"Validation Failed",
-                "errors" => $validator->errors()
             ]);
         }
 

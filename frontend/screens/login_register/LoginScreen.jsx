@@ -1,12 +1,11 @@
 import { useNavigation } from '@react-navigation/core';
-import { Image, Text, TextInput, View, ImageBackground } from 'react-native';
-import Button from '../components/Button';
-import Login from '../hooks/Login';
-import { updateUserProfile } from "../redux/slices/userSlice";
-import { store } from '../redux/store';
-import styles from '../styles/styles';
 import { useState } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, Image, ImageBackground, Text, TextInput, View } from 'react-native';
+import Button from '../../components/Button';
+import Login from '../../hooks/Login';
+import { updateUserProfile } from "../../redux/slices/userSlice";
+import { store } from '../../redux/store';
+import styles from '../../styles/styles';
 
 const LoginScreen = () => {
 
@@ -55,8 +54,8 @@ const LoginScreen = () => {
 
     return (
         <View style={styles.login.container}>
-            <ImageBackground source={require('../assets/images/background.png')} style={styles.login.backgroundImage}>
-                <Image source={require('../assets/images/wen-wasel.png')} style={styles.login.logo} />
+            <ImageBackground source={require('../../assets/images/background.png')} style={styles.login.backgroundImage}>
+                <Image source={require('../../assets/images/wen-wasel.png')} style={styles.login.logo} />
                 <View style={styles.login.view}>
                     <Text style={styles.login.label}>Email</Text>
                     <TextInput
@@ -73,9 +72,9 @@ const LoginScreen = () => {
                         onChangeText={setPassword}
                         secureTextEntry={true}
                     />
-                    <Text style={{ color: "red", fontSize: 14, textAlign: "center"}}>{failedMessage}</Text>
+                    <Text style={styles.login.redLabel}>{failedMessage}</Text>
                     <Button text="LOGIN" onPress={handleLogin} width={"100%"} color={"#FF9E0D"} />
-                    <Text onPress={() => navigation.navigate('Register')} style={[styles.login.links,{paddingBottom: Dimensions.get("window").height * 0.3}]}>Dont have an account? Sign up now!</Text>
+                    <Text onPress={() => navigation.navigate('RegisterUser')} style={[styles.login.links, { paddingBottom: Dimensions.get("window").height * 0.3 }]}>Dont have an account? Sign up now!</Text>
                 </View>
             </ImageBackground>
         </View>

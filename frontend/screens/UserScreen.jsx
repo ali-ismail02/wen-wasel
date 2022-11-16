@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import Main from "../components/passenger/Main";
 
-const HomeScreen = () => {
+const UserScreen = () => {
     return (
         <View>
             <Main />
@@ -10,4 +10,4 @@ const HomeScreen = () => {
     );
 };
 
-export default HomeScreen;
+export default UserScreen;

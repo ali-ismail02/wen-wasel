@@ -328,7 +328,6 @@ export default StyleSheet.create({
     label: {
       color: "white",
       fontSize: 12,
-      height: 12,
     },
     logo: {
       width: 200,
@@ -340,7 +339,7 @@ export default StyleSheet.create({
       backgroundColor: "white",
       borderRadius: 5,
       borderColor: "#888",
-      borderWidth: 1,
+      borderWidth: 2,
       paddingHorizontal: 20,
       fontSize: 20,
       marginVertical: 5,
@@ -350,6 +349,22 @@ export default StyleSheet.create({
       textAlign: "center",
       color: "white",
       fontSize: 12,
+      paddingTop: 5,
+    },
+    redLabel: { 
+      color: "red", 
+      fontSize: 14, 
+      textAlign: "center"
+    },
+    dropdown: {
+      width: "100%",
+      height: 50,
+      backgroundColor: "white",
+      borderRadius: 5,
+      borderColor: "#888",
+      borderWidth: 1,
+      fontSize: 20,
+      marginVertical: 5,
     },
   }
   });

@@ -70,10 +70,10 @@ class VanController extends Controller
         $image_names = [];
 
         foreach($images as $img){
-            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace('data:image/jpeg;base64,', '', $img);
             $img = str_replace(' ', '+', $img);
             $data = base64_decode($img);
-            $filee = uniqid() . '.png';
+            $filee = uniqid() . '.jpeg';
             $file = public_path('images')."\\".$filee;
             $image_names[] = $filee;
             file_put_contents($file, $data);

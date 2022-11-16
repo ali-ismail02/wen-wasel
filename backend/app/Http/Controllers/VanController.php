@@ -15,6 +15,30 @@ use JWTAuth;
 
 class VanController extends Controller
 {
+
+    public function validateUser(Request $request){
+        // Validate the request
+        $rules = [
+            'email' => 'required|email:rfc,dns|unique:users',
+            'password' => 'required|min:8|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/', // at least 1 uppercase, 1 lowercase, 1 number
+            'phone' => 'required|min:8|max:8|unique:users',
+        ];
+        
+        if($error = validate($request->all(), $rules)){
+            return response()->json([
+                "status" => "Failed",
+                "message" => "Validation Failed",
+                "errors" => $error
+            ]);
+        }
+
+        return response()->json([
+            "status" => "Success",
+            "message" => "Validation Success"
+        ]);
+
+    }
+
     // Api to signup van driver
     public function vanSignUp(Request $request){
         // Validate the request

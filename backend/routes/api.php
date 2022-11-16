@@ -31,6 +31,7 @@ Route::group(['prefix' => 'user'], function () {
 
 Route::group(['prefix' => 'van'], function() {
     Route::post('signup', [VanController::class, 'vanSignUp']);
+    Route::Post('validate', [VanController::class, 'validateUser']);
     Route::group(['middleware' => 'VanJWT'], function() {
         Route::POST('add-one-route', [VanController::class, 'addOneTimeRoute']);
         Route::get('get-one-routes', [VanController::class, 'getOneTimeRoutes']);

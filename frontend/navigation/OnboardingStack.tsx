@@ -6,6 +6,7 @@ import LoginScreen from "../screens/login_register/LoginScreen";
 import RegisterUserScreen from "../screens/login_register/RegisterUser";
 import RegisterCarScreen from "../screens/login_register/RegisterCar";
 import RegisterCarImagesScreen from "../screens/login_register/RegisterCarImages";
+import RegisterLicenseScreen from "../screens/login_register/RegisterLicense";
 
 export function OnboardingStack() {
   const RootStackNav = createStackNavigator();
@@ -38,6 +39,12 @@ export function OnboardingStack() {
           name="RegisterCarImages"
           options={{ headerShown: false }}
           component={RegisterCarImagesScreen}
+        />
+
+        <RootStackNav.Screen
+          name="RegisterLicense"
+          options={{ headerShown: false }}
+          component={RegisterLicenseScreen}
         />
 
       </RootStackNav.Navigator>

@@ -1,9 +1,9 @@
 import { useNavigation } from '@react-navigation/core';
 import { Image, Text, TextInput, View, ImageBackground } from 'react-native';
 import Button from '../../components/Button';
-import { store } from '../../redux/store';
 import styles from '../../styles/styles';
 import React, { useState } from 'react';
+import { updateUserProfile } from '../../redux/slices/userSlice';
 import { Dimensions } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -35,22 +35,26 @@ const RegisterCarScreen = () => {
         let flag = 1;
         if (make == "") {
             setFailedArray(...failedArray, failedArray[0] = true);
+            flag = 0;
         }
         if (model == "") {
             setFailedArray(...failedArray, failedArray[1] = true);
+            flag = 0;
         }
         if (year == "") {
             setFailedArray(...failedArray, failedArray[2] = true);
+            flag = 0;
         }
         if (licensePlate == "") {
             setFailedArray(...failedArray, failedArray[3] = true);
+            flag = 0;
         }
         if (!flag) {
             setFailedMessage("Please fill in all fields");
             return;
         }
         await AsyncStorage.setItem('carInfo', JSON.stringify({ make, model, year, licensePlate }));
-        navigation.navigate("RegisterCarImages");
+        navigation.navigate("RegisterLicense");
     }
 
     return (

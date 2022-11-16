@@ -9,23 +9,15 @@ import * as ImagePicker from 'expo-image-picker';
 const RegisterCarImagesScreen = () => {
     const [frontImage, setFrontImage] = useState('');
     const [sideImage, setSideImage] = useState('');
-    const [failedArray, setFailedArray] = useState([false, false]);
     const [failedMessage, setFailedMessage] = useState(null);
-    const [borderColor, setBorderColor] = useState('red');
     const [image1, setImage1] = useState(require("../../assets/images/van_front.jpg"));
     const [image2, setImage2] = useState(require("../../assets/images/van_side.jpg"));
     const navigation = useNavigation()
 
     const register = async () => {
-        let flag = 1;
-        if (frontImage == "") {
-            setFailedArray(...failedArray, failedArray[0] = true);
-        }
-        if (sideImage == "") {
-            setFailedArray(...failedArray, failedArray[1] = true);
-        }
-        if (!flag) {
-            setFailedMessage("Please fill in all fields");
+        
+        if (sideImage == "" || frontImage == "") {
+            setFailedMessage("Please upload both images");
             return;
         }
         await AsyncStorage.setItem('carImages', JSON.stringify({ frontImage, sideImage }));
@@ -66,6 +58,7 @@ const RegisterCarImagesScreen = () => {
                     <TouchableOpacity onPress={() => { handleImage(2) }} style={{paddingBottom:20}}>
                         <Image source={image2} style={styles.login.image} />
                     </TouchableOpacity>
+                    <Text style={styles.login.redLabel}>{failedMessage}</Text>
                     <Button text="NEXT" onPress={register} width={"100%"} color={"#FF9E0D"} />
                 </View>
             </ImageBackground>

@@ -43,7 +43,7 @@ const LoginScreen = () => {
             }
             store.dispatch(updateUserProfile({
                 userProfile: {
-                    token: "Bearer " + user.access_token,
+                    token: "Bearer " + response.access_token,
                     id: response.user.id,
                     name: response.user.name,
                     email: response.user.email,

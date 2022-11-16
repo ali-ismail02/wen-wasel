@@ -7,7 +7,7 @@ import styles from '../../styles/styles';
 import { useState } from 'react';
 import { Dimensions } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
-import RegisterPassenger from '../../hooks/van/RegisterPassenger';
+import RegisterPassenger from '../../hooks/passenger/RegisterPassenger';
 
 const RegisterUserScreen = () => {
 

@@ -7,6 +7,7 @@ import styles from '../../styles/styles';
 import { useState } from 'react';
 import { Dimensions } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
+import RegisterPassenger from '../../hooks/van/RegisterPassenger';
 
 const RegisterUserScreen = () => {
 
@@ -15,13 +16,32 @@ const RegisterUserScreen = () => {
     const [phone, setPhone] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
-    const [failedArray, setFailedArray] = useState([false,false,false,false,false,false]);
+    const [userType, setUserType] = useState("Passenger");
+    const [failedArray, setFailedArray] = useState([false,false,false,false,false]);
     const [failedMessage, setFailedMessage] = useState(null);
     const [borderColor, setBorderColor] = useState('red');
     const [data, setData] = useState(['Passenger', 'Van Driver', 'Service Driver']);
     const navigation = useNavigation()
 
-    const handleLogin = async () => {
+    const checkForErrors = (response) => {
+        if(response.errors.email != undefined){
+            setFailedArray([false,false,true,false,false,false]);
+            setFailedMessage(response.errors.email);
+            return;
+        }
+        if(response.errors.phone != undefined){
+            setFailedArray([false,true,false,false,false,false]);
+            setFailedMessage(response.errors.phone);
+            return;
+        }
+        if(response.errors.password != undefined){
+            setFailedArray([false,false,false,true,true,true]);
+            setFailedMessage(response.errors.password);
+            return;
+        }
+    }
+
+    const register = async () => {
         const formattedEmail = email.trim().toLowerCase();
         const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
         if(fullname == ""){
@@ -50,10 +70,30 @@ const RegisterUserScreen = () => {
             setFailedMessage("Please enter a valid password");
             return;
         }
+        if(userType == "Passenger"){
+            const response = await RegisterPassenger(fullname, phone, formattedEmail, password);
+            if(response){
+                if(response.status == "Failed"){
+                    checkForErrors(response);
+                    return;
+                }
+                store.dispatch(updateUserProfile({
+                    userProfile: {
+                        token: "Bearer " + user.token,
+                        id: response.user.id,
+                        name: response.user.name,
+                        email: response.user.email,
+                        type: response.user.user_type,
+                        image: response.user.image,
+                        phone: response.user.phone,
+                    }
+                }));
+            }
+        }
     }
 
     const handleDropdown = (selectedItem = "passenger") => {
-        console.log(selectedItem);
+        setUserType(selectedItem);
     }
 
     return (
@@ -116,7 +156,7 @@ const RegisterUserScreen = () => {
                         buttonTextStyle={{textAlign: 'left', paddingLeft: 3}}
                     />
                     <Text style={styles.login.redLabel}>{failedMessage}</Text>
-                    <Button text="LOGIN" onPress={handleLogin} width={"100%"} color={"#FF9E0D"} />
+                    <Button text="LOGIN" onPress={register} width={"100%"} color={"#FF9E0D"} />
                     <Text onPress={() => navigation.navigate('Login')} style={[styles.login.links,{paddingBottom: Dimensions.get("window").height * 0.3}]}>Already have an account? Sign in!</Text>
                 </View>
             </ImageBackground>

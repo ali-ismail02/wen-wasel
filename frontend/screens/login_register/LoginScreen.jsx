@@ -31,21 +31,28 @@ const LoginScreen = () => {
             return;
         }
 
-        const user = await Login(formattedEmail, password);
-        if (user) {
-            console.log(user);
+        const response = await Login(formattedEmail, password);
+        if (response) {
+            if(response.driver != undefined && response.driver.approval_status == 0){
+                setFailedMessage("Your account is pending approval");
+                return;
+            }
+            if(response.driver != undefined && response.driver.approval_status == -1){
+                setFailedMessage("Your account has been rejected");
+                return;
+            }
             store.dispatch(updateUserProfile({
                 userProfile: {
                     token: "Bearer " + user.access_token,
-                    id: user.id,
-                    name: user.name,
-                    email: user.email,
-                    type: user.user_type,
-                    image: user.image,
-                    phone: user.phone,
+                    id: response.user.id,
+                    name: response.user.name,
+                    email: response.user.email,
+                    type: response.user.user_type,
+                    image: response.user.image,
+                    phone: response.user.phone,
                 }
             }));
-            navigation.navigate('Home');
+            return;
         }
         setEmailBorder('red');
         setPasswordBorder('red');

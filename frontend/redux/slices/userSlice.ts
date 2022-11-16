@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export interface User {
     userProfile?: {
+        token?: string,
         type?: number,
         id?: number;
         image?: string;

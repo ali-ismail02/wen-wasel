@@ -309,11 +309,26 @@ export default StyleSheet.create({
     container: {
       width: ScreenWidth,
       height: ScreenHeight,
+      paddingHorizontal: 0,
+    },
+    backgroundImage: {
       display: "flex",
       alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: "white",
+      justifyContent: "space-between",
+      width: ScreenWidth,
+      height: ScreenHeight,
       paddingHorizontal: "5%",
+      paddingVertical: "10%",
+    },
+    view: {
+      width: "100%",
+      display: "flex",
+      justifyContent: "center",
+    },
+    label: {
+      color: "white",
+      fontSize: 12,
+      height: 12,
     },
     logo: {
       width: 200,
@@ -326,6 +341,9 @@ export default StyleSheet.create({
       borderRadius: 5,
       borderColor: "#888",
       borderWidth: 1,
+      paddingHorizontal: 20,
+      fontSize: 20,
+      marginVertical: 5,
     },
     links: {
       width: "100%",

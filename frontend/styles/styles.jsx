@@ -326,6 +326,7 @@ export default StyleSheet.create({
       justifyContent: "center",
     },
     label: {
+      width: "100%",
       color: "white",
       fontSize: 12,
     },
@@ -366,5 +367,17 @@ export default StyleSheet.create({
       fontSize: 20,
       marginVertical: 5,
     },
+    image: {
+      width: ScreenWidth * 0.9,
+      height: ScreenHeight * 0.3,
+      resizeMode: "contain",
+    },
+    title: {
+      width: "100%",
+      fontSize: 32,
+      color: "white",
+      textAlign: "center",
+      fontWeight: "bold",
+    }
   }
   });

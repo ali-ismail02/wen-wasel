@@ -13,6 +13,7 @@ const Post = async (api_url, api_data, api_token = null) => {
             }
         );
     } catch (error) {
+        console.log(error);
         return false
     }
 };

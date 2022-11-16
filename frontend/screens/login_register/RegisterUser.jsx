@@ -79,6 +79,7 @@ const RegisterUserScreen = () => {
                     checkForErrors(response);
                     return;
                 }
+                await AsyncStorage.setItem('userToken', "Bearer " + user.token);
                 store.dispatch(updateUserProfile({
                     userProfile: {
                         token: "Bearer " + user.token,
@@ -95,6 +96,8 @@ const RegisterUserScreen = () => {
         if(userType == "Van Driver" || userType == "Service Driver"){
             const response = await ValidateUser(formattedEmail, phone, password);
             if(response == true ){
+                setFailedArray([false,false,false,false,false,false]);
+                setFailedMessage(null);
                 await AsyncStorage.setItem("driverInfo", JSON.stringify({
                     email: formattedEmail,
                     phone: phone,

@@ -4,6 +4,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import LoginScreen from "../screens/login_register/LoginScreen";
 import RegisterUserScreen from "../screens/login_register/RegisterUser";
+import RegisterCarScreen from "../screens/login_register/RegisterCar";
 
 export function OnboardingStack() {
   const RootStackNav = createStackNavigator();
@@ -24,6 +25,12 @@ export function OnboardingStack() {
           name="RegisterUser"
           options={{ headerShown: false }}
           component={RegisterUserScreen}
+        />
+
+        <RootStackNav.Screen
+          name="RegisterCar"
+          options={{ headerShown: false }}
+          component={RegisterCarScreen}
         />
 
       </RootStackNav.Navigator>

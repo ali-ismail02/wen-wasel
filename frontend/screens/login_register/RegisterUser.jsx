@@ -8,6 +8,8 @@ import { useState } from 'react';
 import { Dimensions } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import RegisterPassenger from '../../hooks/passenger/RegisterPassenger';
+import ValidateUser from '../../hooks/van/ValidateUser';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RegisterUserScreen = () => {
 
@@ -90,6 +92,22 @@ const RegisterUserScreen = () => {
                 }));
             }
         }
+        if(userType == "Van Driver" || userType == "Service Driver"){
+            const response = await ValidateUser(formattedEmail, phone, password);
+            if(response == true ){
+                await AsyncStorage.setItem("driverInfo", JSON.stringify({
+                    email: formattedEmail,
+                    phone: phone,
+                    password: password,
+                    name: fullname,
+                    userType: userType,
+                }));
+                navigation.navigate('RegisterCar')
+                return;
+            }
+            checkForErrors(response);
+            return;
+        }
     }
 
     const handleDropdown = (selectedItem = "passenger") => {
@@ -156,7 +174,7 @@ const RegisterUserScreen = () => {
                         buttonTextStyle={{textAlign: 'left', paddingLeft: 3}}
                     />
                     <Text style={styles.login.redLabel}>{failedMessage}</Text>
-                    <Button text="LOGIN" onPress={register} width={"100%"} color={"#FF9E0D"} />
+                    <Button text="SIGNUP" onPress={register} width={"100%"} color={"#FF9E0D"} />
                     <Text onPress={() => navigation.navigate('Login')} style={[styles.login.links,{paddingBottom: Dimensions.get("window").height * 0.3}]}>Already have an account? Sign in!</Text>
                 </View>
             </ImageBackground>

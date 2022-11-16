@@ -1,11 +1,11 @@
 import Post from "../Post";
 
-const ValidateUser = (email,phone, password) => {
-    const response = Post("van/validate", {email, phone, password});
+const ValidateUser = async (email,phone, password) => {
+    const response = await Post("van/validate", {email, phone, password});
     if(response.data.status == "Success"){
         return true;
     }
-    return false;
+    return response.data;
 }
 
 export default ValidateUser;

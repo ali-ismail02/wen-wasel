@@ -55,6 +55,7 @@ const Main = () => {
             BackHandler.exitApp();
             return true;
         } else if (userState == "addingRoute" || userState == "delayingRoute") {
+            setDestination(null);
             if (allUserStates.length == 2) {
                 setUserState("none");
                 setAllUserStates(["none"]);
@@ -114,17 +115,17 @@ const Main = () => {
         setAllDestinations(destinations);
     }
 
-    const components = {
-        none: <PresavedRoutesDropdown presaved_routes={recurringRoutes} setUserState={setUserState} setAllDestinations={updateAllDestinations} />,
-        destinationsSet: <Routes destination={destination} setState={setState} destinations={allDestinations} setDestinations={updateAllDestinations} />,
-        addingRoute: <AddingDestination setDestinations={setDestinations} setState={setState} destination={destination} />,
-        delaying: <DelayingDestinations destinations={allDestinations} setDestinations={updateAllDestinations} setState={setState} />,
+    const components = (state) => {
+        if(state == "none") return <PresavedRoutesDropdown presaved_routes={recurringRoutes} setUserState={setUserState} setAllDestinations={updateAllDestinations} />
+        if(state == "destinationsSet") return <Routes destination={destination} setState={setState} destinations={allDestinations} setDestinations={updateAllDestinations} />
+        if(state == "addingRoute") return <AddingDestination setDestinations={setDestinations} setState={setState} destination={destination} />
+        if(state == "delaying") return <DelayingDestinations destinations={allDestinations} setDestinations={updateAllDestinations} setState={setState} />
     }
 
     return (
         <View>
             <CustomMap allDestinations={allDestinations} location={location} setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} setDestination={setDestination} onPlaceSelect={onPlaceSelect} />
-            {components[userState]}
+            {components(userState)}
         </View>
     );
 };

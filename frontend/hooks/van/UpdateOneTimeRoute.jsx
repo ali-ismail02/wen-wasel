@@ -1,7 +1,9 @@
 import Put from "../Put";
-import { JWT } from "../../constants/vanJWT";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const UpdateOneTimeRoute = async (id, date_time) => {
+    const JWT = await AsyncStorage.getItem('token');
+    console.log(JWT);
     // convert date_time to sql input format
     const date = new Date(date_time);
     const year = date.getFullYear();

@@ -1,7 +1,9 @@
 import Put from "../Put";
-import { JWT } from "../../constants/vanJWT";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const SetTripArrived = async (id) => {
+    const JWT = await AsyncStorage.getItem('token');
+    console.log(JWT);
     const data = {
         route_id: id,
     }

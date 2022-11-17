@@ -1,7 +1,9 @@
-import { jwt } from "../../constants/JWT";
 import Post from "../Post";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const BookSeatsHook = async (route) => {
+    const JWT = await AsyncStorage.getItem('token');
+    console.log(JWT);
     const data = {
         "route_id": route.id,
     }

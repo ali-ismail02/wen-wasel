@@ -1,7 +1,9 @@
-import { jwt } from '../../constants/JWT';
 import Get from '../Get';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const GetFares = async (path) => {
+    const JWT = await AsyncStorage.getItem('token');
+    console.log(JWT);
     const response = await Get("user/get-fares", jwt);
     let price = 0;
     for (const trip of path) {

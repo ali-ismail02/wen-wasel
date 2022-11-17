@@ -18,7 +18,7 @@ const PathDraw = (path, location) => {
                             strokeColor="#FF9E0D"
                             mode='DRIVING'
                         />
-                        <Marker coordinate={dest} pinColor={"#FF9E0D"} />
+                        <Marker key={index} coordinate={dest} pinColor={"#FF9E0D"} />
                     </>
                     );
                 }
@@ -33,7 +33,7 @@ const PathDraw = (path, location) => {
                         strokeColor="#FF9E0D"
                         mode='DRIVING'
                     />
-                    <Marker coordinate={dest} pinColor={"#FF9E0D"} />
+                    <Marker key={index} coordinate={dest} pinColor={"#FF9E0D"} />
                 </>
                 );
             }

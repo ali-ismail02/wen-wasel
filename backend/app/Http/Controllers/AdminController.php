@@ -438,7 +438,7 @@ class AdminController extends Controller
             if($flag){
                 continue;
             }
-            $countOfRoutes[$route->location] = 1;
+            $countOfRoutes[$route->location] = [1];
         }
 
         $routes = Route::select(DB::raw('count(id) as total'), "driver_id")->where('route_type',1)->groupBy('driver_id')->get();
@@ -446,7 +446,8 @@ class AdminController extends Controller
         $van_drivers = [];
         foreach($routes as $route){
             $driver = Driver::find($route->driver_id);
-            $van_drivers[] = [$driver, $route->total];
+            $user = $driver->user()->first();
+            $van_drivers[] = [$driver->id,$user->name, $route->total];
         }
 
         $trip_records = TripRecord::select(DB::raw('count(id) as total'), "driver_id")->groupBy('driver_id')->get();
@@ -454,15 +455,16 @@ class AdminController extends Controller
         $service_drivers = [];
         foreach($trip_records as $trip_record){
             $driver = Driver::find($trip_record->driver_id);
-            $service_drivers[] = [$driver, $trip_record->total];
+            $user = $driver->user()->first();
+            $service_drivers[] = [$driver->id,$user->name, $trip_record->total];
         }
         // sort van drivers by total
         usort($van_drivers, function($a, $b) {
-            return $b[1] <=> $a[1];
+            return $b[2] <=> $a[2];
         });
         // sort service drivers by total
         usort($service_drivers, function($a, $b) {
-            return $b[1] <=> $a[1];
+            return $b[2] <=> $a[2];
         });
         // Sort countOfRoutes by value
         arsort($countOfRoutes);

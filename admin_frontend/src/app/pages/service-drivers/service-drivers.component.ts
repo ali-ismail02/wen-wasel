@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import {
+  faArrowRight,
+  faCheck,
+  faSearch,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-service-drivers',
@@ -6,5 +11,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./service-drivers.component.css']
 })
 export class ServiceDriversComponent {
-
+  searchIcon = faSearch;
+  checkIcon = faCheck;
+  arrowRight = faArrowRight;
 }

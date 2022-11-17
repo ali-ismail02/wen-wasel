@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import {
+  faArrowRight,
+  faCheck,
+  faSearch,
+} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-passengers',
@@ -6,5 +11,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./passengers.component.css']
 })
 export class PassengersComponent {
+
+  searchIcon = faSearch;
+  checkIcon = faCheck;
+  arrowRight = faArrowRight;
 
 }

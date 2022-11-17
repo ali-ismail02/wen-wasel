@@ -19,7 +19,7 @@ export function DrawerStack() {
         <Drawer.Navigator
           initialRouteName="Home"
           drawerContent={CustomDrawer}
-          drawerContentOptions={{
+          screenOptions={{
           activeTintColor: '#000000',
           activeBackgroundColor: '#e6e6e6',
           }}

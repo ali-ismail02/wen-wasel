@@ -1,5 +1,5 @@
 import Graph from "../../classes/Graph";
-import { jwt } from "../../constants/JWT";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import Get from "../Get";
 import getDirections from "../GetGoogleDirections";
 import isLess from "../IsLess";
@@ -151,8 +151,9 @@ const buildVanAndServiceGraph = async (service, van, start_location, end_locatio
 const buildGraph = async (start_location, end_location, trip_type) => {
     if(!trip_type) trip_type = 1;
     // get the routes from the backend
-
-    const response = await Get("user/get-possible-routes/" + start_location + "/" + end_location, jwt);
+    
+    const JWT = await AsyncStorage.getItem('token');
+    const response = await Get("user/get-possible-routes/" + start_location + "/" + end_location, JWT);
     let graph = new Graph();
     // add start location to graph as a node
     const start = {

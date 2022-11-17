@@ -3,8 +3,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const GetFares = async (path) => {
     const JWT = await AsyncStorage.getItem('token');
-    console.log(JWT);
-    const response = await Get("user/get-fares", jwt);
+    const response = await Get("user/get-fares", JWT);
     let price = 0;
     for (const trip of path) {
         if (trip.name != "end_location") {

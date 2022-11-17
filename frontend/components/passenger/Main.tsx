@@ -104,7 +104,7 @@ const Main = () => {
     }
 
     const setState = (state) => {
-        if(state == "done") {
+        if (state == "done") {
             setAllUserStates(["none"]);
             setUserState("done");
             setDestination(null);
@@ -114,49 +114,48 @@ const Main = () => {
         setUserState(state);
     }
 
-    const comps = {
-        done: <CompletedTrip setUserState={setUserState}/>,
-        none: <><View style={styles.searchContainer}>
-            <Search onPlaceSelect={(details) => onPlaceSelect(details)} />
-        </View>
-            <CenterMapButton setCenterMap={setCenterMap}
-                moveTo={moveTo}
-                mapRef={mapRef}
-                location={location} /></>,
+    const comps = (state) => {
+        switch (state) {
+            case "done": return <CompletedTrip setUserState={setUserState} />
+            case "none": return <>
+                                    <View style={styles.searchContainer}>
+                                        <Search onPlaceSelect={(details) => onPlaceSelect(details)} />
+                                    </View>
+                                    <CenterMapButton setCenterMap={setCenterMap}
+                                        moveTo={moveTo}
+                                        mapRef={mapRef}
+                                        location={location} />
+                                </>
+            case "searched": return <View style={styles.bottomPopupContainer}>
+                                        <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />
+                                        <Button text="Next" onPress={() => rideSelect()} width={"100%"} color={"#FF9E0D"} />
+                                    </View>
+            case "rideSelected": return <UserRouteOptions routes={paths} onPress={onPathSelect} />
+            case "pathSelected": return <View style={styles.bottomPopupContainer}>
+                                            <Text style={styles.instructions}>Confirm your route?</Text>
+                                            <Button text="Confirm Route" onPress={onPathConfirm} width={"100%"} color={"#FF9E0D"} />
+                                        </View>
+            case "pathConfirmed": return <BookSeats path={path} setState={setState} setPath={setPath} />
+            case "booked": return <>
+                                    <SubRide path={path} setPath={setPath} setState={setState} />
+                                    <Booked status={1} />
+                                  </>
+            case "failedBooking": return <>
+                                            <SubRide path={path} setPath={setPath} setState={setState} />
+                                            <Booked status={0} />
+                                        </>
+            case "noBooking": return <SubRide path={path} setPath={setPath} setState={setState} />
+            }
+        }
 
-        searched: <View style={styles.bottomPopupContainer}>
-            <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />
-            <Button text="Next" onPress={() => rideSelect()} width={"100%"} color={"#FF9E0D"} />
-        </View>,
+        return (
+            <SafeAreaView>
+                <View>
+                    <CustomMap setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} path={path} setDestination={setDestination} userState={userState} liveLocations={liveLocations} />
+                    {comps(userState)}
+                </View>
+            </SafeAreaView>
+        );
+    };
 
-        rideSelected: <UserRouteOptions routes={paths} onPress={onPathSelect} />,
-
-        pathSelected: <View style={styles.bottomPopupContainer}>
-            <Text style={styles.instructions}>Confirm your route?</Text>
-            <Button text="Confirm Route" onPress={onPathConfirm} width={"100%"} color={"#FF9E0D"} />
-        </View>,
-
-        pathConfirmed: <BookSeats path={path} setState={setState} setPath={setPath} />,
-
-        booked: <>
-            <SubRide path={path} setPath={setPath} setState={setState} />
-            <Booked status={1} />
-        </>,
-        faliedBooking: <>
-            <SubRide path={path} setPath={setPath} setState={setState} />
-            <Booked status={0} />
-        </>,
-        noBooking: <SubRide path={path} setPath={setPath} setState={setState} />
-    }
-
-    return (
-        <SafeAreaView>
-            <View>
-                <CustomMap setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} path={path} setDestination={setDestination} userState={userState} liveLocations={liveLocations}/>
-                {comps[userState]}
-            </View>
-        </SafeAreaView>
-    );
-};
-
-export default Main; 
+    export default Main; 

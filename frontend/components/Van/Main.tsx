@@ -116,10 +116,12 @@ const Main = () => {
     }
 
     const components = (state) => {
-        if(state == "none") return <PresavedRoutesDropdown presaved_routes={recurringRoutes} setUserState={setUserState} setAllDestinations={updateAllDestinations} />
-        if(state == "destinationsSet") return <Routes destination={destination} setState={setState} destinations={allDestinations} setDestinations={updateAllDestinations} />
-        if(state == "addingRoute") return <AddingDestination setDestinations={setDestinations} setState={setState} destination={destination} />
-        if(state == "delaying") return <DelayingDestinations destinations={allDestinations} setDestinations={updateAllDestinations} setState={setState} />
+        switch (state) {
+            case "none": return <PresavedRoutesDropdown presaved_routes={recurringRoutes} setUserState={setUserState} setAllDestinations={updateAllDestinations} />
+            case "destinationsSet": return <Routes destination={destination} setState={setState} destinations={allDestinations} setDestinations={updateAllDestinations} />
+            case "addingRoute": return <AddingDestination setDestinations={setDestinations} setState={setState} destination={destination} />
+            case "delaying": return <DelayingDestinations destinations={allDestinations} setDestinations={updateAllDestinations} setState={setState} />
+        }
     }
 
     return (

@@ -6,17 +6,19 @@ import { AppComponent } from './app.component';
 import { PassengersComponent } from './pages/passengers/passengers.component';
 import { VanDriversComponent } from './pages/van-drivers/van-drivers.component';
 import { ServiceDriversComponent } from './pages/service-drivers/service-drivers.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 
 @NgModule({
   declarations: [
     AppComponent,
     PassengersComponent,
     VanDriversComponent,
-    ServiceDriversComponent
+    ServiceDriversComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FontAwesomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

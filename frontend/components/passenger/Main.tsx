@@ -24,8 +24,28 @@ const Main = () => {
     const [centerMap, setCenterMap] = useState(true);
     const [paths, setPaths] = useState(undefined);
     const [path, setPath] = useState(undefined);
+    const [liveLocations, setLiveLocations] = useState([]);
     const [searchResult, setSearchResult] = useState(undefined);
     const mapRef = React.useRef<MapView>(null);
+    const io = require("socket.io-client");
+    const socket = io.connect('http://192.168.1.50:5000');
+
+    React.useEffect(() => {
+        let flag = true;
+        socket.on("locationBroadcast", (data: any) => {
+            let temp = liveLocations;
+            temp.forEach((loc: any) => {
+                if (loc.id == data.id) {
+                    loc.location = data.location;
+                    flag = false;
+                }
+            });
+            if (flag) {
+                temp.push(data);
+            }
+            setLiveLocations(temp);
+        });
+    }, [socket]);
 
     const backPressed = () => {
         if (allUserStates.length > 5) {
@@ -132,7 +152,7 @@ const Main = () => {
     return (
         <SafeAreaView>
             <View>
-                <CustomMap setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} path={path} setDestination={setDestination} userState={userState} />
+                <CustomMap setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} path={path} setDestination={setDestination} userState={userState} liveLocations={liveLocations}/>
                 {comps[userState]}
             </View>
         </SafeAreaView>

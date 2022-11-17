@@ -13,3 +13,36 @@ body {
 .pointer {
     cursor: pointer;
 }
+
+.table {
+  border-collapse: collapse;
+}
+
+.table td {
+  min-width: 30px;
+  padding: 10px;
+  border-right:1px solid #ded9d9;
+}
+
+.table tr:nth-child(even) {
+  background-color: #ffffff;
+  border-bottom: 1px solid #ccc7c7;
+}
+
+.table tr:nth-child(odd) {
+  background-color: #f2f2f2;
+  border-bottom: 1px solid #ccc7c7;
+}
+
+.table th {
+  background-color: #1f1f1f;
+  color: white;
+}
+
+.table {
+  border: 1px solid #ccc7c7;
+}
+
+.table tr:hover {
+  background-color: #ddd;
+}

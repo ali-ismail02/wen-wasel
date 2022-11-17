@@ -8,7 +8,7 @@ import {
 @Component({
   selector: 'app-passengers',
   templateUrl: './passengers.component.html',
-  styleUrls: ['./passengers.component.css']
+  styleUrls: ['./passengers.component.css'],
 })
 export class PassengersComponent {
 

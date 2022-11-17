@@ -9,6 +9,7 @@ import DelayingDestinations from "./DelayingDestinations";
 import GetRecurringRoute from "../../hooks/van/GetRecurringRoutes";
 import PresavedRoutesDropdown from "./PresavedRoutesDropdown";
 import SortPath from "../../hooks/van/SortPath";
+import { useSelector } from 'react-redux';
 
 const Main = () => {
     const [userState, setUserState] = useState("none");
@@ -19,23 +20,42 @@ const Main = () => {
     const [location, setLocation] = useState(undefined);
     const [centerMap, setCenterMap] = useState(true);
     const mapRef = React.useRef<MapView>(null);
+    const user = useSelector((state: any) => state?.user);
+    const id = user?.userProfile.id;
+    const io = require("socket.io-client");
+    const socket = io('http://192.168.1.50:5000');
+
+    const sameer = () => {
+        // repeat this every 3 seconds
+        setTimeout(() => {
+            if(location) {
+                socket.emit("location", {
+                    type: "van",
+                    id: id,
+                    location: {latitude: location?.latitude, longitude: location?.longitude},
+                });
+            }
+            sameer();
+        }, 2000);
+    }
 
     useEffect(() => {
         const getRecurringRoutes = async () => {
             const recurringRoutes = await GetRecurringRoute();
-            if(recurringRoutes) {
+            if (recurringRoutes) {
                 setRecurringRoutes(recurringRoutes);
             }
         }
         getRecurringRoutes();
+        sameer();
     }, []);
 
     const backPressed = () => {
-        if(userState == "none") {
+        if (userState == "none") {
             BackHandler.exitApp();
             return true;
-        } else if(userState == "addingRoute" || userState == "delayingRoute") {
-            if(allUserStates.length == 2) {
+        } else if (userState == "addingRoute" || userState == "delayingRoute") {
+            if (allUserStates.length == 2) {
                 setUserState("none");
                 setAllUserStates(["none"]);
                 return true;
@@ -43,15 +63,15 @@ const Main = () => {
             setUserState(allUserStates[allUserStates.length - 2]);
             setAllUserStates(allUserStates.slice(0, allUserStates.length - 1));
             return true;
-        }else {
+        } else {
             let flag = 1;
-            for(let i = 0; i < allDestinations.length; i++) {
-                if(allDestinations[i][0]['arrived'] == false) {
+            for (let i = 0; i < allDestinations.length; i++) {
+                if (allDestinations[i][0]['arrived'] == false) {
                     flag = 0;
                     break;
                 }
             }
-            if(flag == 1) {
+            if (flag == 1) {
                 setUserState("none");
                 setAllUserStates(["none"]);
                 setAllDestinations([]);
@@ -77,6 +97,8 @@ const Main = () => {
     }
 
     const setState = (state) => {
+        sameer();   
+        // connect to socket
         setUserState(state);
         setAllUserStates([...allUserStates, state]);
     }
@@ -93,15 +115,15 @@ const Main = () => {
     }
 
     const components = {
-        none:<PresavedRoutesDropdown presaved_routes={recurringRoutes} setUserState={setUserState} setAllDestinations={updateAllDestinations} />,
-        destinationsSet: <Routes destination={destination} setState={setState} destinations= {allDestinations} setDestinations={updateAllDestinations}/>,
-        addingRoute: <AddingDestination setDestinations={setDestinations} setState={setState} destination={destination}/>,
-        delaying: <DelayingDestinations destinations={allDestinations} setDestinations={updateAllDestinations} setState={setState}/>,
+        none: <PresavedRoutesDropdown presaved_routes={recurringRoutes} setUserState={setUserState} setAllDestinations={updateAllDestinations} />,
+        destinationsSet: <Routes destination={destination} setState={setState} destinations={allDestinations} setDestinations={updateAllDestinations} />,
+        addingRoute: <AddingDestination setDestinations={setDestinations} setState={setState} destination={destination} />,
+        delaying: <DelayingDestinations destinations={allDestinations} setDestinations={updateAllDestinations} setState={setState} />,
     }
 
     return (
         <View>
-            <CustomMap allDestinations={allDestinations} location={location}  setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} setDestination={setDestination} onPlaceSelect={onPlaceSelect}/>
+            <CustomMap allDestinations={allDestinations} location={location} setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} setDestination={setDestination} onPlaceSelect={onPlaceSelect} />
             {components[userState]}
         </View>
     );

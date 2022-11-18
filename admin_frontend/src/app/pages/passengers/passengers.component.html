@@ -3,7 +3,7 @@
         <div class="title">Passengers</div>
         <div class="search-container">
             <fa-icon [icon]="searchIcon" class="search-icon"></fa-icon>
-            <input type="text" class="search" placeholder="Search"/>
+            <input type="text" class="search" placeholder="Search" (change)="filterDrivers($event)" />
         </div>
     </div>
     <table class="table">
@@ -18,12 +18,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>234</td> 
-                <td>ali ismail</td> 
-                <td>hello@email.email</td> 
-                <td>asdawdawd aw</td> 
-                <td>awdaw</td> 
+            <tr *ngFor="let user of filteredPassengers">
+                <td>{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.phone}}</td>
+                <td>{{user.created_at}}</td>
             </tr>
         </tbody>
     </table>

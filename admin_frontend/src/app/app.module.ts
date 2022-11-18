@@ -11,6 +11,7 @@ import { AcceptAdminComponent } from './pages/accept-admin/accept-admin.componen
 import { AnalyticsComponent } from './pages/analytics/analytics.component';
 import { GoogleChartsModule } from 'angular-google-charts';
 import { LoginComponent } from './pages/login/login.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { LoginComponent } from './pages/login/login.component';
     AppRoutingModule,
     FontAwesomeModule,
     GoogleChartsModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

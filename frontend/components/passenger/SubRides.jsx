@@ -6,7 +6,7 @@ import Button from '../Button';
 import GetTripType from '../../hooks/passenger/GetTripType';
 import UpdateBooking from '../../hooks/passenger/UpdateBooking';
 
-const SubRides = ({ path, setPath, setState }) => {
+const SubRides = ({ path, setPath, setState, setCenter }) => {
     const [destination, setDestination] = useState('');
     const [time, setTime] = useState('');
     const [imageName, setImageName] = useState('');
@@ -54,6 +54,7 @@ const SubRides = ({ path, setPath, setState }) => {
 
     // remove first element from path array using setPath
     const removePath = async () => {
+        setCenter(true);
         if(path.length === 2){
             setPath([]);
             setState('done');

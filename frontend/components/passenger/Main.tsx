@@ -137,14 +137,14 @@ const Main = () => {
                                         </View>
             case "pathConfirmed": return <BookSeats path={path} setState={setState} setPath={setPath} />
             case "booked": return <>
-                                    <SubRide path={path} setPath={setPath} setState={setState} />
+                                    <SubRide path={path} setPath={setPath} setState={setState} setCenter={setCenterMap} />
                                     <Booked status={1} />
                                   </>
             case "failedBooking": return <>
-                                            <SubRide path={path} setPath={setPath} setState={setState} />
+                                            <SubRide path={path} setPath={setPath} setState={setState}  setCenter={setCenterMap}/>
                                             <Booked status={0} />
                                         </>
-            case "noBooking": return <SubRide path={path} setPath={setPath} setState={setState} />
+            case "noBooking": return <SubRide path={path} setPath={setPath} setState={setState}  setCenter={setCenterMap}/>
             }
         }
 

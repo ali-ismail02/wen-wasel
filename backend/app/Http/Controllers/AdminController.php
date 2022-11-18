@@ -17,7 +17,7 @@ class AdminController extends Controller
     // Spi to get all passengers
     public function getPassengers(Request $request){
         $search = $request->search;
-        $users = User::where('user_type', 1)->where(function ($query) use ($search) {
+        $users = User::where('user_type', 2)->where(function ($query) use ($search) {
                         $query->where('name', 'like', '%' . $search . '%')
                         ->orWhere('email', 'like', '%' . $search . '%');
                     })->get();

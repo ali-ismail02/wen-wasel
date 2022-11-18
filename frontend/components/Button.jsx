@@ -1,22 +1,34 @@
 import styles from '../styles/styles';
-import { Text, TouchableOpacity, Image } from 'react-native';
+import { Text, TouchableOpacity, Image, Appearance } from 'react-native';
+import React, { useState, useEffect } from 'react';
 
 const Button = ({ onPress, text, color, height = 50, width, image = null, disabled = false }) => {
+    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+    const [style, setStyle] = useState(styles.light);
+    
+    Appearance.addChangeListener(({ colorScheme }) => {
+        setColorScheme(colorScheme);
+        {}
+    });
+
+    useEffect(() => {
+        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
+    }, [colorScheme]);
     if (color == "#FF9E0D") {
         var textStyle = {
-            ...styles.buttonText,
+            ...style.buttonText,
             color: "black"
         }
         if(disabled) {
             var buttonStyle = {
-                ...styles.button,
+                ...style.button,
                 height: height,
                 width: width,
                 backgroundColor: "#6F4609",
             }
         }else {
             var buttonStyle = {
-                ...styles.button,
+                ...style.button,
                 height: height,
                 width: width,
                 backgroundColor: color,
@@ -24,19 +36,19 @@ const Button = ({ onPress, text, color, height = 50, width, image = null, disabl
         }
     } else {
         var textStyle = {
-            ...styles.buttonText,
+            ...style.buttonText,
             color: "white"
         }
         if(disabled) {
             var buttonStyle = {
-                ...styles.button,
+                ...style.button,
                 height: height,
                 width: width,
                 backgroundColor: "#DDD",
             }
         }else {
             var buttonStyle = {
-                ...styles.button,
+                ...style.button,
                 height: height,
                 width: width,
                 backgroundColor: color,

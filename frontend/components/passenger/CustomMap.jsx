@@ -28,7 +28,7 @@ const CustomMap = ({ setCenterMap, centerMap, mapRef, destination, path, setLoca
             style={styles.map}
             initialRegion={INITIAL_POSITION}>
             {destination != null && <Marker coordinate={destination} />}
-            {liveLocations.length > 0 && liveLocations.map((location, index) => {
+            {liveLocations.length > 0 && userState != undefined && liveLocations.map((location, index) => {
                 console.log(location)
                 return <Marker coordinate={location.location}
                     key={index}

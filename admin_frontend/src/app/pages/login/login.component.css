@@ -5,9 +5,9 @@
     font-size: 1.2rem;
     font-family: sans-serif;
     font-style: italic;
-  }
-  
-  .wrapper {
+}
+
+.wrapper {
     min-width: 400px;
     width: 26%;
     min-height: 500px;
@@ -15,32 +15,34 @@
     padding: 40px 40px 40px 40px;
     background-color: #1f1f1f;
     border-radius: 15px;
-  }
-  
-  .logo {
+}
+
+.logo {
     width: 80px;
     margin: auto;
-  }
-  
-  .logo img {
+}
+
+.logo img {
     width: 100%;
     height: 80px;
     object-fit: cover;
     border-radius: 50%;
-  }
-  .wrapper .form-container {
+}
+
+.wrapper .form-container {
     margin-top: 30px;
-  }
-  .wrapper .name {
+}
+
+.wrapper .name {
     text-align: center;
     font-weight: 600;
     font-size: 1.6rem;
     letter-spacing: 1.3px;
     padding-left: 10px;
     color: white;
-  }
-  
-  .wrapper .form-field input {
+}
+
+.wrapper .form-field input {
     width: 100%;
     display: block;
     border: none;
@@ -49,16 +51,16 @@
     font-size: 1.2rem;
     color: #666;
     padding: 10px 15px 10px 10px;
-  }
-  
-  .wrapper .form-field {
+}
+
+.wrapper .form-field {
     padding-left: 10px;
     margin-bottom: 20px;
     border-radius: 20px;
     border: 1px solid white;
-  }
-  
-  .wrapper .btn {
+}
+
+.wrapper .btn {
     margin-top: 25px;
     width: 100%;
     height: 40px;
@@ -67,16 +69,16 @@
     border-radius: 25px;
     letter-spacing: 1.3px;
     border: 0px;
-  }
-  .wrapper .btn:hover {
+}
+
+.wrapper .btn:hover {
     cursor: pointer;
-  }
-  
-  .error {
+}
+
+.error {
     color: white;
-  }
-  
-  form {
+}
+
+form {
     text-align: center;
-  }
-  
+}

@@ -99,8 +99,12 @@ const Main = () => {
     }
 
     const setState = (state) => {
-        broadcastLocation();   
-        // connect to socket
+        if(state == "destinationsSet") {
+            setAllUserStates(["none", "destinationsSet"]);
+            setUserState("destinationsSet");
+            return
+        }
+        broadcastLocation();
         setUserState(state);
         setAllUserStates([...allUserStates, state]);
     }

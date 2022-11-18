@@ -597,10 +597,10 @@ class VanController extends Controller
 
         if($request->image){
             $img = $request->image;
-            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace('data:image/jpeg;base64,', '', $img);
             $img = str_replace(' ', '+', $img);
             $data = base64_decode($img);
-            $filee = uniqid() . '.png';
+            $filee = uniqid() . '.jpeg';
             $file = public_path('images')."\\".$filee;
             $user->image = $filee;
             file_put_contents($file, $data);
@@ -620,12 +620,14 @@ class VanController extends Controller
 
         $user->save();
         $driver->save();
+        $token = JWTAuth::fromUser($user);
 
         return response()->json([
             'status' => 1,
             'message' => 'Driver updated',
             'user' => $user,
-            'driver' => $driver
+            'driver' => $driver,
+            'token' => $token
         ]);
     }
 }

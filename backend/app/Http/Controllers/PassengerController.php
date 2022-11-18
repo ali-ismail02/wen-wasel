@@ -637,10 +637,10 @@ class PassengerController extends Controller
         if($request->image){
             // Convert the base64 image to a image file and save it
             $img = $request->image;
-            $img = str_replace('data:image/png;base64,', '', $img);
+            $img = str_replace('data:image/jpeg;base64,', '', $img);
             $img = str_replace(' ', '+', $img);
             $data = base64_decode($img);
-            $filee = uniqid() . '.png';
+            $filee = uniqid() . '.jpeg';
             $file = public_path('images')."\\".$filee;
             $user->image = $filee;
             file_put_contents($file, $data);

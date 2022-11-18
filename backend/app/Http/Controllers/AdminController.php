@@ -438,7 +438,7 @@ class AdminController extends Controller
             if($flag){
                 continue;
             }
-            $countOfRoutes[$route->location] = [1];
+            $countOfRoutes[$route->location] = 1;
         }
 
         $routes = Route::select(DB::raw('count(id) as total'), "driver_id")->where('route_type',1)->groupBy('driver_id')->get();

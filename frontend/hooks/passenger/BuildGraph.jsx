@@ -69,8 +69,14 @@ const buildVanGraph = async (van, start_location, end_location, start, end, grap
         graph.addVertex(obj_start);
         graph.addVertex(obj_end);
         // subtract van[i][1].arrival_time - van[i][0].departure_time (strings) and convert to timestamp
-        let time = new Date(van[i][1].arrival_time) - new Date(van[i][0].arrival_time);
-        time = time / 1000;
+        let bits = van[i][0].arrival_time.split(/\D/);
+        const date1 = new Date(bits[0], --bits[1], bits[2], bits[3], bits[4]);
+        bits = van[i][1].arrival_time.split(/\D/);
+        const date2 = new Date(bits[0], --bits[1], bits[2], bits[3], bits[4]);
+        let time = date1 - date2;
+        // get time in minutes
+        time = time / 1000 / 60;
+        console.log(time);
         // add edge to graph with weight of time
         graph.addEdge(obj_start, obj_end, time);
         // add walking edge to graph from start to start of service
@@ -149,9 +155,9 @@ const buildVanAndServiceGraph = async (service, van, start_location, end_locatio
 }
 
 const buildGraph = async (start_location, end_location, trip_type) => {
-    if(!trip_type) trip_type = 1;
+    if (!trip_type) trip_type = 1;
     // get the routes from the backend
-    
+
     const JWT = await AsyncStorage.getItem('token');
     const response = await Get("user/get-possible-routes/" + start_location + "/" + end_location, JWT);
     let graph = new Graph();

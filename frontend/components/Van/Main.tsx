@@ -28,6 +28,7 @@ const Main = () => {
     const broadcastLocation = () => {
         // repeat this every 2 seconds
         setTimeout(() => {
+            console.log("broadcasting location");
             if(location) {
                 socket.emit("location", {
                     type: "van",
@@ -99,12 +100,12 @@ const Main = () => {
     }
 
     const setState = (state) => {
+        broadcastLocation();
         if(state == "destinationsSet") {
             setAllUserStates(["none", "destinationsSet"]);
             setUserState("destinationsSet");
             return
         }
-        broadcastLocation();
         setUserState(state);
         setAllUserStates([...allUserStates, state]);
     }

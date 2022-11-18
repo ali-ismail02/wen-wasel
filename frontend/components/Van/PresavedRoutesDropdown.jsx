@@ -1,13 +1,24 @@
 import SelectDropdown from "react-native-select-dropdown";
 import styles from "../../styles/styles";
 import BuildRecurringRoutePath from "../../hooks/van/BuildRecurringRoutePath";
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, Appearance} from "react-native";
 import Button from "../Button";
-import React from "react";
+import React, { useState, useEffect } from 'react';
 
 const PresavedRoutesDropdown = ({ presaved_routes, setAllDestinations, setUserState }) => {
     const [selectedRoute, setSelectedRoute] = React.useState(null);
     const [disabled, setDisabled] = React.useState(true);
+    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+    const [style, setStyle] = useState(styles.light);
+    
+    Appearance.addChangeListener(({ colorScheme }) => {
+        setColorScheme(colorScheme);
+        {}
+    });
+
+    useEffect(() => {
+        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
+    }, [colorScheme]);
 
     const startRoute = async () => {
         BuildRecurringRoutePath(selectedRoute, setAllDestinations);
@@ -19,16 +30,21 @@ const PresavedRoutesDropdown = ({ presaved_routes, setAllDestinations, setUserSt
         names.push(presaved_routes[i].presaved_route.name);
     }
     return (
-        <View style={styles.bottomPopupContainerNoPadding}>
-            <View style={[styles.flex, { paddingHorizontal: 30, paddingVertical: 10, borderBottomColor:"#DDD", borderBottomWidth:1 }]}>
-                <Text style={styles.subTitle}>Presaved Routes:</Text>
+        <View style={style.bottomPopupContainerNoPadding}>
+            <View style={[style.flex, { paddingHorizontal: 30, paddingVertical: 10, borderBottomColor:"#DDD", borderBottomWidth:1 }]}>
+                <Text style={style.subTitle}>Presaved Routes:</Text>
                 <SelectDropdown
+                    rowStyle={style.dropdownRow}
                     data={names}
                     onSelect={(selectedItem, index) => {
                         setSelectedRoute(presaved_routes[index]);
                         setDisabled(false);
                     }}
-                    buttonStyle={styles.selectButtonRoutes}
+                    buttonStyle={style.selectButtonRoutes}
+                    selectedRowTextStyle={style.dropdownRowText}
+                    rowTextStyle={style.dropdownRowText}
+                    buttonTextStyle={style.dropdownRowText}
+                    searchInputStyle={style.dropdownSearchInput}
                     dropdownIconPosition={"right"}
                     search={true}
                     searchPlaceHolder="Search"
@@ -43,7 +59,7 @@ const PresavedRoutesDropdown = ({ presaved_routes, setAllDestinations, setUserSt
                     }}
                 />
             </View>
-            <View style={[styles.flex, { paddingHorizontal: 30, paddingVertical: 10 }]}>
+            <View style={[style.flex, { paddingHorizontal: 30, paddingVertical: 10 }]}>
                 <Button text="Start Route" onPress={startRoute} color={"#FF9E0D"} width={"100%"} disabled={disabled}/>
             </View>
         </View>

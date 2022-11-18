@@ -1,4 +1,4 @@
-import { TouchableOpacity, View, Image, Text } from "react-native";
+import { TouchableOpacity, View, Image, Text, Appearance } from "react-native";
 import styles from "../../styles/styles";
 import GetRouteById from "../../hooks/van/GetRouteById";
 import { useEffect, useState } from "react";
@@ -6,12 +6,22 @@ import { Google_API_Key } from "../../constants/GoogleAPIKey";
 import SetTripArrived from "../../hooks/van/setTripArrived";
 
 const RouteDescription = ({ destination, setDestinations, allDestionations, update }) => {
-    if (destination == null) {
-        return null;
-    }
     const [route, setRoute] = useState(destination);
     const [destinationAddress, setDestinationAddress] = useState("");
     const [time, setTime] = useState("");
+    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+    const [style, setStyle] = useState(styles.light);
+    
+    Appearance.addChangeListener(({ colorScheme }) => {
+        setColorScheme(colorScheme);
+    });
+
+    useEffect(() => {
+        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
+    }, []);
+    if (destination == null) {
+        return null;
+    }
 
     const getRoute = async () => {
         // add loop with 5 second delay to check if route is updated
@@ -39,7 +49,7 @@ const RouteDescription = ({ destination, setDestinations, allDestionations, upda
         setTime(timeString);
         getLocation();
         getRoute();
-    }, []);
+    }, [colorScheme]);
 
     const onPress = async () => {
         for (let i = 0; i < allDestionations.length; i++) {
@@ -58,19 +68,22 @@ const RouteDescription = ({ destination, setDestinations, allDestionations, upda
 
     return (<>
         {destination[0].arrived == false ?
-            <TouchableOpacity style={styles.van.routeDescription} onPress={onPress}>
-                <Image style={{ width: 30, height: 30 }} source={require("../../assets/images/hourglass.png")} />
-                <View style={styles.flex}>
-                    <Image style={{ width: 20, height: 30 }} source={require("../../assets/images/standing.png")} />
-                    <Text style={styles.van.routeDescriptionText}>{route.reservations}</Text>
+            <TouchableOpacity style={style.van.routeDescription} onPress={onPress}>
+                {colorScheme == "dark" ? <Image style={{ width: 30, height: 30 }} source={require("../../assets/images/hourglass_dark.png")} /> :
+                <Image style={{ width: 30, height: 30 }} source={require("../../assets/images/hourglass.png")} />}
+                <View style={style.flex}>
+                {colorScheme == "dark" ? <Image style={{ width: 20, height: 30 }} source={require("../../assets/images/standing_dark.png")} /> :
+                <Image style={{ width: 20, height: 30 }} source={require("../../assets/images/standing.png")} />}
+                    <Text style={style.van.routeDescriptionText}>{route.reservations}</Text>
                 </View>
-                <Text style={styles.van.routeDescriptionAddress}>{destinationAddress}</Text>
-                <Text style={styles.van.routeDescriptionTime}>Scheduled at {time}</Text>
+                <Text style={style.van.routeDescriptionAddress}>{destinationAddress}</Text>
+                <Text style={style.van.routeDescriptionTime}>Scheduled at {time}</Text>
             </TouchableOpacity> :
-            <View style={styles.van.routeDescription}>
-                <Image style={{ width: 30, height: 30 }} source={require("../../assets/images/black-tick.png")} />
-                <Text style={styles.van.routeDescriptionAddress}>{destinationAddress}</Text>
-                <Text style={styles.van.routeDescriptionTime}>Scheduled at {time}</Text>
+            <View style={style.van.routeDescription}>
+            {colorScheme == "dark" ? <Image style={{ width: 30, height: 30 }} source={require("../../assets/images/tick.png")} /> :
+            <Image style={{ width: 30, height: 30 }} source={require("../../assets/images/black-tick.png")} />}
+                <Text style={style.van.routeDescriptionAddress}>{destinationAddress}</Text>
+                <Text style={style.van.routeDescriptionTime}>Scheduled at {time}</Text>
             </View>}
     </>
     );

@@ -1,5 +1,5 @@
-import { View, Text, Image } from 'react-native';
-import React from 'react';
+import { View, Text, Image, Appearance } from 'react-native';
+import React, {useState, useEffect} from 'react';
 import styles from '../../styles/styles';
 import SelectDropdown from 'react-native-select-dropdown'
 import UpdateOneTimeRoute from '../../hooks/van/UpdateOneTimeRoute';
@@ -10,6 +10,17 @@ const DelayingDestinations = ({ setDestinations, setState, destinations }) => {
     const [minutes, setMinutes] = React.useState(null);
     const [disabled, setDisabled] = React.useState(true);
     const mins = new Array(60).fill(1).map((_, i) => i);
+    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+    const [style, setStyle] = useState(styles.light);
+    
+    Appearance.addChangeListener(({ colorScheme }) => {
+        setColorScheme(colorScheme);
+        {}
+    });
+
+    useEffect(() => {
+        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
+    }, [colorScheme]);
 
     const delayAllDestinations = async () => {
         for (let i = 0; i < destinations.length; i++) {
@@ -25,19 +36,30 @@ const DelayingDestinations = ({ setDestinations, setState, destinations }) => {
     }
 
     return (
-        <View style={styles.bottomPopupContainer}>
-            <Text style={styles.instructions}>Please press on the mins menu and choose how many minutes are left till you arrive at your route </Text>
-            <View style={styles.flex}>
-                <Image style={{ width: 50, height: 30 }} source={require('../../assets/images/van.png')} />
-                <Image style={{ width: 50, height: 20 }} source={require('../../assets/images/3dots.png')} />
-                <Image style={{ width: 30, height: 35 }} source={require('../../assets/images/waypoint.png')} />
+        <View style={style.bottomPopupContainer}>
+            <Text style={style.instructions}>Please press on the mins menu and choose how many minutes are left till you arrive at your route </Text>
+            <View style={style.flex}>
+                {colorScheme != "dark" ? <>
+                    <Image style={{ width: 50, height: 30 }} source={require('../../assets/images/van.png')} />
+                    <Image style={{ width: 50, height: 20 }} source={require('../../assets/images/3dots.png')} />
+                    <Image style={{ width: 30, height: 35 }} source={require('../../assets/images/hourglass.png')} />
+                </> : <>
+                    <Image style={{ width: 50, height: 30 }} source={require('../../assets/images/van_dark.png')} />
+                    <Image style={{ width: 50, height: 20 }} source={require('../../assets/images/3dots_dark.png')} />
+                    <Image style={{ width: 30, height: 35 }} source={require('../../assets/images/hourglass_dark.png')} />
+                </>}
                 <SelectDropdown data={mins}
                     onSelect={(selectedItem, index) => {
                         setMinutes(selectedItem);
                         setDisabled(false);
                         delayAllDestinations
                     }}
-                    buttonStyle={styles.selectButton}
+                    selectedRowTextStyle={style.dropdownRowText}
+                    rowTextStyle={style.dropdownRowText}
+                    buttonTextStyle={style.dropdownRowText}
+                    searchInputStyle={style.dropdownSearchInput}
+                    buttonStyle={style.selectButton}
+                    rowStyle={style.dropdownRow}
                     dropdownIconPosition={"right"}
                     search={true}
                     searchPlaceHolder="Search"
@@ -50,7 +72,7 @@ const DelayingDestinations = ({ setDestinations, setState, destinations }) => {
 
                 />
             </View>
-            <View style={[styles.flex, {paddingTop: 10}]}>
+            <View style={[style.flex, {paddingTop: 10}]}>
                     <Button text="Cancel" onPress={() => setState("destinationsSet")} color={"black"} width={"47%"} />
                     <Button text="Delay" onPress={delayAllDestinations} color={"#FF9E0D"} width={"47%"} disabled={disabled} />
                 </View>

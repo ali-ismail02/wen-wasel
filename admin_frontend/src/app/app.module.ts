@@ -10,6 +10,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AcceptAdminComponent } from './pages/accept-admin/accept-admin.component';
 import { AnalyticsComponent } from './pages/analytics/analytics.component';
 import { GoogleChartsModule } from 'angular-google-charts';
+import { LoginComponent } from './pages/login/login.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { GoogleChartsModule } from 'angular-google-charts';
     ServiceDriversComponent,
     AcceptAdminComponent,
     AnalyticsComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,

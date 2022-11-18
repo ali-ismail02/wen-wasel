@@ -1,6 +1,7 @@
 import { Marker } from "react-native-maps";
 import { Google_API_Key } from "../../constants/GoogleAPIKey";
 import MapViewDirections from "react-native-maps-directions";
+import { View } from "react-native";
 
 const PathDraw = (path, location) => {
     return (
@@ -9,32 +10,30 @@ const PathDraw = (path, location) => {
             if (trip[0].arrived === false) {
                 if (index == 0) {
                     return (<View key={index}>
-                        <MapViewDirections
-                            key={index}
-                            origin={location}
-                            destination={dest}
-                            apikey={Google_API_Key}
-                            strokeWidth={6}
-                            strokeColor="#FF9E0D"
-                            mode='DRIVING'
-                        />
-                        <Marker key={index} coordinate={dest} pinColor={"#FF9E0D"} />
-                    </View>
-                    );
+                                <MapViewDirections
+                                    origin={location}
+                                    destination={dest}
+                                    apikey={Google_API_Key}
+                                    strokeWidth={6}
+                                    strokeColor="#FF9E0D"
+                                    mode='DRIVING'
+                                />
+                                <Marker coordinate={dest} pinColor={"#FF9E0D"} />
+                            </View>
+                            );
                 }
                 const origin = { latitude: path[index - 1][0].latitude, longitude: path[index - 1][0].longitude }
                 return (<View key={index}>
-                    <MapViewDirections
-                        key={index}
-                        origin={origin}
-                        destination={dest}
-                        apikey={Google_API_Key}
-                        strokeWidth={6}
-                        strokeColor="#FF9E0D"
-                        mode='DRIVING'
-                    />
-                    <Marker key={index} coordinate={dest} pinColor={"#FF9E0D"} />
-                </View>
+                            <MapViewDirections
+                                origin={origin}
+                                destination={dest}
+                                apikey={Google_API_Key}
+                                strokeWidth={6}
+                                strokeColor="#FF9E0D"
+                                mode='DRIVING'
+                            />
+                            <Marker coordinate={dest} pinColor={"#FF9E0D"} />
+                        </View>
                 );
             }
         }

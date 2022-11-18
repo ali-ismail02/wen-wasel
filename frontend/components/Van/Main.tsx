@@ -51,6 +51,7 @@ const Main = () => {
     }, []);
 
     const backPressed = () => {
+        setDestination(null);
         if (userState == "none") {
             BackHandler.exitApp();
             return true;

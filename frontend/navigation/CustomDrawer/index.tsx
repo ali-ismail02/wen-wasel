@@ -1,47 +1,55 @@
 import { DrawerItem } from '@react-navigation/drawer';
-import React from 'react';
-import { View, ScrollView, Text, Image, Switch } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Image, ScrollView, Text, View, Appearance } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
-import styles from './styles';
-import { deleteUser } from '../../redux/slices/userSlice';
-import { updateTheme } from '../../redux/slices/userSlice';
-import { store } from '../../redux/store';
 import { useSelector } from 'react-redux';
-
-const TopSection = () => {
-    const [uri, setUri] = React.useState('');
-    const user = useSelector((state: any) => state?.user);
-    const image = user?.userProfile.image;
-
-    return (
-        <View style={styles.topSection}>
-            {image ? <Image source={{ uri: "http://192.168.1.50:8000/images/" + image }} style={styles.imageProfile} />
-                : <Image source={require("../../assets/images/default_profile.webp")} style={styles.imageProfile} />}
-            <View style={styles.nameContainer}>
-                <Text numberOfLines={1} style={styles.title}>{user?.userProfile.name}</Text>
-            </View>
-        </View>
-    )
-}
+import { deleteUser } from '../../redux/slices/userSlice';
+import { store } from '../../redux/store';
+import styles from './styles';
 
 const CustomDrawer = (props: any) => {
-    const user = useSelector((state: any) => state?.user);
-    const [isDarkTheme, setIsDarkTheme] = React.useState(false);
-    if(user.userProfile.theme == 'dark'){
-        setIsDarkTheme(true);
+    const [uri, setUri] = useState('');
+    const [iconColor, setIconColor] = useState('');
+    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+    const [style, setStyle] = useState<any>({ topSection: null, imageProfile: null, nameContainer: null, title: null });
+
+    Appearance.addChangeListener(({ colorScheme }) => {
+        setColorScheme(colorScheme);
+    });
+
+    useEffect(() => {
+        { colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light) }
+        { colorScheme == 'dark' ? setIconColor('#fff') : setIconColor('#000') }
+    }, [colorScheme]);
+
+    const TopSection = () => {
+    
+        const user = useSelector((state: any) => state?.user);
+        const image = user?.userProfile.image;
+    
+        return (
+            <View style={style.topSection}>
+                {image ? <Image source={{ uri: "http://192.168.1.50:8000/images/" + image }} style={style.imageProfile} />
+                    : <Image source={require("../../assets/images/default_profile.webp")} style={style.imageProfile} />}
+                <View style={style.nameContainer}>
+                    <Text numberOfLines={1} style={style.title}>{user?.userProfile.name}</Text>
+                </View>
+            </View>
+        )
     }
+    const user = useSelector((state: any) => state?.user);
     // const dispatch = useDispatch()
     return (
         <ScrollView bounces={false}>
             <TopSection />
-            <View style={styles.container}>
+            <View style={style.container}>
                 <DrawerItem
                     icon={({ color, size }) => (
-                        <Icon name="home" color={"black"} size={24} />
+                        <Icon name="home" color={iconColor} size={24} />
                     )}
                     label="Home"
                     labelStyle={{
-                        color: "black",
+                        color: iconColor,
                     }}
                     onPress={() => {
                         props.navigation.navigate('Home');
@@ -51,34 +59,19 @@ const CustomDrawer = (props: any) => {
                     icon={({ color, size }) => (
                         <Icon
                             name="user"
-                            color={"black"}
+                            color={iconColor}
                             size={24}
                         />
                     )}
                     label="My Profile"
                     labelStyle={{
-                        color: "black",
+                        color: iconColor,
                     }}
                     onPress={() => {
                         props.navigation.navigate('My Profile');
                     }}
                 />
-                <View style={styles.switchContainer}>
-                    <Icon name="moon" color={"black"} size={24} />
-                    <Text style={styles.switchText}>Dark Theme</Text>
-                    <Switch
-                        trackColor={{ false: "#767577", true: "#81b0ff" }}
-                        thumbColor={isDarkTheme ? "#f5dd4b" : "#f4f3f4"}
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={() => {
-                            {isDarkTheme ? store.dispatch(updateTheme('light')) : store.dispatch(updateTheme('dark'))}
-                            setIsDarkTheme(!isDarkTheme)
-                            store
-                        }}
-                        value={isDarkTheme}
-                    />
-                </View>
-                <View style={styles.divider} />
+                <View style={style.divider} />
                 <DrawerItem
                     icon={({ color, size }) => (
                         <Icon name="log-out" color={"red"} size={24} />

@@ -5,8 +5,22 @@ import { moveTo } from '../../hooks/CameraChange';
 import PathDraw from './PathDraw';
 import { Google_API_Key } from '../../constants/GoogleAPIKey';
 import { Image } from 'react-native';
+import { Appearance} from 'react-native';
+import React, { useState, useEffect } from 'react';
 
 const CustomMap = ({ setCenterMap, centerMap, mapRef, destination, path, setLocation, setState, setDestination, userState, liveLocations }) => {
+    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+    const [style, setStyle] = useState(styles.light);
+    
+    Appearance.addChangeListener(({ colorScheme }) => {
+        setColorScheme(colorScheme);
+        {}
+    });
+
+    useEffect(() => {
+        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
+    }, [colorScheme]);
+
     return (
         <MapView
             apikey={Google_API_Key}
@@ -25,7 +39,7 @@ const CustomMap = ({ setCenterMap, centerMap, mapRef, destination, path, setLoca
                 setDestination(e.nativeEvent.coordinate)
             }}
             ref={mapRef}
-            style={styles.map}
+            style={style.map}
             initialRegion={INITIAL_POSITION}>
             {destination != null && <Marker coordinate={destination} />}
             {liveLocations.length > 0 && userState != undefined && liveLocations.map((location, index) => {

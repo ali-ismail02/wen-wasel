@@ -1,4 +1,4 @@
-import { View, Text, Image } from 'react-native';
+import { View, Text, Image, Appearance } from 'react-native';
 import styles from '../../styles/styles';
 import { Google_API_Key } from '../../constants/GoogleAPIKey';
 import { useEffect, useState } from 'react';
@@ -11,6 +11,13 @@ const SubRides = ({ path, setPath, setState, setCenter }) => {
     const [time, setTime] = useState('');
     const [imageName, setImageName] = useState('');
     const [buttonImage, setButtonImage] = useState('');
+    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+    const [style, setStyle] = useState(styles.light);
+
+    Appearance.addChangeListener(({ colorScheme }) => {
+        setColorScheme(colorScheme);
+        { }
+    });
 
     const update = async (path) => {
         const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${path[1].location}&key=${Google_API_Key}`;
@@ -47,21 +54,22 @@ const SubRides = ({ path, setPath, setState, setCenter }) => {
     };
 
     useEffect(() => {
+        { colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light) }
         if (path.length > 1) {
             update(path);
         }
-    }, []);
+    }, [colorScheme]);
 
     // remove first element from path array using setPath
     const removePath = async () => {
         setCenter(true);
-        if(path.length === 2){
+        if (path.length === 2) {
             setPath([]);
             setState('done');
             return;
         }
 
-        if(path[0].reservation != undefined){
+        if (path[0].reservation != undefined) {
             const response = await UpdateBooking(path[0].reservation);
         }
 
@@ -74,14 +82,20 @@ const SubRides = ({ path, setPath, setState, setCenter }) => {
 
     if (path.length > 1) {
         return (
-            <View style={styles.bottomPopupContainer}>
-                <View style={styles.subRides}>
-                    {imageName == "car" ? <Image source={require("../../assets/images/car.png")} style={{ width: 40, height: 30 }} /> :
-                        imageName == "van" ? <Image source={require("../../assets/images/van.png")} style={{ width: 40, height: 30 }} /> :
-                            <Image source={require("../../assets/images/walking.png")} style={{ width: 20, height: 40 }} />}
-                    <View style={styles.subRideText}>
-                        <Text style={styles.subRideTextDestination}>To {destination}</Text>
-                        <Text style={styles.subRideTextTime}>Arrive at {time}</Text>
+            <View style={style.bottomPopupContainer}>
+                <View style={style.subRides}>
+                    {imageName == "car" && colorScheme == "dark" ?
+                        <Image source={require("../../assets/images/car_dark.png")} style={{ width: 40, height: 30 }} /> :
+                        imageName == "car" && <Image source={require("../../assets/images/car.png")} style={{ width: 40, height: 30 }} />}
+                    {imageName == "van" && colorScheme == "dark" ?
+                        <Image source={require("../../assets/images/van_dark.png")} style={{ width: 40, height: 30 }} /> :
+                        imageName == "van" && <Image source={require("../../assets/images/van.png")} style={{ width: 40, height: 30 }} />}
+                    {imageName == "walking" && colorScheme == "dark" ?
+                        <Image source={require("../../assets/images/walking_dark.png")} style={{ width: 20, height: 40 }} />:
+                        imageName == "walking" && <Image source={require("../../assets/images/walking.png")} style={{ width: 20, height: 40 }} />}
+                    <View style={style.subRideText}>
+                        <Text style={style.subRideTextDestination}>To {destination}</Text>
+                        <Text style={style.subRideTextTime}>Arrive at {time}</Text>
                     </View>
                 </View>
                 <Button text={'Change destination'} image={buttonImage} color={'#FF9E0D'} width={"100%"} onPress={removePath} />

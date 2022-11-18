@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BackHandler, SafeAreaView, Text, View } from "react-native";
+import { BackHandler, SafeAreaView, Text, View, Appearance } from "react-native";
 import MapView, { LatLng } from 'react-native-maps';
 import { centerScreen, moveTo } from '../../hooks/CameraChange';
 import getRoutes from "../../hooks/passenger/GetRoutes";
@@ -26,11 +26,20 @@ const Main = () => {
     const [path, setPath] = useState(undefined);
     const [liveLocations, setLiveLocations] = useState([]);
     const [searchResult, setSearchResult] = useState(undefined);
+    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+    const [style, setStyle] = useState<any>({searchContainer: null,bottomPopupContainer: null, instructions: null});
+    
+    Appearance.addChangeListener(({ colorScheme }) => {
+        setColorScheme(colorScheme);
+        {}
+    });
+
     const mapRef = React.useRef<MapView>(null);
     const io = require("socket.io-client");
     const socket = io.connect('http://192.168.1.50:5000');
 
     React.useEffect(() => {
+        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
         let flag = true;
         socket.on("locationBroadcast", (data: any) => {
             let temp = liveLocations;
@@ -118,7 +127,7 @@ const Main = () => {
         switch (state) {
             case "done": return <CompletedTrip setUserState={setUserState} />
             case "none": return <>
-                                    <View style={styles.searchContainer}>
+                                    <View style={style.searchContainer}>
                                         <Search onPlaceSelect={(details) => onPlaceSelect(details)} />
                                     </View>
                                     <CenterMapButton setCenterMap={setCenterMap}
@@ -126,13 +135,13 @@ const Main = () => {
                                         mapRef={mapRef}
                                         location={location} />
                                 </>
-            case "searched": return <View style={styles.bottomPopupContainer}>
+            case "searched": return <View style={style.bottomPopupContainer}>
                                         <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />
                                         <Button text="Next" onPress={() => rideSelect()} width={"100%"} color={"#FF9E0D"} />
                                     </View>
             case "rideSelected": return <UserRouteOptions routes={paths} onPress={onPathSelect} />
-            case "pathSelected": return <View style={styles.bottomPopupContainer}>
-                                            <Text style={styles.instructions}>Confirm your route?</Text>
+            case "pathSelected": return <View style={style.bottomPopupContainer}>
+                                            <Text style={style.instructions}>Confirm your route?</Text>
                                             <Button text="Confirm Route" onPress={onPathConfirm} width={"100%"} color={"#FF9E0D"} />
                                         </View>
             case "pathConfirmed": return <BookSeats path={path} setState={setState} setPath={setPath} />

@@ -12,6 +12,10 @@
     height: 100vh;
     justify-content: space-between;
     align-items: center;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
 }
 
 .navbar-header {
@@ -104,20 +108,30 @@
 }
 
 .right {
-  width: 100%;
-  background-color: #f1f1f1;
-  color: #1f1f1f;
+    width: calc(100vw - 300px);
+    background-color: #f1f1f1;
+    height: calc(100vh - 75px);
+    color: #1f1f1f;
+    position: fixed;
+    padding-top: 75px;
+    right: 0;
+    overflow: auto;
+    scroll-behavior: smooth;
 }
 
 .top-bar {
-  width: 100%;
-  background-color: white;
-  height: 75px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
+    width: calc(100vw - 300px);
+    position: fixed;
+    background-color: white;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    top: 0;
+    right: 0;
+    z-index: 2;
 }
 
 .username {
-  font-size: 1.2rem;
+    font-size: 1.2rem;
 }

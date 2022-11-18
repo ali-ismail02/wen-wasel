@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PassengersComponent } from './pages/passengers/passengers.component';
 import { ServiceDriversComponent } from './pages/service-drivers/service-drivers.component';
 import { VanDriversComponent } from './pages/van-drivers/van-drivers.component';
+import { AcceptAdminComponent } from './pages/accept-admin/accept-admin.component';
 
 const routes: Routes = [
   {
@@ -16,6 +17,10 @@ const routes: Routes = [
   {
     path: 'service-drivers',
     component: ServiceDriversComponent,
+  },
+  {
+    path: 'accept',
+    component: AcceptAdminComponent,
   },
 
 ];

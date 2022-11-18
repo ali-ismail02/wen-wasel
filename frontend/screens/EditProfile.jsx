@@ -1,6 +1,6 @@
 import * as ImagePicker from 'expo-image-picker';
 import React, { useEffect, useState } from 'react';
-import { Image, Text, TouchableOpacity, View, TextInput } from 'react-native';
+import { Image, Text, TouchableOpacity, View, TextInput, Appearance } from 'react-native';
 import Button from '../components/Button';
 import UpdateProfile from '../hooks/UpdateProfile';
 import { updateUserProfile } from '../redux/slices/userSlice';
@@ -18,8 +18,15 @@ const EditProfileScreen = () => {
     const [successMessage, setSuccessMessage] = useState(null);
     const [image, setImage] = useState();
     const user = useSelector((state) => state?.user);
-
+    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+    const [style, setStyle] = useState(styles.light);
+    
+    Appearance.addChangeListener(({ colorScheme }) => {
+        setColorScheme(colorScheme);
+        {}
+    });
     useEffect(() => {
+        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
         const img = user?.userProfile?.image;
         setEmail(user?.userProfile?.email);
         setName(user?.userProfile?.name);
@@ -35,7 +42,7 @@ const EditProfileScreen = () => {
         } else {
             setImage(require('../assets/images/default_profile.webp'));
         }
-    }, []);
+    }, [colorScheme]);
 
     const update = async () => {
         const response = await UpdateProfile(null, name, email, password, phone, userType);
@@ -87,44 +94,44 @@ const EditProfileScreen = () => {
 
 
     return (
-        <View style={styles.updateProfile.container}>
-            <View style={styles.updateProfile.view}>
-            <Text style={styles.updateProfile.title}>Update Profile</Text>
-                <TouchableOpacity onPress={handleImage} style={styles.updateProfile.touchableOpacity}>
-                    <Image source={image} style={styles.updateProfile.image} />
+        <View style={style.updateProfile.container}>
+            <View style={style.updateProfile.view}>
+            <Text style={style.updateProfile.title}>Update Profile</Text>
+                <TouchableOpacity onPress={handleImage} style={style.updateProfile.touchableOpacity}>
+                    <Image source={image} style={style.updateProfile.image} />
                 </TouchableOpacity>
-                <Text style={styles.updateProfile.label}>Name:</Text>
+                <Text style={style.updateProfile.label}>Name:</Text>
                 <TextInput
-                    style={styles.login.input}
+                    style={style.updateProfile.input}
                     placeholder="name"
                     value={name}
                     onChangeText={setName}
                 />
-                <Text style={styles.updateProfile.label}>Email:</Text>
+                <Text style={style.updateProfile.label}>Email:</Text>
                 <TextInput
-                    style={styles.login.input}
+                    style={style.updateProfile.input}
                     placeholder="email"
                     value={email}
                     onChangeText={setEmail}
                 />
-                <Text style={styles.updateProfile.label}>Phone:</Text>
+                <Text style={style.updateProfile.label}>Phone:</Text>
                 <TextInput
-                    style={styles.login.input}
+                    style={style.updateProfile.input}
                     placeholder="Phone"
                     value={phone}
                     onChangeText={(text) => setPhone(text.replace(/[^0-9]/g, ''))}
                     keyboardType="numeric"
                 />
-                <Text style={styles.updateProfile.label}>Password:</Text>
+                <Text style={style.updateProfile.label}>Password:</Text>
                 <TextInput
-                    style={styles.login.input}
+                    style={style.updateProfile.input}
                     placeholder="password"
                     value={password}
                     onChangeText={setPassword}
                     secureTextEntry={true}
                 />
                 <Text style={styles.login.redLabel}>{failedMessage}</Text>
-                <Text style={styles.updateProfile.success}>{successMessage}</Text>
+                <Text style={style.updateProfile.success}>{successMessage}</Text>
             </View>
             <Button text="UPDATE" onPress={update} width={"100%"} color={"#FF9E0D"} />
         </View>

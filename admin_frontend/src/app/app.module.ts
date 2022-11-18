@@ -7,7 +7,8 @@ import { PassengersComponent } from './pages/passengers/passengers.component';
 import { VanDriversComponent } from './pages/van-drivers/van-drivers.component';
 import { ServiceDriversComponent } from './pages/service-drivers/service-drivers.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { AcceptAdminComponent } from './pages/accept-admin/accept-admin.component'
+import { AcceptAdminComponent } from './pages/accept-admin/accept-admin.component';
+import { AnalyticsComponent } from './pages/analytics/analytics.component'
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { AcceptAdminComponent } from './pages/accept-admin/accept-admin.componen
     VanDriversComponent,
     ServiceDriversComponent,
     AcceptAdminComponent,
+    AnalyticsComponent,
   ],
   imports: [
     BrowserModule,

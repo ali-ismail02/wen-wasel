@@ -8,7 +8,8 @@ import { VanDriversComponent } from './pages/van-drivers/van-drivers.component';
 import { ServiceDriversComponent } from './pages/service-drivers/service-drivers.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AcceptAdminComponent } from './pages/accept-admin/accept-admin.component';
-import { AnalyticsComponent } from './pages/analytics/analytics.component'
+import { AnalyticsComponent } from './pages/analytics/analytics.component';
+import { GoogleChartsModule } from 'angular-google-charts';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { AnalyticsComponent } from './pages/analytics/analytics.component'
     BrowserModule,
     AppRoutingModule,
     FontAwesomeModule,
+    GoogleChartsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

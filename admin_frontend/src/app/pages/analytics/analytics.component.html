@@ -1,1 +1,6 @@
-<p>analytics works!</p>
+<div class="main">
+    <google-chart class="google-chart" title="Most Popular Routes" [type]="LineChart" [data]="this.most_array">
+    </google-chart>
+    <google-chart class="google-chart" title="Least Popular Routes" [type]="LineChart" [data]="this.least_array">
+    </google-chart>
+</div>

@@ -23,6 +23,7 @@ export class AnalyticsComponent implements OnInit {
 
   ngOnInit(): void {
     try {
+      console.log(localStorage.getItem('token'));
       let token = localStorage.getItem('token');
       axios
         .get(environment.api + '/api/admin/get-analytics', {

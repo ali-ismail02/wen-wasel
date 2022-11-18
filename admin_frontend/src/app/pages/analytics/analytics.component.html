@@ -1,6 +1,49 @@
 <div class="main">
-    <google-chart class="google-chart" title="Most Popular Routes" [type]="LineChart" [data]="this.most_array">
-    </google-chart>
-    <google-chart class="google-chart" title="Least Popular Routes" [type]="LineChart" [data]="this.least_array">
-    </google-chart>
+    <div class="google-chart">
+        <google-chart title="Most Popular Routes" [type]="LineChart" [data]="this.most_array">
+        </google-chart>
+    </div>
+    <div class="google-chart">
+        <google-chart title="Least Popular Routes" [type]="LineChart" [data]="this.least_array">
+        </google-chart>
+    </div>
+
+    <div class="main-table">
+        <h3>Top 5 Van Drivers</h3>
+        <table class="table" style="width: 550px;">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of most_active_van_drivers">
+                    <td>{{user[0]}}</td>
+                    <td>{{user[1]}}</td>
+                    <td>{{user[2]}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="main-table">
+        <h3>Top 5 Service Drivers</h3>
+        <table class="table" style="width: 550px;">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of most_active_service_drivers">
+                    <td>{{user[0]}}</td>
+                    <td>{{user[1]}}</td>
+                    <td>{{user[2]}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>

@@ -1,9 +1,10 @@
 import { DrawerItem } from '@react-navigation/drawer';
 import React from 'react';
-import { View, ScrollView, Text, Image } from 'react-native';
+import { View, ScrollView, Text, Image, Switch } from 'react-native';
 import Icon from 'react-native-vector-icons/Feather';
 import styles from './styles';
 import { deleteUser } from '../../redux/slices/userSlice';
+import { updateTheme } from '../../redux/slices/userSlice';
 import { store } from '../../redux/store';
 import { useSelector } from 'react-redux';
 
@@ -14,7 +15,7 @@ const TopSection = () => {
 
     return (
         <View style={styles.topSection}>
-            {image ? <Image source={{ uri: "http://192.168.1.50:8000/images" + image }} style={styles.imageProfile} />
+            {image ? <Image source={{ uri: "http://192.168.1.50:8000/images/" + image }} style={styles.imageProfile} />
                 : <Image source={require("../../assets/images/default_profile.webp")} style={styles.imageProfile} />}
             <View style={styles.nameContainer}>
                 <Text numberOfLines={1} style={styles.title}>{user?.userProfile.name}</Text>
@@ -24,6 +25,11 @@ const TopSection = () => {
 }
 
 const CustomDrawer = (props: any) => {
+    const user = useSelector((state: any) => state?.user);
+    const [isDarkTheme, setIsDarkTheme] = React.useState(false);
+    if(user.userProfile.theme == 'dark'){
+        setIsDarkTheme(true);
+    }
     // const dispatch = useDispatch()
     return (
         <ScrollView bounces={false}>
@@ -33,7 +39,7 @@ const CustomDrawer = (props: any) => {
                     icon={({ color, size }) => (
                         <Icon name="home" color={"black"} size={24} />
                     )}
-                    label="Home sweet home"
+                    label="Home"
                     labelStyle={{
                         color: "black",
                     }}
@@ -57,6 +63,21 @@ const CustomDrawer = (props: any) => {
                         props.navigation.navigate('My Profile');
                     }}
                 />
+                <View style={styles.switchContainer}>
+                    <Icon name="moon" color={"black"} size={24} />
+                    <Text style={styles.switchText}>Dark Theme</Text>
+                    <Switch
+                        trackColor={{ false: "#767577", true: "#81b0ff" }}
+                        thumbColor={isDarkTheme ? "#f5dd4b" : "#f4f3f4"}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={() => {
+                            {isDarkTheme ? store.dispatch(updateTheme('light')) : store.dispatch(updateTheme('dark'))}
+                            setIsDarkTheme(!isDarkTheme)
+                            store
+                        }}
+                        value={isDarkTheme}
+                    />
+                </View>
                 <View style={styles.divider} />
                 <DrawerItem
                     icon={({ color, size }) => (

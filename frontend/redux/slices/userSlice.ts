@@ -10,6 +10,7 @@ export interface User {
         name?: string;
         email?: string;
         phone?: string;
+        theme?: string;
     }
 }
 
@@ -27,12 +28,16 @@ const userSlice = createSlice({
     deleteUser() {
         return initialState;
     },
+    updateTheme(state, action) {
+        state.userProfile.theme = action.payload;
+    },
     updateUserProfile(state, action){
         state.userProfile = action.payload.userProfile
+        state.userProfile.theme == "light";
         AsyncStorage.setItem('token', action.payload.userProfile.token);
     },
   },
 });
 
-export const { addUser, deleteUser, updateUserProfile } = userSlice.actions
+export const { addUser, deleteUser, updateUserProfile, updateTheme } = userSlice.actions
 export default userSlice.reducer

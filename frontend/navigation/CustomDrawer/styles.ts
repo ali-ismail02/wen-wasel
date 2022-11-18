@@ -1,33 +1,43 @@
 import { StyleSheet } from "react-native";
+import { Dimensions } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    padding: 10
+    padding: 25
+  },
+  switchContainer: {
+    paddingLeft:18,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  switchText: {
+    fontSize: 14,
   },
   topSection: {
-      backgroundColor: "white",
-      padding: 30,
-      flexDirection: 'row'
+    backgroundColor: "white",
+    padding: 30,
+    paddingTop: Dimensions.get("window").height * 0.08,
+    flexDirection: 'row'
   },
   divider: {
     height: 30
   },
   nameContainer: {
     flexDirection: 'column',
-     flex: 1,
-     justifyContent: 'center',
-     marginLeft: 15
+    flex: 1,
+    justifyContent: 'center',
+    marginLeft: 15
   },
   imageProfile: {
     borderRadius: 50,
     width: 50,
     height: 50,
     aspectRatio: 1,
-    borderWidth: 3,
     borderColor: "#DDD"
   },
   title: {
-    fontSize: 16,
+    fontSize: 20,
     fontWeight: 'bold',
     color: "black"
   },

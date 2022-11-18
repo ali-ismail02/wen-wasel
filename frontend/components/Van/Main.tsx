@@ -25,8 +25,8 @@ const Main = () => {
     const io = require("socket.io-client");
     const socket = io('http://192.168.1.50:5000');
 
-    const sameer = () => {
-        // repeat this every 3 seconds
+    const broadcastLocation = () => {
+        // repeat this every 2 seconds
         setTimeout(() => {
             if(location) {
                 socket.emit("location", {
@@ -35,7 +35,7 @@ const Main = () => {
                     location: {latitude: location?.latitude, longitude: location?.longitude},
                 });
             }
-            sameer();
+            broadcastLocation();
         }, 2000);
     }
 
@@ -47,7 +47,7 @@ const Main = () => {
             }
         }
         getRecurringRoutes();
-        sameer();
+        broadcastLocation();
     }, []);
 
     const backPressed = () => {
@@ -99,7 +99,7 @@ const Main = () => {
     }
 
     const setState = (state) => {
-        sameer();   
+        broadcastLocation();   
         // connect to socket
         setUserState(state);
         setAllUserStates([...allUserStates, state]);

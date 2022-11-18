@@ -12,13 +12,20 @@ export class AppComponent implements OnInit {
   logoutIcon = faSignOut;
   faTaxi = faTaxi;
   _router: Router;
+  image: string = "";
+  name: string = "";
+
 
   constructor(private router: Router) {
     this._router = router;
   }
 
   ngOnInit(): void {
+    const user = JSON.parse(localStorage.getItem('user') || '{}');
+    this.image = `http://localhost:8000/images/${user.image}`;
+    this.name = user.name;
     if (!localStorage.getItem('token')) this._router.navigateByUrl('/login');
+    console.log( this._router);
   }
 
   handleSubmit(): void {

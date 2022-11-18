@@ -1,11 +1,12 @@
 import { useNavigation } from '@react-navigation/core';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dimensions, Image, ImageBackground, Text, TextInput, View } from 'react-native';
 import Button from '../../components/Button';
 import Login from '../../hooks/Login';
 import { updateUserProfile } from "../../redux/slices/userSlice";
 import { store } from '../../redux/store';
 import styles from '../../styles/styles';
+import * as Location from "expo-location";
 
 const LoginScreen = () => {
 
@@ -15,6 +16,18 @@ const LoginScreen = () => {
     const [passwordBorder, setPasswordBorder] = useState('#DDD');
     const [failedMessage, setFailedMessage] = useState(null);
     const navigation = useNavigation()
+
+    useEffect(() => {
+        const getLocation = async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            console.log(status);
+            if (status !== 'granted') {
+                setErrorMsg('Permission to access location was denied');
+                return;
+            }
+        }
+        getLocation();
+    }, [])
 
     const handleLogin = async () => {
         const formattedEmail = email.trim().toLowerCase();
@@ -33,11 +46,11 @@ const LoginScreen = () => {
 
         const response = await Login(formattedEmail, password);
         if (response) {
-            if(response.driver != undefined && response.driver.approval_status == 0){
+            if (response.driver != undefined && response.driver.approval_status == 0) {
                 setFailedMessage("Your account is pending approval");
                 return;
             }
-            if(response.driver != undefined && response.driver.approval_status == -1){
+            if (response.driver != undefined && response.driver.approval_status == -1) {
                 setFailedMessage("Your account has been rejected");
                 return;
             }

@@ -379,5 +379,53 @@ export default StyleSheet.create({
       textAlign: "center",
       fontWeight: "bold",
     }
+  },
+  // update profiile screen
+  updateProfile: {
+    container: {
+      width: ScreenWidth,
+      height: ScreenHeight - 100,
+      paddingHorizontal: "5%",
+      paddingVertical: "10%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between",
+      backgroundColor: "white",
+    },
+    touchableOpacity: {
+      width: "100%",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    image: {
+      width: 100,
+      height: 100,
+      borderRadius: 100,
+    },
+    label: {
+      width: "100%",
+      color: "black",
+      fontSize: 12,
+      paddingTop: 5,
+    },
+    title: {
+      width: "100%",
+      fontSize: 32,
+      color: "black",
+      textAlign: "center",
+      fontWeight: "bold",
+    },
+    view: {
+      width: "100%",
+      display: "flex",
+      justifyContent: "center",
+    },
+    success: {
+      width: "100%",
+      color: "black",
+      fontSize: 12,
+      textAlign: "center",
+    },
   }
   });

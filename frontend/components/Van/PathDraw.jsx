@@ -8,7 +8,7 @@ const PathDraw = (path, location) => {
             const dest = { latitude: parseFloat(trip[0].latitude), longitude: parseFloat(trip[0].longitude) }
             if (trip[0].arrived === false) {
                 if (index == 0) {
-                    return (<>
+                    return (<View key={index}>
                         <MapViewDirections
                             key={index}
                             origin={location}
@@ -19,11 +19,11 @@ const PathDraw = (path, location) => {
                             mode='DRIVING'
                         />
                         <Marker key={index} coordinate={dest} pinColor={"#FF9E0D"} />
-                    </>
+                    </View>
                     );
                 }
                 const origin = { latitude: path[index - 1][0].latitude, longitude: path[index - 1][0].longitude }
-                return (<>
+                return (<View key={index}>
                     <MapViewDirections
                         key={index}
                         origin={origin}
@@ -34,7 +34,7 @@ const PathDraw = (path, location) => {
                         mode='DRIVING'
                     />
                     <Marker key={index} coordinate={dest} pinColor={"#FF9E0D"} />
-                </>
+                </View>
                 );
             }
         }

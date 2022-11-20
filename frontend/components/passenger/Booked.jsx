@@ -1,8 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Image, Text, View } from 'react-native';
 
 const Booked = ({ status, style }) => {
     const [display, setDisplay] = useState(true);
+
+    // set display to false after 2 seconds
+    useEffect(() => {
+        if (display) {
+            setTimeout(() => {
+                setDisplay(false);
+            }, 2000);
+        }
+    }, []);
 
     if (status == 1) { // Booking was successful
         return (<>

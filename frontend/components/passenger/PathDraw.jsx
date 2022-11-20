@@ -1,8 +1,8 @@
-import react from 'react';
 import MapViewDirections from 'react-native-maps-directions';
-import {Google_API_Key} from '../../constants/GoogleAPIKey';
+import { Google_API_Key } from '../../constants/GoogleAPIKey';
 
 const PathDraw = (path) => {
+    // loop over all routes and draw them accordingly
     return (
         path.map((trip, index) => {
             if (trip.name != "end_location") {
@@ -28,7 +28,7 @@ const PathDraw = (path) => {
                         strokeWidth={6}
                         strokeColor="#FF9E0D"
                         mode='WALKING'
-                        lineDashPattern={[2,2]}
+                        lineDashPattern={[2, 2]}
                     />
                 );
             }

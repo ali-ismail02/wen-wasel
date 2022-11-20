@@ -1,8 +1,7 @@
-import { View, Text,Appearance } from "react-native";
-import styles from "../../styles/styles";
-import UserRouteOption from "./UserRouteOption";
+import React from "react";
+import { Text, View } from "react-native";
 import { FlatList } from "react-native-gesture-handler";
-import React, { useState, useEffect } from "react";
+import UserRouteOption from "./UserRouteOption";
 
 const rideSelectedState = ({ routes, onPress, style, colorScheme }) => {
     return (
@@ -11,7 +10,7 @@ const rideSelectedState = ({ routes, onPress, style, colorScheme }) => {
             <FlatList style={style.flatList}
                 data={routes}
                 // render each route with UserRouteOption with onPress
-                renderItem={({ item }) => <UserRouteOption route={item} onPress={() => { onPress(item) }} style={style} colorScheme={colorScheme}/>}
+                renderItem={({ item }) => <UserRouteOption route={item} onPress={() => { onPress(item) }} style={style} colorScheme={colorScheme} />}
             />
         </View>
     );

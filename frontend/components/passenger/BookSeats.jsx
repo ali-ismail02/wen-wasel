@@ -5,7 +5,7 @@ import GetTripType from '../../hooks/passenger/GetTripType';
 import Button from '../Button';
 import UserRouteOption from './UserRouteOption';
 
-const BookSeats = ({ path, setState, style }) => {
+const BookSeats = ({ path, setState, style, colorScheme }) => {
 
     const bookSeat = async (route, i) => {
         // call the hook to book the seat
@@ -26,7 +26,7 @@ const BookSeats = ({ path, setState, style }) => {
                 <>
                     <View style={style.bottomPopupContainer}>
                         <View style={style.borderBottom}>
-                            <UserRouteOption route={path} onPress={() => { }} />
+                            <UserRouteOption route={path} onPress={() => { }} style={style} colorScheme={colorScheme}/>
                         </View>
                         <Text style={style.instructions}>A van is available at this route with empty seats, would you like to book a seat?</Text>
                         <View style={style.flex}>

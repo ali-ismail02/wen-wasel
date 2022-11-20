@@ -4,7 +4,7 @@ import UserRouteOption from "./UserRouteOption";
 import { FlatList } from "react-native-gesture-handler";
 import React, { useState, useEffect } from "react";
 
-const UserRouteOptions = ({ routes, onPress, style, colorScheme }) => {
+const rideSelectedState = ({ routes, onPress, style, colorScheme }) => {
     return (
         <View style={style.bottomPopupContainer}>
             <Text style={style.subTitle}>Routes:</Text>
@@ -17,4 +17,4 @@ const UserRouteOptions = ({ routes, onPress, style, colorScheme }) => {
     );
 }
 
-export default UserRouteOptions;
+export default rideSelectedState;

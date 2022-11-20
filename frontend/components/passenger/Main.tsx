@@ -17,15 +17,15 @@ import CompletedTrip from "./CompletedTrip";
 
 const Main = () => {
     const [location, setLocation] = useState(undefined);
-    const [allUserStates, setAllUserStates] = useState<string[]>(["none"]);
+    const [all_user_states, setAllUserStates] = useState<string[]>(["none"]);
     const [destination, setDestination] = useState<LatLng | null>();
-    const [userState, setUserState] = useState<string>("none");
-    const [sliderValue, setSliderValue] = useState(1);
-    const [centerMap, setCenterMap] = useState(true);
+    const [user_state, setUserState] = useState<string>("none");
+    const [slider_value, setSliderValue] = useState(1);
+    const [center_map, setCenterMap] = useState(true);
     const [paths, setPaths] = useState(undefined);
     const [path, setPath] = useState(undefined);
-    const [liveLocations, setLiveLocations] = useState([]);
-    const [searchResult, setSearchResult] = useState(undefined);
+    const [live_locations, setLiveLocations] = useState([]);
+    const [search_result, setSearchResult] = useState(undefined);
     const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
     const [style, setStyle] = useState<any>({searchContainer: null,bottomPopupContainer: null, instructions: null});
     
@@ -42,7 +42,7 @@ const Main = () => {
         {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
         let flag = true;
         socket.on("locationBroadcast", (data: any) => {
-            let temp = liveLocations;
+            let temp = live_locations;
             temp.forEach((loc: any) => {
                 if (loc.id == data.id) {
                     loc.location = data.location;
@@ -57,24 +57,24 @@ const Main = () => {
     }, [socket]);
 
     const backPressed = () => {
-        if (allUserStates.length > 5) {
+        if (all_user_states.length > 5) {
             return true;
         }
-        if (userState === "pathConfirmed") {
-            centerScreen(location.coords, searchResult, mapRef);
+        if (user_state === "pathConfirmed") {
+            centerScreen(location.coords, search_result, mapRef);
         }
-        if (userState == "searched") {
+        if (user_state == "searched") {
             setDestination(null);
             setCenterMap(true);
         }
-        if (userState == "pathSelected") {
+        if (user_state == "pathSelected") {
             setPath(undefined);
         }
-        if (userState === "none") {
+        if (user_state === "none") {
             BackHandler.exitApp();
         } else {
-            setUserState(allUserStates[allUserStates.length - 2]);
-            setAllUserStates(allUserStates.slice(0, allUserStates.length - 1));
+            setUserState(all_user_states[all_user_states.length - 2]);
+            setAllUserStates(all_user_states.slice(0, all_user_states.length - 1));
         }
         return true;
     }
@@ -97,7 +97,7 @@ const Main = () => {
     }
 
     const rideSelect = async () => {
-        setPaths(await getRoutes(location.latitude + "," + location.longitude, destination.latitude + "," + destination.longitude, sliderValue[0]));
+        setPaths(await getRoutes(location.latitude + "," + location.longitude, destination.latitude + "," + destination.longitude, slider_value[0]));
         setState("rideSelected");
     }
 
@@ -119,7 +119,7 @@ const Main = () => {
             setDestination(null);
             return
         }
-        setAllUserStates([...allUserStates, state])
+        setAllUserStates([...all_user_states, state])
         setUserState(state);
     }
 
@@ -137,7 +137,7 @@ const Main = () => {
                                         style={style}/>
                                 </>
             case "searched": return <View style={style.bottomPopupContainer}>
-                                        <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} style={style} colorScheme={colorScheme} />
+                                        <CustomSlider slider_value={slider_value} setSliderValue={setSliderValue} style={style} colorScheme={colorScheme} />
                                         <Button text="Next" onPress={() => rideSelect()} width={"100%"} color={"#FF9E0D"}  style={style} />
                                     </View>
             case "rideSelected": return <UserRouteOptions routes={paths} onPress={onPathSelect} style={style} colorScheme={colorScheme} />
@@ -161,8 +161,8 @@ const Main = () => {
         return (
             <SafeAreaView>
                 <View>
-                    <CustomMap setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} path={path} setDestination={setDestination} userState={userState} liveLocations={liveLocations}  style={style} />
-                    {comps(userState)}
+                    <CustomMap setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} center_map={center_map} mapRef={mapRef} destination={destination} path={path} setDestination={setDestination} user_state={user_state} live_locations={live_locations}  style={style} colorScheme={colorScheme} />
+                    {comps(user_state)}
                 </View>
             </SafeAreaView>
         );

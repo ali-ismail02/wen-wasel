@@ -20,13 +20,14 @@ const PathConfirmedState = ({ path, setState, style, colorScheme }) => {
         setState("failedBooking");
     }
 
+    // loop over all routes to check for a van with empty seats
     for (let i = 0; i < path.length; i++) {
         if (GetTripType(path[i]) == "van") {
             return (
                 <>
                     <View style={style.bottomPopupContainer}>
                         <View style={style.borderBottom}>
-                            <UserRouteOption route={path} onPress={() => { }} style={style} colorScheme={colorScheme}/>
+                            <UserRouteOption route={path} onPress={() => { }} style={style} colorScheme={colorScheme} />
                         </View>
                         <Text style={style.instructions}>A van is available at this route with empty seats, would you like to book a seat?</Text>
                         <View style={style.flex}>

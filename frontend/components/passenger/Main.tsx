@@ -125,42 +125,43 @@ const Main = () => {
 
     const comps = (state) => {
         switch (state) {
-            case "done": return <CompletedTrip setUserState={setUserState} />
+            case "done": return <CompletedTrip setUserState={setUserState} style={style} />
             case "none": return <>
                                     <View style={style.searchContainer}>
-                                        <Search onPlaceSelect={(details) => onPlaceSelect(details)} />
+                                        <Search onPlaceSelect={(details) => onPlaceSelect(details)} style={style}/>
                                     </View>
                                     <CenterMapButton setCenterMap={setCenterMap}
                                         moveTo={moveTo}
                                         mapRef={mapRef}
-                                        location={location} />
+                                        location={location} 
+                                        style={style}/>
                                 </>
             case "searched": return <View style={style.bottomPopupContainer}>
-                                        <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} />
-                                        <Button text="Next" onPress={() => rideSelect()} width={"100%"} color={"#FF9E0D"} />
+                                        <CustomSlider sliderValue={sliderValue} setSliderValue={setSliderValue} style={style} colorScheme={colorScheme} />
+                                        <Button text="Next" onPress={() => rideSelect()} width={"100%"} color={"#FF9E0D"}  style={style} />
                                     </View>
-            case "rideSelected": return <UserRouteOptions routes={paths} onPress={onPathSelect} />
+            case "rideSelected": return <UserRouteOptions routes={paths} onPress={onPathSelect} style={style} colorScheme={colorScheme} />
             case "pathSelected": return <View style={style.bottomPopupContainer}>
                                             <Text style={style.instructions}>Confirm your route?</Text>
-                                            <Button text="Confirm Route" onPress={onPathConfirm} width={"100%"} color={"#FF9E0D"} />
+                                            <Button text="Confirm Route" onPress={onPathConfirm} width={"100%"} color={"#FF9E0D"}  style={style} />
                                         </View>
-            case "pathConfirmed": return <BookSeats path={path} setState={setState} setPath={setPath} />
+            case "pathConfirmed": return <BookSeats path={path} setState={setState} style={style}/>
             case "booked": return <>
-                                    <SubRide path={path} setPath={setPath} setState={setState} setCenter={setCenterMap} />
-                                    <Booked status={1} />
+                                    <SubRide path={path} setPath={setPath} setState={setState} setCenter={setCenterMap}  style={style} colorScheme={colorScheme} />
+                                    <Booked status={1}  style={style}/>
                                   </>
             case "failedBooking": return <>
-                                            <SubRide path={path} setPath={setPath} setState={setState}  setCenter={setCenterMap}/>
-                                            <Booked status={0} />
+                                            <SubRide path={path} setPath={setPath} setState={setState}  setCenter={setCenterMap} style={style} colorScheme={colorScheme} />
+                                            <Booked status={0}  style={style}/>
                                         </>
-            case "noBooking": return <SubRide path={path} setPath={setPath} setState={setState}  setCenter={setCenterMap}/>
+            case "noBooking": return <SubRide path={path} setPath={setPath} setState={setState}  setCenter={setCenterMap} style={style} colorScheme={colorScheme} />
             }
         }
 
         return (
             <SafeAreaView>
                 <View>
-                    <CustomMap setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} path={path} setDestination={setDestination} userState={userState} liveLocations={liveLocations} />
+                    <CustomMap setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} path={path} setDestination={setDestination} userState={userState} liveLocations={liveLocations}  style={style} />
                     {comps(userState)}
                 </View>
             </SafeAreaView>

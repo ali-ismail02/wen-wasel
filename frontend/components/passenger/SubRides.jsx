@@ -6,18 +6,11 @@ import Button from '../Button';
 import GetTripType from '../../hooks/passenger/GetTripType';
 import UpdateBooking from '../../hooks/passenger/UpdateBooking';
 
-const SubRides = ({ path, setPath, setState, setCenter }) => {
+const SubRides = ({ path, setPath, setState, setCenter, style, colorScheme }) => {
     const [destination, setDestination] = useState('');
     const [time, setTime] = useState('');
     const [imageName, setImageName] = useState('');
     const [buttonImage, setButtonImage] = useState('');
-    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
-    const [style, setStyle] = useState(styles.light);
-
-    Appearance.addChangeListener(({ colorScheme }) => {
-        setColorScheme(colorScheme);
-        { }
-    });
 
     const update = async (path) => {
         const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${path[1].location}&key=${Google_API_Key}`;
@@ -54,11 +47,10 @@ const SubRides = ({ path, setPath, setState, setCenter }) => {
     };
 
     useEffect(() => {
-        { colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light) }
         if (path.length > 1) {
             update(path);
         }
-    }, [colorScheme]);
+    }, []);
 
     // remove first element from path array using setPath
     const removePath = async () => {
@@ -98,7 +90,7 @@ const SubRides = ({ path, setPath, setState, setCenter }) => {
                         <Text style={style.subRideTextTime}>Arrive at {time}</Text>
                     </View>
                 </View>
-                <Button text={'Change destination'} image={buttonImage} color={'#FF9E0D'} width={"100%"} onPress={removePath} />
+                <Button text={'Change destination'} image={buttonImage} color={'#FF9E0D'} width={"100%"} onPress={removePath} style={style} />
             </View>
         )
     }

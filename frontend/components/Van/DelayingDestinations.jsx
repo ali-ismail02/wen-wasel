@@ -1,26 +1,14 @@
-import { View, Text, Image, Appearance } from 'react-native';
-import React, {useState, useEffect} from 'react';
-import styles from '../../styles/styles';
-import SelectDropdown from 'react-native-select-dropdown'
+import React from 'react';
+import { Image, Text, View } from 'react-native';
+import SelectDropdown from 'react-native-select-dropdown';
+import SortPath from '../../hooks/van/SortPath';
 import UpdateOneTimeRoute from '../../hooks/van/UpdateOneTimeRoute';
 import Button from '../Button';
-import SortPath from '../../hooks/van/SortPath';
 
-const DelayingDestinations = ({ setDestinations, setState, destinations }) => {
+const DelayingDestinations = ({ setDestinations, setState, destinations, style, colorScheme }) => {
     const [minutes, setMinutes] = React.useState(null);
     const [disabled, setDisabled] = React.useState(true);
     const mins = new Array(60).fill(1).map((_, i) => i);
-    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
-    const [style, setStyle] = useState(styles.light);
-    
-    Appearance.addChangeListener(({ colorScheme }) => {
-        setColorScheme(colorScheme);
-        {}
-    });
-
-    useEffect(() => {
-        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
-    }, [colorScheme]);
 
     const delayAllDestinations = async () => {
         for (let i = 0; i < destinations.length; i++) {
@@ -73,8 +61,8 @@ const DelayingDestinations = ({ setDestinations, setState, destinations }) => {
                 />
             </View>
             <View style={[style.flex, {paddingTop: 10}]}>
-                    <Button text="Cancel" onPress={() => setState("destinationsSet")} color={"black"} width={"47%"} />
-                    <Button text="Delay" onPress={delayAllDestinations} color={"#FF9E0D"} width={"47%"} disabled={disabled} />
+                    <Button text="Cancel" onPress={() => setState("destinationsSet")} color={"black"} width={"47%"} style={style} />
+                    <Button text="Delay" onPress={delayAllDestinations} color={"#FF9E0D"} width={"47%"} disabled={disabled} style={style} />
                 </View>
         </View>
     );

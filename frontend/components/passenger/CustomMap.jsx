@@ -5,7 +5,7 @@ import INITIAL_POSITION from '../../constants/InitialPosition';
 import { moveTo } from '../../hooks/CameraChange';
 import PathDraw from './PathDraw';
 
-const CustomMap = ({ setCenterMap, centerMap, mapRef, destination, path, setLocation, setState, setDestination, userState, liveLocations, style }) => {
+const CustomMap = ({ setCenterMap, center_map, mapRef, destination, path, setLocation, setState, setDestination, user_state, live_locations, style }) => {
 
     return (
         <MapView
@@ -13,22 +13,22 @@ const CustomMap = ({ setCenterMap, centerMap, mapRef, destination, path, setLoca
             provider={PROVIDER_GOOGLE}
             showsUserLocation={true}
             onPanDrag={() => setCenterMap(false)}
-            followsUserLocation={centerMap}
+            followsUserLocation={center_map}
             showsMyLocationButton={false}
             onUserLocationChange={(coordinate) => {
-                centerMap === true && moveTo(coordinate.nativeEvent.coordinate, mapRef);
+                center_map === true && moveTo(coordinate.nativeEvent.coordinate, mapRef);
                 setLocation(coordinate.nativeEvent.coordinate);
             }}
             onPress={(e) => {
                 setCenterMap(false);
-                if (userState != "searched") setState("searched")
+                if (user_state != "searched") setState("searched")
                 setDestination(e.nativeEvent.coordinate)
             }}
             ref={mapRef}
             style={style.map}
             initialRegion={INITIAL_POSITION}>
             {destination != null && <Marker coordinate={destination} />}
-            {liveLocations.length > 0 && userState != undefined && liveLocations.map((location, index) => {
+            {live_locations.length > 0 && user_state != undefined && live_locations.map((location, index) => {
                 console.log(location)
                 return <Marker coordinate={location.location}
                     key={index}

@@ -1,20 +1,7 @@
-import styles from '../styles/styles';
-import { Image, TouchableHighlight, Appearance } from 'react-native';
-import React, {useState, useEffect} from 'react';
+import React from 'react';
+import { Image, TouchableHighlight } from 'react-native';
 
-const CenterMapButton = ({setCenterMap, moveTo, location, mapRef}) => {
-    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
-    const [style, setStyle] = useState(styles.light);
-    
-    Appearance.addChangeListener(({ colorScheme }) => {
-        setColorScheme(colorScheme);
-        {}
-    });
-
-    useEffect(() => {
-        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
-    }, [colorScheme]);
-
+const CenterMapButton = ({setCenterMap, moveTo, location, mapRef, style}) => {
     return (
     <TouchableHighlight style={style.center} onPress={async () => {
         moveTo(location?.coords, mapRef, 18);

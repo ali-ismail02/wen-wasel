@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { Image, Text, TouchableNativeFeedback, View } from "react-native";
-import GetFares from "../../hooks/passenger/GetFares";
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import { Text, TouchableNativeFeedback, View } from "react-native";
 import Feather from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import GetFares from "../../hooks/passenger/GetFares";
 
 const UserRouteOption = ({ route, onPress, style, colorScheme }) => {
     const [time, setTime] = useState(undefined);

@@ -1,12 +1,11 @@
-import { Appearance } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Image, Text, View } from 'react-native';
-import styles from '../../styles/styles';
 
 const CompletedTrip = ({ setUserState, style }) => {
     const [display, setDisplay] = useState(true);
 
     useEffect(() => {
+        // hide the popup after 2 seconds
         if (display) {
             setTimeout(() => {
                 setDisplay(true);

@@ -4,12 +4,14 @@ import { Google_API_Key } from '../../constants/GoogleAPIKey';
 import GetTripType from '../../hooks/passenger/GetTripType';
 import UpdateBooking from '../../hooks/passenger/UpdateBooking';
 import Button from '../Button';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const SubRides = ({ path, setPath, setState, setCenter, style, colorScheme }) => {
     const [destination, setDestination] = useState('');
     const [time, setTime] = useState('');
     const [imageName, setImageName] = useState('');
     const [buttonImage, setButtonImage] = useState('');
+    const [color, setColor] = useState('');
 
     // handling user's arrival at every route
     const update = async (path) => {
@@ -47,10 +49,11 @@ const SubRides = ({ path, setPath, setState, setCenter, style, colorScheme }) =>
     };
 
     useEffect(() => {
+        {colorScheme == 'dark' ? setColor('#fff') : setColor('#000')}
         if (path.length > 1) {
             update(path);
         }
-    }, []);
+    }, [colorScheme]);
 
     // remove first element from path array using setPath
     const removePath = async () => {
@@ -76,15 +79,9 @@ const SubRides = ({ path, setPath, setState, setCenter, style, colorScheme }) =>
         return (
             <View style={style.bottomPopupContainer}>
                 <View style={style.subRides}>
-                    {imageName == "car" && colorScheme == "dark" ?
-                        <Image source={require("../../assets/images/car_dark.png")} style={{ width: 40, height: 30 }} /> :
-                        imageName == "car" && <Image source={require("../../assets/images/car.png")} style={{ width: 40, height: 30 }} />}
-                    {imageName == "van" && colorScheme == "dark" ?
-                        <Image source={require("../../assets/images/van_dark.png")} style={{ width: 40, height: 30 }} /> :
-                        imageName == "van" && <Image source={require("../../assets/images/van.png")} style={{ width: 40, height: 30 }} />}
-                    {imageName == "walking" && colorScheme == "dark" ?
-                        <Image source={require("../../assets/images/walking_dark.png")} style={{ width: 20, height: 40 }} />:
-                        imageName == "walking" && <Image source={require("../../assets/images/walking.png")} style={{ width: 20, height: 40 }} />}
+                    {imageName == "car" && <Icon name="shuttle-van" size={30} color={color} />}
+                    {imageName == "van" && <Icon name="taxi" size={30} color={color} />}
+                    {imageName == "walking" && <Icon name="walking" size={30} color={color} />}
                     <View style={style.subRideText}>
                         <Text style={style.subRideTextDestination}>To {destination}</Text>
                         <Text style={style.subRideTextTime}>Arrive at {time}</Text>

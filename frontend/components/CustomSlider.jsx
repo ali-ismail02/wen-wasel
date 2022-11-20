@@ -2,7 +2,7 @@ import { Slider } from '@miblanchard/react-native-slider';
 import React from 'react';
 import { Text, View } from 'react-native';
 
-const CustomSlider = ({sliderValue, setSliderValue, style, colorScheme}) => {
+const CustomSlider = ({slider_value, setSliderValue, style, colorScheme}) => {
     return (
         <>
             <Text style={style.instructions}>Please select your desired trip type:</Text>
@@ -20,7 +20,7 @@ const CustomSlider = ({sliderValue, setSliderValue, style, colorScheme}) => {
             <Slider
                 minimumValue={1}
                 maximumValue={3}
-                value={sliderValue}
+                value={slider_value}
                 onValueChange={value => setSliderValue(value)}
                 minimumTrackTintColor={colorScheme == 'dark' ? '#555' : '#000000'}
                 maximumTrackTintColor={colorScheme == 'dark' ? '#FFFFFF' : '#000000'}

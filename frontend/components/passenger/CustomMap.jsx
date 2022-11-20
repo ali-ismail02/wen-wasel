@@ -1,25 +1,11 @@
-import INITIAL_POSITION from '../../constants/InitialPosition';
+import React from 'react';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import styles from '../../styles/styles';
+import { Google_API_Key } from '../../constants/GoogleAPIKey';
+import INITIAL_POSITION from '../../constants/InitialPosition';
 import { moveTo } from '../../hooks/CameraChange';
 import PathDraw from './PathDraw';
-import { Google_API_Key } from '../../constants/GoogleAPIKey';
-import { Image } from 'react-native';
-import { Appearance} from 'react-native';
-import React, { useState, useEffect } from 'react';
 
-const CustomMap = ({ setCenterMap, centerMap, mapRef, destination, path, setLocation, setState, setDestination, userState, liveLocations }) => {
-    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
-    const [style, setStyle] = useState(styles.light);
-    
-    Appearance.addChangeListener(({ colorScheme }) => {
-        setColorScheme(colorScheme);
-        {}
-    });
-
-    useEffect(() => {
-        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
-    }, [colorScheme]);
+const CustomMap = ({ setCenterMap, centerMap, mapRef, destination, path, setLocation, setState, setDestination, userState, liveLocations, style }) => {
 
     return (
         <MapView

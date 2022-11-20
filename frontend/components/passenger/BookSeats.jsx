@@ -1,24 +1,11 @@
+import React from 'react';
 import { Text, View } from 'react-native';
 import BookSeatsHook from '../../hooks/passenger/BookSeat';
 import GetTripType from '../../hooks/passenger/GetTripType';
-import styles from '../../styles/styles';
 import Button from '../Button';
 import UserRouteOption from './UserRouteOption';
-import { Appearance} from 'react-native';
-import React, { useState, useEffect } from 'react';
 
-const BookSeats = ({ path, setState, setPath }) => {
-    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
-    const [style, setStyle] = useState(styles.light);
-    
-    Appearance.addChangeListener(({ colorScheme }) => {
-        setColorScheme(colorScheme);
-        {}
-    });
-
-    useEffect(() => {
-        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
-    }, [colorScheme]);
+const BookSeats = ({ path, setState, style }) => {
 
     const bookSeat = async (route, i) => {
         const response = await BookSeatsHook(route.element.trip);
@@ -41,8 +28,8 @@ const BookSeats = ({ path, setState, setPath }) => {
                         </View>
                         <Text style={style.instructions}>A van is available at this route with empty seats, would you like to book a seat?</Text>
                         <View style={style.flex}>
-                            <Button text="Yes" onPress={() => { bookSeat(path[i], i) }} width={"48%"} color={"#FF9E0D"} />
-                            <Button text="No" onPress={() => { setState("noBooking") }} width={"48%"} color={"black"} />
+                            <Button text="Yes" onPress={() => { bookSeat(path[i], i) }} width={"48%"} color={"#FF9E0D"} style={style}/>
+                            <Button text="No" onPress={() => { setState("noBooking") }} width={"48%"} color={"black"} style={style} />
                         </View>
                     </View>
                 </>

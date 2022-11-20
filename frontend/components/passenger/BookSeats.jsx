@@ -8,6 +8,7 @@ import UserRouteOption from './UserRouteOption';
 const BookSeats = ({ path, setState, style }) => {
 
     const bookSeat = async (route, i) => {
+        // call the hook to book the seat
         const response = await BookSeatsHook(route.element.trip);
         if (response != false) {
             path[i].reservation = response;
@@ -15,6 +16,7 @@ const BookSeats = ({ path, setState, style }) => {
             setState("booked");
             return
         }
+        // if the booking was unsuccessful:
         setState("failedBooking");
     }
 
@@ -28,7 +30,7 @@ const BookSeats = ({ path, setState, style }) => {
                         </View>
                         <Text style={style.instructions}>A van is available at this route with empty seats, would you like to book a seat?</Text>
                         <View style={style.flex}>
-                            <Button text="Yes" onPress={() => { bookSeat(path[i], i) }} width={"48%"} color={"#FF9E0D"} style={style}/>
+                            <Button text="Yes" onPress={() => { bookSeat(path[i], i) }} width={"48%"} color={"#FF9E0D"} style={style} />
                             <Button text="No" onPress={() => { setState("noBooking") }} width={"48%"} color={"black"} style={style} />
                         </View>
                     </View>
@@ -36,7 +38,7 @@ const BookSeats = ({ path, setState, style }) => {
             )
         }
     }
-    setState("noBooking") 
+    setState("noBooking")
     return null;
 }
 

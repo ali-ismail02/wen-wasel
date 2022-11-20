@@ -5,7 +5,7 @@ import GetTripType from '../../hooks/passenger/GetTripType';
 import Button from '../Button';
 import UserRouteOption from './UserRouteOption';
 
-const BookSeats = ({ path, setState, style, colorScheme }) => {
+const PathConfirmedState = ({ path, setState, style, colorScheme }) => {
 
     const bookSeat = async (route, i) => {
         // call the hook to book the seat
@@ -42,4 +42,4 @@ const BookSeats = ({ path, setState, style, colorScheme }) => {
     return null;
 }
 
-export default BookSeats;
+export default PathConfirmedState;

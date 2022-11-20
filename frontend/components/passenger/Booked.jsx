@@ -1,27 +1,8 @@
-import { View, Text, Image } from 'react-native';
-import styles from '../../styles/styles';
-import { useState, useEffect } from 'react';
-import { Appearance } from 'react-native';
+import { useState } from 'react';
+import { Image, Text, View } from 'react-native';
 
-const Booked = ({ status }) => {
+const Booked = ({ status, style }) => {
     const [display, setDisplay] = useState(true);
-    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
-    const [style, setStyle] = useState(styles.light);
-    
-    Appearance.addChangeListener(({ colorScheme }) => {
-        setColorScheme(colorScheme);
-        {}
-    });
-
-    // set display to false after 2 seconds
-    useEffect(() => {
-        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
-        if (display) {
-            setTimeout(() => {
-                setDisplay(false);
-            }, 2000);
-        }
-    }, [colorScheme]);
 
     if (status == 1) {
         return (<>

@@ -1,24 +1,13 @@
-import { TouchableOpacity, View, Image, Text, Appearance } from "react-native";
-import styles from "../../styles/styles";
-import GetRouteById from "../../hooks/van/GetRouteById";
 import { useEffect, useState } from "react";
+import { Image, Text, TouchableOpacity, View } from "react-native";
 import { Google_API_Key } from "../../constants/GoogleAPIKey";
+import GetRouteById from "../../hooks/van/GetRouteById";
 import SetTripArrived from "../../hooks/van/setTripArrived";
 
-const RouteDescription = ({ destination, setDestinations, allDestionations, update }) => {
+const RouteDescription = ({ destination, setDestinations, allDestionations, update, style, colorScheme }) => {
     const [route, setRoute] = useState(destination);
     const [destinationAddress, setDestinationAddress] = useState("");
     const [time, setTime] = useState("");
-    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
-    const [style, setStyle] = useState(styles.light);
-    
-    Appearance.addChangeListener(({ colorScheme }) => {
-        setColorScheme(colorScheme);
-    });
-
-    useEffect(() => {
-        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
-    }, []);
     if (destination == null) {
         return null;
     }

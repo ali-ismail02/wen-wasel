@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, BackHandler } from "react-native";
+import { View, BackHandler,Appearance } from "react-native";
 import MapView, { LatLng } from 'react-native-maps';
 import CustomMap from "./CustomMap";
 import Routes from "./Routes";
@@ -10,6 +10,7 @@ import GetRecurringRoute from "../../hooks/van/GetRecurringRoutes";
 import PresavedRoutesDropdown from "./PresavedRoutesDropdown";
 import SortPath from "../../hooks/van/SortPath";
 import { useSelector } from 'react-redux';
+import styles from "../../styles/styles";
 
 const Main = () => {
     const [userState, setUserState] = useState("none");
@@ -24,6 +25,17 @@ const Main = () => {
     const id = user?.userProfile.id;
     const io = require("socket.io-client");
     const socket = io('http://192.168.1.50:5000');
+    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+    const [style, setStyle] = useState<any>({bottomPopupContainer: null});
+    
+    Appearance.addChangeListener(({ colorScheme }) => {
+        setColorScheme(colorScheme);
+        {}
+    });
+
+    useEffect(() => {
+        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
+    }, [colorScheme]);
 
     const broadcastLocation = () => {
         // repeat this every 2 seconds
@@ -123,16 +135,16 @@ const Main = () => {
 
     const components = (state) => {
         switch (state) {
-            case "none": return <PresavedRoutesDropdown presaved_routes={recurringRoutes} setUserState={setUserState} setAllDestinations={updateAllDestinations} />
-            case "destinationsSet": return <Routes destination={destination} setState={setState} destinations={allDestinations} setDestinations={updateAllDestinations} />
-            case "addingRoute": return <AddingDestination setDestinations={setDestinations} setState={setState} destination={destination} />
-            case "delaying": return <DelayingDestinations destinations={allDestinations} setDestinations={updateAllDestinations} setState={setState} />
+            case "none": return <PresavedRoutesDropdown presaved_routes={recurringRoutes} setUserState={setUserState} setAllDestinations={updateAllDestinations} style={style} />
+            case "destinationsSet": return <Routes destination={destination} setState={setState} destinations={allDestinations} setDestinations={updateAllDestinations} style={style} colorScheme={colorScheme} />
+            case "addingRoute": return <AddingDestination setDestinations={setDestinations} setState={setState} destination={destination} style={style} colorScheme={colorScheme}  />
+            case "delaying": return <DelayingDestinations destinations={allDestinations} setDestinations={updateAllDestinations} setState={setState} style={style} colorScheme={colorScheme}  />
         }
     }
 
     return (
         <View>
-            <CustomMap allDestinations={allDestinations} location={location} setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} setDestination={setDestination} onPlaceSelect={onPlaceSelect} />
+            <CustomMap allDestinations={allDestinations} location={location} setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} setDestination={setDestination} onPlaceSelect={onPlaceSelect} style={style} colorScheme={colorScheme} />
             {components(userState)}
         </View>
     );

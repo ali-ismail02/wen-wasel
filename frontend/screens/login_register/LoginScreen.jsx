@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import { useState, useEffect } from 'react';
-import { Dimensions, Image, ImageBackground, Text, TextInput, View } from 'react-native';
+import { Dimensions, Image, ImageBackground, Text, TextInput, View,Appearance } from 'react-native';
 import Button from '../../components/Button';
 import Login from '../../hooks/Login';
 import { updateUserProfile } from "../../redux/slices/userSlice";
@@ -9,6 +9,17 @@ import styles from '../../styles/styles';
 import * as Location from "expo-location";
 
 const LoginScreen = () => {
+    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+    const [style, setStyle] = useState({bottomPopupContainer: null});
+    
+    Appearance.addChangeListener(({ colorScheme }) => {
+        setColorScheme(colorScheme);
+        {}
+    });
+
+    useEffect(() => {
+        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
+    }, [colorScheme]);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -93,7 +104,7 @@ const LoginScreen = () => {
                         secureTextEntry={true}
                     />
                     <Text style={styles.login.redLabel}>{failedMessage}</Text>
-                    <Button text="LOGIN" onPress={handleLogin} width={"100%"} color={"#FF9E0D"} />
+                    <Button text="LOGIN" onPress={handleLogin} width={"100%"} color={"#FF9E0D"} style={style}/>
                     <Text onPress={() => navigation.navigate('RegisterUser')} style={[styles.login.links, { paddingBottom: Dimensions.get("window").height * 0.3 }]}>Dont have an account? Sign up now!</Text>
                 </View>
             </ImageBackground>

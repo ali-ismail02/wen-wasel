@@ -1,13 +1,12 @@
-import React, { useRef, useState, useEffect } from "react";
-import { NavigationContainer } from "@react-navigation/native";
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import CustomDrawer from "./CustomDrawer";
+import { NavigationContainer } from "@react-navigation/native";
+import React, { useEffect, useRef, useState } from "react";
+import { Appearance } from 'react-native';
 import { useSelector } from 'react-redux';
+import EditProfileScreen from "../screens/EditProfile";
 import UserScreen from "../screens/UserScreen";
 import VanScreen from "../screens/VanScreen";
-import EditProfileScreen from "../screens/EditProfile";
-import { Appearance } from 'react-native';
-import Icon from 'react-native-vector-icons/Feather';
+import CustomDrawer from "./CustomDrawer";
 
 export function DrawerStack() {
   const user = useSelector((state) => state?.user);

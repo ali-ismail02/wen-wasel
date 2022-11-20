@@ -1,19 +1,7 @@
-import styles from '../styles/styles';
-import { Text, TouchableOpacity, Image, Appearance } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { Image, Text, TouchableOpacity } from 'react-native';
 
-const Button = ({ onPress, text, color, height = 50, width, image = null, disabled = false }) => {
-    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
-    const [style, setStyle] = useState(styles.light);
-    
-    Appearance.addChangeListener(({ colorScheme }) => {
-        setColorScheme(colorScheme);
-        {}
-    });
-
-    useEffect(() => {
-        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
-    }, [colorScheme]);
+const Button = ({ onPress, text, color, height = 50, width, image = null, disabled = false, style }) => {
     if (color == "#FF9E0D") {
         var textStyle = {
             ...style.buttonText,

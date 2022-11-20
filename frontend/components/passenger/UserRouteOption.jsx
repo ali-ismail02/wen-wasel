@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { Image, Text, TouchableNativeFeedback, View, Appearance } from "react-native";
-import styles from "../../styles/styles";
+import { Image, Text, TouchableNativeFeedback, View } from "react-native";
 import GetFares from "../../hooks/passenger/GetFares";
 
 const UserRouteOption = ({ route, onPress, style, colorScheme }) => {

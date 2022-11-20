@@ -1,10 +1,9 @@
-import { View, Text, Image, Appearance } from 'react-native';
-import styles from '../../styles/styles';
-import { Google_API_Key } from '../../constants/GoogleAPIKey';
 import { useEffect, useState } from 'react';
-import Button from '../Button';
+import { Image, Text, View } from 'react-native';
+import { Google_API_Key } from '../../constants/GoogleAPIKey';
 import GetTripType from '../../hooks/passenger/GetTripType';
 import UpdateBooking from '../../hooks/passenger/UpdateBooking';
+import Button from '../Button';
 
 const SubRides = ({ path, setPath, setState, setCenter, style, colorScheme }) => {
     const [destination, setDestination] = useState('');
@@ -12,6 +11,7 @@ const SubRides = ({ path, setPath, setState, setCenter, style, colorScheme }) =>
     const [imageName, setImageName] = useState('');
     const [buttonImage, setButtonImage] = useState('');
 
+    // handling user's arrival at every route
     const update = async (path) => {
         const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${path[1].location}&key=${Google_API_Key}`;
         await fetch(url)

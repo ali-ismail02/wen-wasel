@@ -1,18 +1,17 @@
 import React, { useState } from "react";
-import { Appearance, BackHandler, SafeAreaView, Text, View } from "react-native";
+import { Appearance, BackHandler, SafeAreaView, View } from "react-native";
 import MapView, { LatLng } from 'react-native-maps';
 import { centerScreen } from '../../hooks/CameraChange';
 import styles from "../../styles/styles";
-import Button from "../Button";
 import BaseState from "./BaseState";
-import Booked from "./Booked";
-import BookSeats from "./BookSeats";
-import CompletedTrip from "./CompletedTrip";
+import BookedOrNoBookingState from "./BookedOrNoBookingState";
+import PathConfirmedState from "./PathConfirmedState";
+import CompletedTripState from "./CompletedTripState";
 import CustomMap from "./CustomMap";
+import PathSelectedState from "./PathSelectedState";
 import SearchedState from "./SearchedState";
 import SubRide from "./SubRides";
-import UserRouteOptions from "./UserRouteOptions";
-import { moveTo } from "../../hooks/CameraChange";
+import RideSelectedState from "./rideSelectedState";
 
 const Main = () => {
     const [location, setLocation] = useState(undefined);
@@ -27,12 +26,12 @@ const Main = () => {
     const [search_result, setSearchResult] = useState(undefined);
     const mapRef = React.useRef<MapView>(null);
     const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
-    const [style, setStyle] = useState<any>({searchContainer: null,bottomPopupContainer: null, instructions: null});
-    
+    const [style, setStyle] = useState<any>({ searchContainer: null, bottomPopupContainer: null, instructions: null });
+
     // add event listener for theme change
     Appearance.addChangeListener(({ colorScheme }) => {
         setColorScheme(colorScheme);
-        {}
+        { }
     });
 
     // connecting the socket
@@ -40,7 +39,7 @@ const Main = () => {
     const socket = io.connect('http://192.168.1.50:5000');
 
     React.useEffect(() => {
-        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
+        { colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light) }
         let flag = true;
         socket.on("locationBroadcast", (data: any) => {
             let temp = live_locations;
@@ -93,13 +92,6 @@ const Main = () => {
         setState("pathSelected");
     }
 
-    // handling path confirmation
-    const onPathConfirm = () => {
-        setState("pathConfirmed");
-        setCenterMap(true);
-        moveTo(location.coords, mapRef, 18);
-    }
-
     // handling state change and updating all_user_states
     const setState = (state) => {
         if (state == "done") {
@@ -113,37 +105,37 @@ const Main = () => {
     }
 
     // switch case for rendering different components based on user_state
-    const comps = (state) => {
+    const components = (state) => {
         switch (state) {
-            case "done": return <CompletedTrip setUserState={setUserState} style={style} />
-            case "none": return <BaseState style={style} setState={setState} setSearchResult={setSearchResult} setDestination={setDestination} mapRef={mapRef} location={location} setCenterMap={setCenterMap}/>
-            case "searched": return <SearchedState  setState={setState} setPaths={setPaths} style={style} slider_value={slider_value} setSliderValue={setSliderValue} colorScheme={colorScheme} location={location} destination={destination}/>
-            case "rideSelected": return <UserRouteOptions routes={paths} onPress={onPathSelect} style={style} colorScheme={colorScheme}/>
-            case "pathSelected": return <View style={style.bottomPopupContainer}>
-                                            <Text style={style.instructions}>Confirm your route?</Text>
-                                            <Button text="Confirm Route" onPress={onPathConfirm} width={"100%"} color={"#FF9E0D"}  style={style} />
-                                        </View>
-            case "pathConfirmed": return <BookSeats path={path} setState={setState} style={style}/>
-            case "booked": return <>
-                                    <SubRide path={path} setPath={setPath} setState={setState} setCenter={setCenterMap}  style={style} colorScheme={colorScheme} />
-                                    <Booked status={1}  style={style}/>
-                                  </>
-            case "failedBooking": return <>
-                                            <SubRide path={path} setPath={setPath} setState={setState}  setCenter={setCenterMap} style={style} colorScheme={colorScheme} />
-                                            <Booked status={0}  style={style}/>
-                                        </>
-            case "noBooking": return <SubRide path={path} setPath={setPath} setState={setState}  setCenter={setCenterMap} style={style} colorScheme={colorScheme} />
-            }
+            case "done":
+                return <CompletedTripState setUserState={setUserState} style={style} />
+            case "none":
+                return <BaseState style={style} setState={setState} setSearchResult={setSearchResult} setDestination={setDestination} mapRef={mapRef} location={location} setCenterMap={setCenterMap} />
+            case "searched":
+                return <SearchedState setState={setState} setPaths={setPaths} style={style} slider_value={slider_value} setSliderValue={setSliderValue} colorScheme={colorScheme} location={location} destination={destination} />
+            case "rideSelected":
+                return <RideSelectedState routes={paths} onPress={onPathSelect} style={style} colorScheme={colorScheme} />
+            case "pathSelected":
+                return <PathSelectedState style={style} setState={setState} setCenterMap={setCenterMap} location={location} mapRef={mapRef} />
+            case "pathConfirmed":
+                return <PathConfirmedState path={path} setState={setState} style={style} colorScheme={colorScheme} />
+            case "booked":
+                return <BookedOrNoBookingState path={path} setPath={setPath} setState={setState} setCenterMap={setCenterMap} style={style} colorScheme={colorScheme} status={1} />
+            case "failedBooking":
+                return <BookedOrNoBookingState path={path} setPath={setPath} setState={setState} setCenterMap={setCenterMap} style={style} colorScheme={colorScheme} status={0} />
+            case "noBooking":
+                return <SubRide path={path} setPath={setPath} setState={setState} setCenter={setCenterMap} style={style} colorScheme={colorScheme} />
         }
+    }
 
-        return (
-            <SafeAreaView>
-                <View>
-                    <CustomMap setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} center_map={center_map} mapRef={mapRef} destination={destination} path={path} setDestination={setDestination} user_state={user_state} live_locations={live_locations}  style={style}/>
-                    {comps(user_state)}
-                </View>
-            </SafeAreaView>
-        );
-    };
+    return (
+        <SafeAreaView>
+            <View>
+                <CustomMap setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} center_map={center_map} mapRef={mapRef} destination={destination} path={path} setDestination={setDestination} user_state={user_state} live_locations={live_locations} style={style} />
+                {components(user_state)}
+            </View>
+        </SafeAreaView>
+    );
+};
 
-    export default Main; 
+export default Main; 

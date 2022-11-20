@@ -2,7 +2,7 @@ import { View, Text } from "react-native";
 import Button from "../Button";
 import { moveTo } from "../../hooks/CameraChange";
 
-const PathSelected = ({ style, setState, setCenterMap, location, mapRef }) => {
+const PathSelectedState = ({ style, setState, setCenterMap, location, mapRef }) => {
 
     // handling path confirmation
     const onPathConfirm = () => {
@@ -18,4 +18,4 @@ const PathSelected = ({ style, setState, setCenterMap, location, mapRef }) => {
     </View>)
 }
 
-export default PathSelected;
+export default PathSelectedState;

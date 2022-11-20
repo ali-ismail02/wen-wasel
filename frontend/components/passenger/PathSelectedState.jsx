@@ -12,10 +12,11 @@ const PathSelectedState = ({ style, setState, setCenterMap, location, mapRef }) 
     }
 
     return (
-    <View style={style.bottomPopupContainer}>
-        <Text style={style.instructions}>Confirm your route?</Text>
-        <Button text="Confirm Route" onPress={onPathConfirm} width={"100%"} color={"#FF9E0D"} style={style} />
-    </View>)
+        <View style={style.bottomPopupContainer}>
+            <Text style={style.instructions}>Confirm your route?</Text>
+            <Button text="Confirm Route" onPress={onPathConfirm} width={"100%"} color={"#FF9E0D"} style={style} />
+        </View>
+    )
 }
 
 export default PathSelectedState;

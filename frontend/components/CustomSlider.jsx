@@ -1,21 +1,8 @@
 import { Slider } from '@miblanchard/react-native-slider';
-import React, { useState, useEffect } from 'react';
-import { Text, View, Appearance } from 'react-native';
-import styles from '../styles/styles';
+import React from 'react';
+import { Text, View } from 'react-native';
 
-const CustomSlider = ({sliderValue, setSliderValue}) => {
-    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
-    const [style, setStyle] = useState(styles.light);
-    
-    Appearance.addChangeListener(({ colorScheme }) => {
-        setColorScheme(colorScheme);
-        {}
-    });
-
-    useEffect(() => {
-        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
-    }, [colorScheme]);
-
+const CustomSlider = ({sliderValue, setSliderValue, style, colorScheme}) => {
     return (
         <>
             <Text style={style.instructions}>Please select your desired trip type:</Text>

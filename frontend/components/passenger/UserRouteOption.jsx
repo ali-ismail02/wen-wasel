@@ -3,20 +3,12 @@ import { Image, Text, TouchableNativeFeedback, View, Appearance } from "react-na
 import styles from "../../styles/styles";
 import GetFares from "../../hooks/passenger/GetFares";
 
-const UserRouteOption = ({ route, onPress }) => {
+const UserRouteOption = ({ route, onPress, style, colorScheme }) => {
     const [time, setTime] = useState(undefined);
     const [price, setPrice] = useState(0);
-    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
-    const [style, setStyle] = useState(styles.light);
-
-    Appearance.addChangeListener(({ colorScheme }) => {
-        setColorScheme(colorScheme);
-
-    });
 
     // calculating time for route
     useEffect(() => {
-        { colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light) }
         const getPrice = async () => {
             const price = await GetFares(route);
             setPrice(price);

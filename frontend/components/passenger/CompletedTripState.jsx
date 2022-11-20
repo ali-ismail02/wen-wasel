@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Image, Text, View } from 'react-native';
 
-const CompletedTrip = ({ setUserState, style }) => {
+const CompletedTripState = ({ setUserState, style }) => {
     const [display, setDisplay] = useState(true);
 
     useEffect(() => {
@@ -24,4 +24,4 @@ const CompletedTrip = ({ setUserState, style }) => {
     );
 };
 
-export default CompletedTrip;
+export default CompletedTripState;

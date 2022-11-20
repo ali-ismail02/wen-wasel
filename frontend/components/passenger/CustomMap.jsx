@@ -27,7 +27,9 @@ const CustomMap = ({ setCenterMap, center_map, mapRef, destination, path, setLoc
             ref={mapRef}
             style={style.map}
             initialRegion={INITIAL_POSITION}>
+            {/* if the user sets a destination throught searching or pin point */}
             {destination != null && <Marker coordinate={destination} />}
+            {/* if there are any vans live loactions broadcasted add a can icon to their location */}
             {live_locations.length > 0 && user_state != undefined && live_locations.map((location, index) => {
                 console.log(location)
                 return <Marker coordinate={location.location}
@@ -37,6 +39,7 @@ const CustomMap = ({ setCenterMap, center_map, mapRef, destination, path, setLoc
                 />
             }
             )}
+            {/* if the user chose a path draw it */}
             {path != undefined && PathDraw(path)}
         </MapView>
     );

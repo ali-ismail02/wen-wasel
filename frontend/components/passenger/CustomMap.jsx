@@ -31,7 +31,6 @@ const CustomMap = ({ setCenterMap, center_map, mapRef, destination, path, setLoc
             {destination != null && <Marker coordinate={destination} />}
             {/* if there are any vans live loactions broadcasted add a can icon to their location */}
             {live_locations.length > 0 && user_state != undefined && live_locations.map((location, index) => {
-                console.log(location)
                 return <Marker coordinate={location.location}
                     key={index}
                     image={require('../../assets/images/van-icon.png')}

@@ -1,24 +1,12 @@
+import React from 'react';
+import { Image, Text, View } from "react-native";
 import SelectDropdown from "react-native-select-dropdown";
-import styles from "../../styles/styles";
 import BuildRecurringRoutePath from "../../hooks/van/BuildRecurringRoutePath";
-import { View, Text, Image, Appearance} from "react-native";
 import Button from "../Button";
-import React, { useState, useEffect } from 'react';
 
-const PresavedRoutesDropdown = ({ presaved_routes, setAllDestinations, setUserState }) => {
+const PresavedRoutesDropdown = ({ presaved_routes, setAllDestinations, setUserState, style }) => {
     const [selectedRoute, setSelectedRoute] = React.useState(null);
     const [disabled, setDisabled] = React.useState(true);
-    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
-    const [style, setStyle] = useState(styles.light);
-    
-    Appearance.addChangeListener(({ colorScheme }) => {
-        setColorScheme(colorScheme);
-        {}
-    });
-
-    useEffect(() => {
-        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
-    }, [colorScheme]);
 
     const startRoute = async () => {
         BuildRecurringRoutePath(selectedRoute, setAllDestinations);
@@ -60,7 +48,7 @@ const PresavedRoutesDropdown = ({ presaved_routes, setAllDestinations, setUserSt
                 />
             </View>
             <View style={[style.flex, { paddingHorizontal: 30, paddingVertical: 10 }]}>
-                <Button text="Start Route" onPress={startRoute} color={"#FF9E0D"} width={"100%"} disabled={disabled}/>
+                <Button text="Start Route" onPress={startRoute} color={"#FF9E0D"} width={"100%"} disabled={disabled} style={style}/>
             </View>
         </View>
     );

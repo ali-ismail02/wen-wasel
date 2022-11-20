@@ -1,24 +1,12 @@
-import { View, Text, Image, Appearance } from 'react-native';
-import React, { useState, useEffect } from 'react';
-import styles from '../../styles/styles';
-import SelectDropdown from 'react-native-select-dropdown'
+import React from 'react';
+import { Image, Text, View } from 'react-native';
+import SelectDropdown from 'react-native-select-dropdown';
 import AddOneTimeRoute from '../../hooks/van/AddOneTimeRoute';
 import Button from '../Button';
 
-const AddingDestination = ({ setDestinations, setState, destination }) => {
+const AddingDestination = ({ setDestinations, setState, destination, style, colorScheme }) => {
     const [minutes, setMinutes] = React.useState(null);
     const [disabled, setDisabled] = React.useState(true);
-    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
-    const [style, setStyle] = useState(styles.light);
-
-    Appearance.addChangeListener(({ colorScheme }) => {
-        setColorScheme(colorScheme);
-        { }
-    });
-
-    useEffect(() => {
-        { colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light) }
-    }, [colorScheme]);
 
     const addDestination = async () => {
         // get time and date after adding mins
@@ -74,8 +62,8 @@ const AddingDestination = ({ setDestinations, setState, destination }) => {
                 />
             </View>
             <View style={[style.flex, { paddingTop: 10 }]}>
-                <Button text="Cancel" onPress={() => setState("destinationsSet")} color={"black"} width={"47%"} />
-                <Button text="Add" onPress={addDestination} color={"#FF9E0D"} width={"47%"} disabled={disabled} />
+                <Button text="Cancel" onPress={() => setState("destinationsSet")} color={"black"} width={"47%"} style={style} />
+                <Button text="Add" onPress={addDestination} color={"#FF9E0D"} width={"47%"} disabled={disabled} style={style} />
             </View>
         </View>
     );

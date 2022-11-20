@@ -1,19 +1,18 @@
 import React, { useState } from "react";
-import { BackHandler, SafeAreaView, Text, View, Appearance } from "react-native";
+import { Appearance, BackHandler, SafeAreaView, Text, View } from "react-native";
 import MapView, { LatLng } from 'react-native-maps';
-import { centerScreen, moveTo } from '../../hooks/CameraChange';
-import getRoutes from "../../hooks/passenger/GetRoutes";
+import { centerScreen } from '../../hooks/CameraChange';
 import styles from "../../styles/styles";
 import Button from "../Button";
-import CenterMapButton from "../CenterMapButton";
-import CustomSlider from '../CustomSlider';
-import Search from "../Search";
+import BaseState from "./BaseState";
 import Booked from "./Booked";
 import BookSeats from "./BookSeats";
+import CompletedTrip from "./CompletedTrip";
 import CustomMap from "./CustomMap";
+import SearchedState from "./SearchedState";
 import SubRide from "./SubRides";
 import UserRouteOptions from "./UserRouteOptions";
-import CompletedTrip from "./CompletedTrip";
+import { moveTo } from "../../hooks/CameraChange";
 
 const Main = () => {
     const [location, setLocation] = useState(undefined);
@@ -88,25 +87,6 @@ const Main = () => {
         backPressed
     );
 
-    // handling place selection from search or map
-    const onPlaceSelect = (details) => {
-        const position = {
-            latitude: details.geometry.location.lat,
-            longitude: details.geometry.location.lng,
-        }
-        setSearchResult(position)
-        setDestination(position);
-        centerScreen(location, position, mapRef);
-        setCenterMap(false);
-        setState("searched");
-    }
-
-    // handling ride type selection
-    const rideSelect = async () => {
-        setPaths(await getRoutes(location.latitude + "," + location.longitude, destination.latitude + "," + destination.longitude, slider_value[0]));
-        setState("rideSelected");
-    }
-
     // handling path selection
     const onPathSelect = (path) => {
         setPath(path);
@@ -136,21 +116,9 @@ const Main = () => {
     const comps = (state) => {
         switch (state) {
             case "done": return <CompletedTrip setUserState={setUserState} style={style} />
-            case "none": return <>
-                                    <View style={style.searchContainer}>
-                                        <Search onPlaceSelect={(details) => onPlaceSelect(details)} style={style}/>
-                                    </View>
-                                    <CenterMapButton setCenterMap={setCenterMap}
-                                        moveTo={moveTo}
-                                        mapRef={mapRef}
-                                        location={location} 
-                                        style={style}/>
-                                </>
-            case "searched": return <View style={style.bottomPopupContainer}>
-                                        <CustomSlider slider_value={slider_value} setSliderValue={setSliderValue} style={style} colorScheme={colorScheme} />
-                                        <Button text="Next" onPress={() => rideSelect()} width={"100%"} color={"#FF9E0D"}  style={style} />
-                                    </View>
-            case "rideSelected": return <UserRouteOptions routes={paths} onPress={onPathSelect} style={style} colorScheme={colorScheme} />
+            case "none": return <BaseState style={style} setState={setState} setSearchResult={setSearchResult} setDestination={setDestination} mapRef={mapRef} location={location} setCenterMap={setCenterMap}/>
+            case "searched": return <SearchedState  setState={setState} setPaths={setPaths} style={style} slider_value={slider_value} setSliderValue={setSliderValue} colorScheme={colorScheme} location={location} destination={destination}/>
+            case "rideSelected": return <UserRouteOptions routes={paths} onPress={onPathSelect} style={style} colorScheme={colorScheme}/>
             case "pathSelected": return <View style={style.bottomPopupContainer}>
                                             <Text style={style.instructions}>Confirm your route?</Text>
                                             <Button text="Confirm Route" onPress={onPathConfirm} width={"100%"} color={"#FF9E0D"}  style={style} />
@@ -171,7 +139,7 @@ const Main = () => {
         return (
             <SafeAreaView>
                 <View>
-                    <CustomMap setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} center_map={center_map} mapRef={mapRef} destination={destination} path={path} setDestination={setDestination} user_state={user_state} live_locations={live_locations}  style={style} colorScheme={colorScheme} />
+                    <CustomMap setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} center_map={center_map} mapRef={mapRef} destination={destination} path={path} setDestination={setDestination} user_state={user_state} live_locations={live_locations}  style={style}/>
                     {comps(user_state)}
                 </View>
             </SafeAreaView>

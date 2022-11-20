@@ -26,15 +26,17 @@ const Main = () => {
     const [path, setPath] = useState(undefined);
     const [live_locations, setLiveLocations] = useState([]);
     const [search_result, setSearchResult] = useState(undefined);
+    const mapRef = React.useRef<MapView>(null);
     const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
     const [style, setStyle] = useState<any>({searchContainer: null,bottomPopupContainer: null, instructions: null});
     
+    // add event listener for theme change
     Appearance.addChangeListener(({ colorScheme }) => {
         setColorScheme(colorScheme);
         {}
     });
 
-    const mapRef = React.useRef<MapView>(null);
+    // connecting the socket
     const io = require("socket.io-client");
     const socket = io.connect('http://192.168.1.50:5000');
 
@@ -56,6 +58,7 @@ const Main = () => {
         });
     }, [socket]);
 
+    // handling back button press
     const backPressed = () => {
         if (all_user_states.length > 5) {
             return true;
@@ -79,11 +82,13 @@ const Main = () => {
         return true;
     }
 
+    // adding event listener for back button press
     const backHandler = BackHandler.addEventListener(
         "hardwareBackPress",
         backPressed
     );
 
+    // handling place selection from search or map
     const onPlaceSelect = (details) => {
         const position = {
             latitude: details.geometry.location.lat,
@@ -96,22 +101,26 @@ const Main = () => {
         setState("searched");
     }
 
+    // handling ride type selection
     const rideSelect = async () => {
         setPaths(await getRoutes(location.latitude + "," + location.longitude, destination.latitude + "," + destination.longitude, slider_value[0]));
         setState("rideSelected");
     }
 
+    // handling path selection
     const onPathSelect = (path) => {
         setPath(path);
         setState("pathSelected");
     }
 
+    // handling path confirmation
     const onPathConfirm = () => {
         setState("pathConfirmed");
         setCenterMap(true);
         moveTo(location.coords, mapRef, 18);
     }
 
+    // handling state change and updating all_user_states
     const setState = (state) => {
         if (state == "done") {
             setAllUserStates(["none"]);
@@ -123,6 +132,7 @@ const Main = () => {
         setUserState(state);
     }
 
+    // switch case for rendering different components based on user_state
     const comps = (state) => {
         switch (state) {
             case "done": return <CompletedTrip setUserState={setUserState} style={style} />

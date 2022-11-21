@@ -5,27 +5,16 @@ import { View } from "react-native";
 
 const PathDraw = (path, location) => {
     return (
+        // loop through all the destinations and draw a path between them
         path.map((trip, index) => {
             const dest = { latitude: parseFloat(trip[0].latitude), longitude: parseFloat(trip[0].longitude) }
             if (trip[0].arrived === false) {
+                // check if it's the first destination and draw a path from the driver's location to it
                 if (index == 0) {
-                    return (<View key={index}>
-                                <MapViewDirections
-                                    origin={location}
-                                    destination={dest}
-                                    apikey={Google_API_Key}
-                                    strokeWidth={6}
-                                    strokeColor="#FF9E0D"
-                                    mode='DRIVING'
-                                />
-                                <Marker coordinate={dest} pinColor={"#FF9E0D"} />
-                            </View>
-                            );
-                }
-                const origin = { latitude: path[index - 1][0].latitude, longitude: path[index - 1][0].longitude }
-                return (<View key={index}>
+                    return (
+                        <View key={index}>
                             <MapViewDirections
-                                origin={origin}
+                                origin={location}
                                 destination={dest}
                                 apikey={Google_API_Key}
                                 strokeWidth={6}
@@ -34,6 +23,22 @@ const PathDraw = (path, location) => {
                             />
                             <Marker coordinate={dest} pinColor={"#FF9E0D"} />
                         </View>
+                    );
+                }
+                const origin = { latitude: path[index - 1][0].latitude, longitude: path[index - 1][0].longitude }
+                // else draw a path from the previous destination to the current one
+                return (
+                    <View key={index}>
+                        <MapViewDirections
+                            origin={origin}
+                            destination={dest}
+                            apikey={Google_API_Key}
+                            strokeWidth={6}
+                            strokeColor="#FF9E0D"
+                            mode='DRIVING'
+                        />
+                        <Marker coordinate={dest} pinColor={"#FF9E0D"} />
+                    </View>
                 );
             }
         }

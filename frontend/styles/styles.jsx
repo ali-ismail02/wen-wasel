@@ -225,20 +225,33 @@ export default StyleSheet.create({
       borderWidth: 1,
     },
     selectButtonRoutes: {
-      width: 200,
-      height: 50,
+      width: 150,
+      height: 40,
       backgroundColor: colors.dark.backgroundColor,
       borderRadius: 5,
       borderColor: colors.dark.borderColor,
       borderWidth: 1,
     },
     dropdownRow: {
+      height: 40,
       width: "100%",
       color: colors.dark.color,
       backgroundColor: colors.dark.backgroundColor,
+      borderColor: colors.dark.borderColor,
     },
     dropdownRowText: {
       color: colors.dark.color,
+    },
+    dropdownSearchInput: {
+      width: "100%",
+      height: 50,
+      backgroundColor: colors.dark.backgroundColor,
+      color: colors.dark.color,
+      borderBottomColor: colors.dark.borderColor,
+      borderBottomWidth: 1,
+    },
+    dropdownStyle: {
+      backgroundColor: colors.dark.backgroundColor,
     },
     // Center Button Styles
     center: {
@@ -610,20 +623,33 @@ export default StyleSheet.create({
       borderWidth: 1,
     },
     selectButtonRoutes: {
-      width: 200,
-      height: 50,
+      width: 150,
+      height: 40,
       backgroundColor: colors.light.backgroundColor,
       borderRadius: 5,
       borderColor: colors.light.borderColor,
       borderWidth: 1,
     },
     dropdownRow: {
+      height: 40,
       width: "100%",
       color: colors.light.color,
       backgroundColor: colors.light.backgroundColor,
+      borderColor: colors.light.borderColor,
     },
     dropdownRowText: {
       color: colors.light.color,
+    },
+    dropdownSearchInput: {
+      width: "100%",
+      height: 50,
+      backgroundColor: colors.light.backgroundColor,
+      color: colors.light.color,
+      borderBottomColor: colors.light.borderColor,
+      borderBottomWidth: 1,
+    },
+    dropdownStyle: {
+      backgroundColor: colors.light.backgroundColor,
     },
     // Center Button Styles
     center: {

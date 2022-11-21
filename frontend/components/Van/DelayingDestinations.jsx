@@ -1,12 +1,12 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Image, Text, View } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
+import Entypo from 'react-native-vector-icons/Entypo';
+import FA from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import SortPath from '../../hooks/van/SortPath';
 import UpdateOneTimeRoute from '../../hooks/van/UpdateOneTimeRoute';
 import Button from '../Button';
-import Icon from 'react-native-vector-icons/FontAwesome5';
-import FA from 'react-native-vector-icons/FontAwesome';
-import Entypo from 'react-native-vector-icons/Entypo';
 
 const DelayingDestinations = ({ setDestinations, setState, destinations, style, colorScheme }) => {
     const mins = new Array(60).fill(1).map((_, i) => i);
@@ -20,6 +20,7 @@ const DelayingDestinations = ({ setDestinations, setState, destinations, style, 
 
 
     const delayAllDestinations = async () => {
+        // loop through destinations and update time for each one
         for (let i = 0; i < destinations.length; i++) {
             const date = new Date(destinations[i][1]);
             const date2 = new Date(date.getTime() + minutes * 60000);
@@ -28,7 +29,9 @@ const DelayingDestinations = ({ setDestinations, setState, destinations, style, 
             destinations[i][1] = dateStr + " " + time;
             const response = await UpdateOneTimeRoute(destinations[i][0].id, dateStr + " " + time);
         }
+        // sort destinations by time
         setDestinations(SortPath(destinations));
+        // close popup
         setState("destinationsSet");
     }
 
@@ -63,10 +66,10 @@ const DelayingDestinations = ({ setDestinations, setState, destinations, style, 
 
                 />
             </View>
-            <View style={[style.flex, {paddingTop: 10}]}>
-                    <Button text="Cancel" onPress={() => setState("destinationsSet")} color={"black"} width={"47%"} style={style} />
-                    <Button text="Delay" onPress={delayAllDestinations} color={"#FF9E0D"} width={"47%"} disabled={disabled} style={style} />
-                </View>
+            <View style={[style.flex, { paddingTop: 10 }]}>
+                <Button text="Cancel" onPress={() => setState("destinationsSet")} color={"black"} width={"47%"} style={style} />
+                <Button text="Delay" onPress={delayAllDestinations} color={"#FF9E0D"} width={"47%"} disabled={disabled} style={style} />
+            </View>
         </View>
     );
 }

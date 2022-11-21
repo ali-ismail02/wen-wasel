@@ -13,11 +13,11 @@ import PresavedRoutesDropdown from "./PresavedRoutesDropdown";
 import Routes from "./Routes";
 
 const Main = () => {
-    const [userState, setUserState] = useState("none");
-    const [recurringRoutes, setRecurringRoutes] = useState([]);
-    const [allUserStates, setAllUserStates] = useState(["none"]);
+    const [user_state, setUserState] = useState("none");
+    const [recurring_routes, setRecurringRoutes] = useState([]);
+    const [all_user_states, setAllUserStates] = useState(["none"]);
     const [destination, setDestination] = useState<LatLng | null>(null);
-    const [allDestinations, setAllDestinations] = useState<[Object, string][]>([]);
+    const [all_destinations, setAllDestinations] = useState<[Object, string][]>([]);
     const [location, setLocation] = useState(undefined);
     const [centerMap, setCenterMap] = useState(true);
     const mapRef = React.useRef<MapView>(null);
@@ -51,9 +51,9 @@ const Main = () => {
         colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)
         // get recurring routes from database
         const getRecurringRoutes = async () => {
-            const recurringRoutes = await GetRecurringRoute();
-            if (recurringRoutes) {
-                setRecurringRoutes(recurringRoutes);
+            const recurring_routes = await GetRecurringRoute();
+            if (recurring_routes) {
+                setRecurringRoutes(recurring_routes);
             }
         }
         getRecurringRoutes();
@@ -64,23 +64,23 @@ const Main = () => {
     // handle back button
     const backPressed = () => {
         setDestination(null);
-        if (userState == "none") {
+        if (user_state == "none") {
             BackHandler.exitApp();
             return true;
-        } else if (userState == "addingRoute" || userState == "delayingRoute") {
+        } else if (user_state == "addingRoute" || user_state == "delayingRoute") {
             setDestination(null);
-            if (allUserStates.length == 2) {
+            if (all_user_states.length == 2) {
                 setUserState("none");
                 setAllUserStates(["none"]);
                 return true;
             }
-            setUserState(allUserStates[allUserStates.length - 2]);
-            setAllUserStates(allUserStates.slice(0, allUserStates.length - 1));
+            setUserState(all_user_states[all_user_states.length - 2]);
+            setAllUserStates(all_user_states.slice(0, all_user_states.length - 1));
             return true;
         } else {
             let flag = 1;
-            for (let i = 0; i < allDestinations.length; i++) {
-                if (allDestinations[i][0]['arrived'] == false) {
+            for (let i = 0; i < all_destinations.length; i++) {
+                if (all_destinations[i][0]['arrived'] == false) {
                     flag = 0;
                     break;
                 }
@@ -121,14 +121,14 @@ const Main = () => {
             return
         }
         setUserState(state);
-        setAllUserStates([...allUserStates, state]);
+        setAllUserStates([...all_user_states, state]);
     }
 
     // handle adding destination
     const setDestinations = (destination, time) => {
         setDestination(null);
-        setAllDestinations([...allDestinations, [destination, time]]);
-        setAllDestinations(SortPath([...allDestinations, [destination, time]]));
+        setAllDestinations([...all_destinations, [destination, time]]);
+        setAllDestinations(SortPath([...all_destinations, [destination, time]]));
         setState("destinationsSet");
     }
 
@@ -141,20 +141,20 @@ const Main = () => {
     const components = (state) => {
         switch (state) {
             case "none":
-                return <PresavedRoutesDropdown presaved_routes={recurringRoutes} setUserState={setUserState} setAllDestinations={updateAllDestinations} style={style} />
+                return <PresavedRoutesDropdown presaved_routes={recurring_routes} setUserState={setUserState} setAllDestinations={updateAllDestinations} style={style} />
             case "destinationsSet":
-                return <Routes destination={destination} setState={setState} destinations={allDestinations} setDestinations={updateAllDestinations} style={style} colorScheme={colorScheme} />
+                return <Routes destination={destination} setState={setState} destinations={all_destinations} setDestinations={updateAllDestinations} style={style} colorScheme={colorScheme} />
             case "addingRoute":
                 return <AddingDestination setDestinations={setDestinations} setState={setState} destination={destination} style={style} colorScheme={colorScheme} />
             case "delaying":
-                return <DelayingDestinations destinations={allDestinations} setDestinations={updateAllDestinations} setState={setState} style={style} colorScheme={colorScheme} />
+                return <DelayingDestinations destinations={all_destinations} setDestinations={updateAllDestinations} setState={setState} style={style} colorScheme={colorScheme} />
         }
     }
 
     return (
         <View>
-            <CustomMap allDestinations={allDestinations} location={location} setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} setDestination={setDestination} onPlaceSelect={onPlaceSelect} style={style} colorScheme={colorScheme} />
-            {components(userState)}
+            <CustomMap all_destinations={all_destinations} location={location} setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} centerMap={centerMap} mapRef={mapRef} destination={destination} setDestination={setDestination} onPlaceSelect={onPlaceSelect} style={style} colorScheme={colorScheme} />
+            {components(user_state)}
         </View>
     );
 };

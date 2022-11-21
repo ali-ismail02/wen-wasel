@@ -6,7 +6,7 @@ import { moveTo } from '../../hooks/CameraChange';
 import Search from '../Search';
 import PathDraw from './PathDraw';
 
-const CustomMap = ({ setCenterMap, centerMap, mapRef, destination, setLocation, setState, setDestination, onPlaceSelect, location, allDestinations, style, colorScheme }) => {
+const CustomMap = ({ setCenterMap, centerMap, mapRef, destination, setLocation, setState, setDestination, onPlaceSelect, location, all_destinations, style, colorScheme }) => {
 
     return (<>
         <MapView
@@ -31,7 +31,7 @@ const CustomMap = ({ setCenterMap, centerMap, mapRef, destination, setLocation, 
             {/* if the driver sets a destination a marker is shown on the map */}
             {destination != null && <Marker coordinate={destination} />}
             {/* if the driver has set destinations, a path is drawn between them */}
-            {allDestinations != undefined && PathDraw(allDestinations, location)}
+            {all_destinations != undefined && PathDraw(all_destinations, location)}
         </MapView>
         <View style={style.searchContainer}>
             <Search onPlaceSelect={(details) => onPlaceSelect(details)} style={style} colorScheme={colorScheme} />

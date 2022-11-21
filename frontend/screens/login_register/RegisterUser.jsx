@@ -1,10 +1,10 @@
 import { useNavigation } from '@react-navigation/core';
-import { Image, Text, TextInput, View, ImageBackground } from 'react-native';
+import { Image, Text, TextInput, View, ImageBackground, Appearance } from 'react-native';
 import Button from '../../components/Button';
 import { updateUserProfile } from "../../redux/slices/userSlice";
 import { store } from '../../redux/store';
 import styles from '../../styles/styles';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Dimensions } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import RegisterPassenger from '../../hooks/passenger/RegisterPassenger';
@@ -12,7 +12,7 @@ import ValidateUser from '../../hooks/van/ValidateUser';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RegisterUserScreen = () => {
-
+    const navigation = useNavigation()
     const [fullname, setFullname] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
@@ -22,8 +22,18 @@ const RegisterUserScreen = () => {
     const [failedArray, setFailedArray] = useState([false,false,false,false,false]);
     const [failedMessage, setFailedMessage] = useState(null);
     const [borderColor, setBorderColor] = useState('red');
-    const [data, setData] = useState(['Passenger', 'Van Driver', 'Service Driver']);
-    const navigation = useNavigation()
+    const [data, setData] = useState(['Passenger', 'Bus Driver', 'Cab Driver']);
+    const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
+    const [style, setStyle] = useState({bottomPopupContainer: null});
+    
+    Appearance.addChangeListener(({ colorScheme }) => {
+        setColorScheme(colorScheme);
+        {}
+    });
+
+    useEffect(() => {
+        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
+    }, [colorScheme]);
 
     const checkForErrors = (response) => {
         if(response.errors.email != undefined){
@@ -93,7 +103,7 @@ const RegisterUserScreen = () => {
                 }));
             }
         }
-        if(userType == "Van Driver" || userType == "Service Driver"){
+        if(userType == "Bus Driver" || userType == "Cab Driver"){
             const response = await ValidateUser(formattedEmail, phone, password);
             if(response == true ){
                 setFailedArray([false,false,false,false,false,false]);
@@ -122,29 +132,29 @@ const RegisterUserScreen = () => {
             <ImageBackground source={require('../../assets/images/background.png')} style={styles.login.backgroundImage}>
                 <Image source={require('../../assets/images/wen-wasel.png')} style={styles.login.logo} />
                 <View style={styles.login.view}>
-                <Text style={styles.login.label}>Full Name</Text>
+                <Text style={styles.login.label}>Full Name:</Text>
                     <TextInput
                         style = {{...!failedArray[0] ? styles.login.input : {...styles.login.input, borderColor: borderColor}}}
                         placeholder="Full Name"
                         value={fullname}
                         onChangeText={setFullname}
                     />
-                    <Text style={styles.login.label}>Phone Nb.</Text>
+                    <Text style={styles.login.label}>Phone Number:</Text>
                     <TextInput
                         style = {{...!failedArray[1] ? styles.login.input : {...styles.login.input, borderColor: borderColor}}}
-                        placeholder="Phone Nb."
+                        placeholder="Phone Number."
                         value={phone}
                         onChangeText={(text) => setPhone(text.replace(/[^0-9]/g, ''))}
                         keyboardType="numeric"
                     />
-                    <Text style={styles.login.label}>Email</Text>
+                    <Text style={styles.login.label}>Email:</Text>
                     <TextInput
                         style = {{...!failedArray[2] ? styles.login.input : {...styles.login.input, borderColor: borderColor}}}
                         placeholder="Email"
                         value={email}
                         onChangeText={setEmail}
                     />
-                    <Text style={styles.login.label}>Password</Text>
+                    <Text style={styles.login.label}>Password:</Text>
                     <TextInput
                         style = {{...!failedArray[3] ? styles.login.input : {...styles.login.input, borderColor: borderColor}}}
                         placeholder="Password"
@@ -152,15 +162,15 @@ const RegisterUserScreen = () => {
                         onChangeText={setPassword}
                         secureTextEntry={true}
                     />
-                    <Text style={styles.login.label}>Repeat Password</Text>
+                    <Text style={styles.login.label}>Confirm Password:</Text>
                     <TextInput
                         style = {{...!failedArray[4] ? styles.login.input : {...styles.login.input, borderColor: borderColor}}}
-                        placeholder="Repeat Password"
+                        placeholder="Confirm Password"
                         value={confirmPassword}
                         onChangeText={setConfirmPassword}
                         secureTextEntry={true}
                     />
-                    <Text style={styles.login.label}>User Type</Text>
+                    <Text style={styles.login.label}>User Type:</Text>
                     <SelectDropdown 
                         data={data}
                         onSelect={(selectedItem, index) => {
@@ -177,7 +187,7 @@ const RegisterUserScreen = () => {
                         buttonTextStyle={{textAlign: 'left', paddingLeft: 3}}
                     />
                     <Text style={styles.login.redLabel}>{failedMessage}</Text>
-                    <Button text="SIGNUP" onPress={register} width={"100%"} color={"#FF9E0D"} />
+                    <Button text="SIGNUP" onPress={register} width={"100%"} color={"#FF9E0D"}  style={style}/>
                     <Text onPress={() => navigation.navigate('Login')} style={[styles.login.links,{paddingBottom: Dimensions.get("window").height * 0.3}]}>Already have an account? Sign in!</Text>
                 </View>
             </ImageBackground>

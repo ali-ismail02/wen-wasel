@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { Image, Text, TouchableOpacity, View } from "react-native";
+import { Text, TouchableOpacity, View } from "react-native";
+import Entypo from "react-native-vector-icons/Entypo";
+import FontAwasone from "react-native-vector-icons/FontAwesome";
+import Material from "react-native-vector-icons/MaterialCommunityIcons";
 import { Google_API_Key } from "../../constants/GoogleAPIKey";
 import GetRouteById from "../../hooks/van/GetRouteById";
 import SetTripArrived from "../../hooks/van/setTripArrived";
-import Entypo from "react-native-vector-icons/Entypo";
-import Material from "react-native-vector-icons/MaterialCommunityIcons";
-import FontAwasone from "react-native-vector-icons/FontAwesome";
 
 const RouteDescription = ({ destination, setDestinations, allDestionations, update, style, colorScheme }) => {
     const [route, setRoute] = useState(destination);
@@ -30,6 +30,7 @@ const RouteDescription = ({ destination, setDestinations, allDestionations, upda
     }
 
     useEffect(() => {
+        // get route location name from google api
         const getLocation = async () => {
             const url = `https://maps.googleapis.com/maps/api/geocode/json?latlng=${destination[0].latitude + "," + destination[0].longitude}&key=${Google_API_Key}`;
             await fetch(url)
@@ -49,6 +50,7 @@ const RouteDescription = ({ destination, setDestinations, allDestionations, upda
         getRoute();
     }, [colorScheme]);
 
+    // set trip as arrived and update in destinations
     const onPress = async () => {
         for (let i = 0; i < allDestionations.length; i++) {
             if (allDestionations[i][0].id === destination[0].id) {

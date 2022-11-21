@@ -1,14 +1,21 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { Google_API_Key } from '../../constants/GoogleAPIKey';
 import INITIAL_POSITION from '../../constants/InitialPosition';
 import { moveTo } from '../../hooks/CameraChange';
 import PathDraw from './PathDraw';
+import MapStyles from '../../styles/MapStyles';
 
-const CustomMap = ({ setCenterMap, center_map, mapRef, destination, path, setLocation, setState, setDestination, user_state, live_locations, style }) => {
+const CustomMap = ({ setCenterMap, center_map, mapRef, destination, path, setLocation, setState, setDestination, user_state, live_locations, style, colorScheme }) => {
+    const [map, setMap] = useState(null);
+
+    useEffect(() => {
+        colorScheme === 'dark' ? setMap(MapStyles.dark) : setMap(MapStyles.light);
+    }, [colorScheme]);
 
     return (
         <MapView
+            customMapStyle={map}
             apikey={Google_API_Key}
             provider={PROVIDER_GOOGLE}
             showsUserLocation={true}
@@ -34,7 +41,7 @@ const CustomMap = ({ setCenterMap, center_map, mapRef, destination, path, setLoc
                 return <Marker coordinate={location.location}
                     key={index}
                     image={require('../../assets/images/van-icon.png')}
-                    
+
                 />
             }
             )}

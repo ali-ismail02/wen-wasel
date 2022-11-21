@@ -131,7 +131,7 @@ const Main = () => {
     return (
         <SafeAreaView>
             <View>
-                <CustomMap setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} center_map={center_map} mapRef={mapRef} destination={destination} path={path} setDestination={setDestination} user_state={user_state} live_locations={live_locations} style={style} />
+                <CustomMap setState={setState} setLocation={setLocation} setCenterMap={setCenterMap} center_map={center_map} mapRef={mapRef} destination={destination} path={path} setDestination={setDestination} user_state={user_state} live_locations={live_locations} style={style} colorScheme={colorScheme}/>
                 {components(user_state)}
             </View>
         </SafeAreaView>

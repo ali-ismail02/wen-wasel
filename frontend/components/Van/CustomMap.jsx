@@ -5,11 +5,19 @@ import INITIAL_POSITION from '../../constants/InitialPosition';
 import { moveTo } from '../../hooks/CameraChange';
 import Search from '../Search';
 import PathDraw from './PathDraw';
+import MapStyles from '../../styles/MapStyles';
+import { useEffect, useState } from 'react';
 
 const CustomMap = ({ setCenterMap, centerMap, mapRef, destination, setLocation, setState, setDestination, onPlaceSelect, location, all_destinations, style, colorScheme }) => {
+    const [map, setMap] = useState(null);
+
+    useEffect(() => {
+        colorScheme === 'dark' ? setMap(MapStyles.dark) : setMap(MapStyles.light);
+    }, [colorScheme]);
 
     return (<>
         <MapView
+            customMapStyle={map}
             apikey={Google_API_Key}
             provider={PROVIDER_GOOGLE}
             showsUserLocation={true}

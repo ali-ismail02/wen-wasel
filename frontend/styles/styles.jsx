@@ -114,10 +114,8 @@ export default StyleSheet.create({
       width: "90%",
       backgroundColor: colors.dark.backgroundColor,
       shadowColor: colors.dark.shadowColor,
-      shadowOffset: { width: 2, height: 2 },
       shadowOpacity: 0.5,
       elevation: 4,
-      padding: 8,
       borderRadius: 8,
     },
     input: {
@@ -125,6 +123,7 @@ export default StyleSheet.create({
       borderWidth: 1,
       backgroundColor: colors.dark.backgroundColor,
       color: colors.dark.color,
+      margin: 0,
     },
     separator: {
       height: 1,

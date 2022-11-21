@@ -51,10 +51,10 @@ const Routes = ({ destination, destinations, setState, setDestinations, style, c
                     {expanded == true ?
                         <FlatList style={{ maxHeight: 400, display: "flex" }}
                             data={destinations}
-                            renderItem={({ item }) => <RouteDescription destination={item} allDestionations={destinations} setDestinations={setDestinations} update={getFirstDestination}  style={style} colorScheme={colorScheme} />}
+                            renderItem={({ item }) => <RouteDescription destination={item} allDestionations={destinations} setDestinations={setDestinations} update={getFirstDestination} style={style} colorScheme={colorScheme} />}
                         /> :
                         firstDestination != undefined ?
-                            <RouteDescription destination={firstDestination} allDestionations={destinations} setDestinations={setDestinations} update={getFirstDestination} style={style} colorScheme={colorScheme}  /> :
+                            <RouteDescription destination={firstDestination} allDestionations={destinations} setDestinations={setDestinations} update={getFirstDestination} style={style} colorScheme={colorScheme} /> :
                             <View style={style.van.routeDescription}>
                                 <Text style={[style.subTitle, { width: "100%", textAlign: "center" }]}>No more destinations</Text>
                             </View>

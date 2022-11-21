@@ -1,12 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image, Text, View } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import AddOneTimeRoute from '../../hooks/van/AddOneTimeRoute';
 import Button from '../Button';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import Feather from 'react-native-vector-icons/Feather';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 const AddingDestination = ({ setDestinations, setState, destination, style, colorScheme }) => {
     const [minutes, setMinutes] = React.useState(null);
     const [disabled, setDisabled] = React.useState(true);
+    const [color, setColor] = React.useState("black");
+
+    useEffect(() => {
+        colorScheme == "dark" ? setColor("white") : setColor("black");
+    }, [colorScheme]);
 
     const addDestination = async () => {
         // get time and date after adding mins
@@ -29,15 +37,9 @@ const AddingDestination = ({ setDestinations, setState, destination, style, colo
         <View style={style.bottomPopupContainer}>
             <Text style={style.instructions}>Please press on the mins menu and choose how many minutes are left till you arrive at your route </Text>
             <View style={style.flex}>
-                {colorScheme != "dark" ? <>
-                    <Image style={{ width: 50, height: 30 }} source={require('../../assets/images/van.png')} />
-                    <Image style={{ width: 50, height: 20 }} source={require('../../assets/images/3dots.png')} />
-                    <Image style={{ width: 30, height: 35 }} source={require('../../assets/images/waypoint.png')} />
-                </> : <>
-                    <Image style={{ width: 50, height: 30 }} source={require('../../assets/images/van_dark.png')} />
-                    <Image style={{ width: 50, height: 20 }} source={require('../../assets/images/3dots_dark.png')} />
-                    <Image style={{ width: 30, height: 35 }} source={require('../../assets/images/waypoint_dark.png')} />
-                </>}
+                <Icon name="shuttle-van" size={30} color={color} />
+                <Entypo name="dots-three-horizontal" size={30} color={color} />
+                <Feather name="map-pin" size={30} color={color} />
                 <SelectDropdown data={mins}
                     onSelect={(selectedItem, index) => {
                         setMinutes(selectedItem);

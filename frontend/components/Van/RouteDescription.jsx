@@ -3,11 +3,20 @@ import { Image, Text, TouchableOpacity, View } from "react-native";
 import { Google_API_Key } from "../../constants/GoogleAPIKey";
 import GetRouteById from "../../hooks/van/GetRouteById";
 import SetTripArrived from "../../hooks/van/setTripArrived";
+import Entypo from "react-native-vector-icons/Entypo";
+import Material from "react-native-vector-icons/MaterialCommunityIcons";
+import FontAwasone from "react-native-vector-icons/FontAwesome";
 
 const RouteDescription = ({ destination, setDestinations, allDestionations, update, style, colorScheme }) => {
     const [route, setRoute] = useState(destination);
     const [destinationAddress, setDestinationAddress] = useState("");
     const [time, setTime] = useState("");
+    const [color, setColor] = useState("black");
+
+    useEffect(() => {
+        colorScheme == "dark" ? setColor("white") : setColor("black")
+    }, [colorScheme])
+
     if (destination == null) {
         return null;
     }
@@ -58,19 +67,16 @@ const RouteDescription = ({ destination, setDestinations, allDestionations, upda
     return (<>
         {destination[0].arrived == false ?
             <TouchableOpacity style={style.van.routeDescription} onPress={onPress}>
-                {colorScheme == "dark" ? <Image style={{ width: 30, height: 30 }} source={require("../../assets/images/hourglass_dark.png")} /> :
-                <Image style={{ width: 30, height: 30 }} source={require("../../assets/images/hourglass.png")} />}
+                <FontAwasone name="hourglass-2" size={30} color={color} />
                 <View style={style.flex}>
-                {colorScheme == "dark" ? <Image style={{ width: 20, height: 30 }} source={require("../../assets/images/standing_dark.png")} /> :
-                <Image style={{ width: 20, height: 30 }} source={require("../../assets/images/standing.png")} />}
+                    <Material name="human-handsdown" size={30} color={color} />
                     <Text style={style.van.routeDescriptionText}>{route.reservations}</Text>
                 </View>
                 <Text style={style.van.routeDescriptionAddress}>{destinationAddress}</Text>
                 <Text style={style.van.routeDescriptionTime}>Scheduled at {time}</Text>
             </TouchableOpacity> :
             <View style={style.van.routeDescription}>
-            {colorScheme == "dark" ? <Image style={{ width: 30, height: 30 }} source={require("../../assets/images/tick.png")} /> :
-            <Image style={{ width: 30, height: 30 }} source={require("../../assets/images/black-tick.png")} />}
+                <Entypo name="check" size={30} color={color} />
                 <Text style={style.van.routeDescriptionAddress}>{destinationAddress}</Text>
                 <Text style={style.van.routeDescriptionTime}>Scheduled at {time}</Text>
             </View>}

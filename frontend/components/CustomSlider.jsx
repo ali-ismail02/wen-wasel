@@ -8,10 +8,10 @@ const CustomSlider = ({slider_value, setSliderValue, style, colorScheme}) => {
             <Text style={style.instructions}>Please select your desired trip type:</Text>
             <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <View style={{width:50}}>
-                    <Text style={[style.instructions,{textAlign: 'left'}]}>Service</Text>
+                    <Text style={[style.instructions,{textAlign: 'left'}]}>Cab</Text>
                 </View>
                 <View style={{width:50}}>
-                    <Text style={[style.instructions,{textAlign: 'center'}]}>Van</Text>
+                    <Text style={[style.instructions,{textAlign: 'center'}]}>Bus</Text>
                 </View>
                 <View style={{width:50}}>
                     <Text style={[style.instructions,{textAlign: 'right'}]}>Any</Text>

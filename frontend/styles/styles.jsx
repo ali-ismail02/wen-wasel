@@ -307,7 +307,7 @@ export default StyleSheet.create({
     },
     routeOptionPrice: {
       color: colors.dark.color,
-      fontSize: 20,
+      fontSize: 16,
       fontWeight: "bold",
     },
     routeOptionInformation: {
@@ -705,7 +705,7 @@ export default StyleSheet.create({
     },
     routeOptionPrice: {
       color: colors.light.color,
-      fontSize: 20,
+      fontSize: 16,
       fontWeight: "bold",
     },
     routeOptionInformation: {

@@ -24,9 +24,12 @@ const UserRouteOption = ({ route, onPress, style, colorScheme }) => {
         date.setMinutes(date.getMinutes() + time);
         setTime(date.toLocaleTimeString());
     }, [colorScheme])
-    // format price with commas
+    // remove last 4 0s from price
     const formatPrice = (price) => {
-        return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        if(price == 0) {
+            return "Free";
+        }
+        return "LBP " + price.toString().slice(0, -3) + "K";
     }
 
     return (
@@ -70,7 +73,7 @@ const UserRouteOption = ({ route, onPress, style, colorScheme }) => {
                     </View>
                     <Text style={style.routeOptionArriveTime}>Arrive at {time}</Text>
                 </View>
-                <Text style={style.routeOptionPrice}>LBP {formatPrice(price)}</Text>
+                <Text style={style.routeOptionPrice}>{formatPrice(price)}</Text>
             </View>
         </TouchableNativeFeedback>
     );

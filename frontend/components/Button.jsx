@@ -1,5 +1,8 @@
 import React from 'react';
 import { Image, Text, TouchableOpacity } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import Feather from 'react-native-vector-icons/Feather';
+
 
 const Button = ({ onPress, text, color, height = 50, width, image = null, disabled = false, style }) => {
     if (color == "#FF9E0D") {
@@ -47,10 +50,10 @@ const Button = ({ onPress, text, color, height = 50, width, image = null, disabl
     if (image != null) {
         return (
             <TouchableOpacity style={buttonStyle} onPress={onPress} disabled={disabled}>
-                {image == "car" ? <Image source={require('../assets/images/car.png')} style={{width:40, height:30}} /> : 
-                image == "van" ? <Image source={require('../assets/images/van.png')} style={{width:40, height:30}} /> : 
-                image == "waypoint" ? <Image source={require('../assets/images/waypoint.png')} style={{width:20, height:40}} /> :
-                <Image source={require('../assets/images/walking.png')} style={{width:30, height:40}} />}
+                {image == "car" ? <Icon name="taxi" size={30} color="black" /> :
+                image == "van" ? <Icon name="shuttle-van" size={30} color="black" /> : 
+                image == "waypoint" ? <Feather name="map-pin" size={30} color="black" /> :
+                <Icon name="walking" size={30} color="black" />}
             </TouchableOpacity>
         );
     }

@@ -1,14 +1,23 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Image, Text, View } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import SortPath from '../../hooks/van/SortPath';
 import UpdateOneTimeRoute from '../../hooks/van/UpdateOneTimeRoute';
 import Button from '../Button';
+import Icon from 'react-native-vector-icons/FontAwesome5';
+import FA from 'react-native-vector-icons/FontAwesome';
+import Entypo from 'react-native-vector-icons/Entypo';
 
 const DelayingDestinations = ({ setDestinations, setState, destinations, style, colorScheme }) => {
+    const mins = new Array(60).fill(1).map((_, i) => i);
     const [minutes, setMinutes] = React.useState(null);
     const [disabled, setDisabled] = React.useState(true);
-    const mins = new Array(60).fill(1).map((_, i) => i);
+    const [color, setColor] = React.useState("black");
+
+    useEffect(() => {
+        colorScheme == "dark" ? setColor("white") : setColor("black");
+    }, [colorScheme]);
+
 
     const delayAllDestinations = async () => {
         for (let i = 0; i < destinations.length; i++) {
@@ -27,15 +36,9 @@ const DelayingDestinations = ({ setDestinations, setState, destinations, style, 
         <View style={style.bottomPopupContainer}>
             <Text style={style.instructions}>Please press on the mins menu and choose how many minutes are left till you arrive at your route </Text>
             <View style={style.flex}>
-                {colorScheme != "dark" ? <>
-                    <Image style={{ width: 50, height: 30 }} source={require('../../assets/images/van.png')} />
-                    <Image style={{ width: 50, height: 20 }} source={require('../../assets/images/3dots.png')} />
-                    <Image style={{ width: 30, height: 35 }} source={require('../../assets/images/hourglass.png')} />
-                </> : <>
-                    <Image style={{ width: 50, height: 30 }} source={require('../../assets/images/van_dark.png')} />
-                    <Image style={{ width: 50, height: 20 }} source={require('../../assets/images/3dots_dark.png')} />
-                    <Image style={{ width: 30, height: 35 }} source={require('../../assets/images/hourglass_dark.png')} />
-                </>}
+                <Icon name="shuttle-van" size={30} color={color} />
+                <Entypo name="dots-three-horizontal" size={30} color={color} />
+                <FA name="hourglass-2" size={30} color={color} />
                 <SelectDropdown data={mins}
                     onSelect={(selectedItem, index) => {
                         setMinutes(selectedItem);

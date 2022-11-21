@@ -40,7 +40,6 @@ const Main = () => {
     const broadcastLocation = () => {
         // repeat this every 2 seconds
         setTimeout(() => {
-            console.log("broadcasting location");
             if(location) {
                 socket.emit("location", {
                     type: "van",

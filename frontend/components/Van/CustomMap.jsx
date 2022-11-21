@@ -28,11 +28,13 @@ const CustomMap = ({ setCenterMap, centerMap, mapRef, destination, setLocation, 
             ref={mapRef}
             style={style.map}
             initialRegion={INITIAL_POSITION}>
+            {/* if the driver sets a destination a marker is shown on the map */}
             {destination != null && <Marker coordinate={destination} />}
-            {allDestinations != undefined && PathDraw(allDestinations, location) }
+            {/* if the driver has set destinations, a path is drawn between them */}
+            {allDestinations != undefined && PathDraw(allDestinations, location)}
         </MapView>
         <View style={style.searchContainer}>
-            <Search onPlaceSelect={(details) => onPlaceSelect(details)}  style={style} colorScheme={colorScheme} />
+            <Search onPlaceSelect={(details) => onPlaceSelect(details)} style={style} colorScheme={colorScheme} />
         </View>
     </>
     );

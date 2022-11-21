@@ -124,6 +124,16 @@ export default StyleSheet.create({
       borderColor: colors.dark.borderColor,
       borderWidth: 1,
       backgroundColor: colors.dark.backgroundColor,
+      color: colors.dark.color,
+    },
+    separator: {
+      height: 1,
+      width: "100%",
+      backgroundColor: colors.dark.borderColor,
+    },
+    predefinedPlacesDescription: {
+      backgroundColor: colors.dark.backgroundColor,
+      color: colors.dark.color,
     },
     bottomPopupContainer: {
       position: 'absolute',
@@ -499,6 +509,16 @@ export default StyleSheet.create({
       borderColor: colors.light.borderColor,
       borderWidth: 1,
       backgroundColor: colors.light.backgroundColor,
+      color: colors.light.color,
+    },
+    separator: {
+      height: 1,
+      width: "100%",
+      backgroundColor: colors.light.borderColor,
+    },
+    predefinedPlacesDescription: {
+      backgroundColor: colors.light.backgroundColor,
+      color: colors.light.color,
     },
     bottomPopupContainer: {
       position: 'absolute',

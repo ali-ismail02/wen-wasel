@@ -9,7 +9,7 @@ import SetTripArrived from "../../hooks/van/setTripArrived";
 
 const RouteDescription = ({ destination, setDestinations, allDestionations, update, style, colorScheme }) => {
     const [route, setRoute] = useState(destination);
-    const [destinationAddress, setDestinationAddress] = useState("");
+    const [destination_address, setDestinationAddress] = useState("");
     const [time, setTime] = useState("");
     const [color, setColor] = useState("black");
 
@@ -74,12 +74,12 @@ const RouteDescription = ({ destination, setDestinations, allDestionations, upda
                     <Material name="human-handsdown" size={30} color={color} />
                     <Text style={style.van.routeDescriptionText}>{route.reservations}</Text>
                 </View>
-                <Text style={style.van.routeDescriptionAddress}>{destinationAddress}</Text>
+                <Text style={style.van.routeDescriptionAddress}>{destination_address}</Text>
                 <Text style={style.van.routeDescriptionTime}>Scheduled at {time}</Text>
             </TouchableOpacity> :
             <View style={style.van.routeDescription}>
                 <Entypo name="check" size={30} color={color} />
-                <Text style={style.van.routeDescriptionAddress}>{destinationAddress}</Text>
+                <Text style={style.van.routeDescriptionAddress}>{destination_address}</Text>
                 <Text style={style.van.routeDescriptionTime}>Scheduled at {time}</Text>
             </View>}
     </>

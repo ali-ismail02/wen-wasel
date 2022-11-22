@@ -25,11 +25,11 @@ const SubRides = ({ path, setPath, setState, setCenter, style, colorScheme }) =>
                 console.error(error);
             });
         let time = new Date();
-        // add path[0].time seconds to time
-        time.setSeconds(time.getSeconds() + path[0].time);
-        // display only hours and minutes
-        setTime(time.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }));
-        setTime(path[0].cost)
+        // add path[0].cost minutes to the current time
+        time.setMinutes(time.getMinutes() + path[0].cost);
+        // format the time to HH:MM
+        time = time.toTimeString().split(' ')[0].slice(0, 5);
+        setTime(time);
 
         if (GetTripType(path[0]) == 'service') {
             setImageName('car');

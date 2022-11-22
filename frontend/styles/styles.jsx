@@ -25,6 +25,7 @@ export default StyleSheet.create({
       width: ScreenWidth,
       height: ScreenHeight,
       paddingHorizontal: 0,
+      display: "flex",
     },
     backgroundImage: {
       display: "flex",
@@ -81,6 +82,7 @@ export default StyleSheet.create({
       borderWidth: 1,
       fontSize: 20,
       marginVertical: 5,
+      position: "relative",
     },
     image: {
       width: ScreenWidth * 0.9,
@@ -93,7 +95,10 @@ export default StyleSheet.create({
       color: "white",
       textAlign: "center",
       fontWeight: "bold",
-    }
+    },
+    dropdownStyle: {
+      marginTop: -53,
+    },
   },
   dark: {
     // Utility Styles

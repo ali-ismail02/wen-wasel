@@ -142,7 +142,7 @@ const RegisterUserScreen = () => {
                     <Text style={styles.login.label}>Phone Number:</Text>
                     <TextInput
                         style = {{...!failedArray[1] ? styles.login.input : {...styles.login.input, borderColor: borderColor}}}
-                        placeholder="Phone Number."
+                        placeholder="Phone Number"
                         value={phone}
                         onChangeText={(text) => setPhone(text.replace(/[^0-9]/g, ''))}
                         keyboardType="numeric"
@@ -182,6 +182,7 @@ const RegisterUserScreen = () => {
                                 <Image source={require('../../assets/images/arrowup.webp')} style={{width:30, height:30}} />
                             )
                         }}
+                        dropdownStyle={styles.login.dropdownStyle}
                         dropdownIconPosition="right"
                         defaultValue={data[0]}
                         buttonTextStyle={{textAlign: 'left', paddingLeft: 3}}

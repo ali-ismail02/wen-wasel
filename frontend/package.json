@@ -31,6 +31,8 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.6.0",
     "react-native": "0.69.6",
+    "react-native-dropdown-select-list": "^2.0.2",
+    "react-native-element-dropdown": "^2.4.0",
     "react-native-gesture-handler": "~2.5.0",
     "react-native-google-places-autocomplete": "^2.5.0",
     "react-native-image-picker": "^4.10.1",

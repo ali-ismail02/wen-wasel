@@ -11,10 +11,11 @@ const PathDraw = (path, location) => {
             if (trip[0].arrived === false) {
                 // check if it's the first destination and draw a path from the driver's location to it
                 if (index == 0) {
+                    const origin = { latitude: parseFloat(location.latitude), longitude: parseFloat(location.longitude) }
                     return (
                         <View key={index}>
                             <MapViewDirections
-                                origin={location}
+                                origin={origin}
                                 destination={dest}
                                 apikey={Google_API_Key}
                                 strokeWidth={6}
@@ -25,7 +26,7 @@ const PathDraw = (path, location) => {
                         </View>
                     );
                 }
-                const origin = { latitude: path[index - 1][0].latitude, longitude: path[index - 1][0].longitude }
+                const origin = { latitude: parseFloat(path[index - 1][0].latitude), longitude: parseFloat(path[index - 1][0].longitude) }
                 // else draw a path from the previous destination to the current one
                 return (
                     <View key={index}>

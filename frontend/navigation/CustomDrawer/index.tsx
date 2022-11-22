@@ -74,11 +74,11 @@ const CustomDrawer = (props: any) => {
                 <View style={style.divider} />
                 <DrawerItem
                     icon={({ color, size }) => (
-                        <Icon name="log-out" color={"red"} size={24} />
+                        <Icon name="log-out" color={"#FF9E0D"} size={24} />
                     )}
                     label="Logout"
                     labelStyle={{
-                        color: "red",
+                        color: "#FF9E0D",
                     }}
                     onPress={() => {
                         store.dispatch(deleteUser())

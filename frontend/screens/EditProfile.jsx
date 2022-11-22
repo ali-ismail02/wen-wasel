@@ -16,7 +16,6 @@ const EditProfileScreen = () => {
     const [password, setPassword] = useState("");
     const [userType, setUserType] = useState();
     const [failedMessage, setFailedMessage] = useState(null);
-    const [successMessage, setSuccessMessage] = useState(null);
     const [image, setImage] = useState();
     const [updated, setUpdated] = useState(false);
     const user = useSelector((state) => state?.user);
@@ -109,16 +108,18 @@ const EditProfileScreen = () => {
                     <Text style={style.updateProfile.label}>Name:</Text>
                     <TextInput
                         style={style.updateProfile.input}
-                        placeholder="name"
+                        placeholder="Name"
                         value={name}
                         onChangeText={setName}
+                        placeholderTextColor={"#777"}
                     />
                     <Text style={style.updateProfile.label}>Email:</Text>
                     <TextInput
                         style={style.updateProfile.input}
-                        placeholder="email"
+                        placeholder="Email"
                         value={email}
                         onChangeText={setEmail}
+                        placeholderTextColor={"#777"}
                     />
                     <Text style={style.updateProfile.label}>Phone:</Text>
                     <TextInput
@@ -127,17 +128,18 @@ const EditProfileScreen = () => {
                         value={phone}
                         onChangeText={(text) => setPhone(text.replace(/[^0-9]/g, ''))}
                         keyboardType="numeric"
+                        placeholderTextColor={"#777"}
                     />
                     <Text style={style.updateProfile.label}>Password:</Text>
                     <TextInput
                         style={style.updateProfile.input}
-                        placeholder="password"
+                        placeholder="Password"
                         value={password}
                         onChangeText={setPassword}
                         secureTextEntry={true}
+                        placeholderTextColor={"#777"}
                     />
                     <Text style={styles.login.redLabel}>{failedMessage}</Text>
-                    <Text style={style.updateProfile.success}>{successMessage}</Text>
                 </View>
                 <Button text="UPDATE" onPress={update} width={"100%"} color={"#FF9E0D"} style={style} />
             </View>

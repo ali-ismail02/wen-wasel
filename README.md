@@ -48,7 +48,7 @@ Note that i didn't use any styling library or theme, all from scratch and using 
 | ![Van Driver](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Main%20(van).png) | ![Viewing Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Expanded%20(van).png) | ![Adding Route](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Adding%20Route.png) |
 
 | Admin Panel  | Admin Analytics  |
-| -----| -----| -----|
+| -----| -----|
 | ![Admin Panel](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/admin_panel.png) | ![Admin Analytics](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/admin_analytics.png) |
 
 <br><br>
@@ -71,10 +71,17 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 
 > Uing the above mentioned tecch stacks and the wireframes build with figma from the user sotries we have, the implementation of the app is shown as below, these are screenshots from the real app
 
-| Landing  | Home/Search  |
-| -----------------| -----|
-| ![Landing](https://github.com/julescript/spotifyndr/blob/master/demo/Landing_Page.jpg) | ![Home/Search](https://github.com/julescript/spotifyndr/blob/master/demo/Search_Page.jpg) |
+| Landing | Signup | 
+| ---|---|
+| ![Landing](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/login.jpg) | ![Signup](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/signup.jpg) |
 
+| Passenger searching for destination | Passenger choosing ride type | Passenger choosing path |
+|---|----|---|
+| ![Passenger searching for destination](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/searching.gif) | ![Passenger choosing ride type](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-ride-type.gif) | ![Passenger choosing path](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-path.gif) |
+
+| Passenger booking seat | Passenger traversing path |
+|---|---|
+| ![Passenger booking seat](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/booking-seat.gif) | ![Passenger traversing path](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/traversing-route.gif) |
 
 <br><br>
 <img src="./readme/title6.svg"/>

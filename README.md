@@ -76,7 +76,7 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 | ![Landing](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/login.jpg) | ![Signup](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/signup.jpg) |
 
 | Passenger searching for destination | Passenger choosing ride type | Passenger choosing path |
-|---|----|---|
+|---|--- |---|
 | ![Passenger searching for destination](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/searching.gif) | ![Passenger choosing ride type](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-ride-type.gif) | ![Passenger choosing path](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-path.gif) |
 
 | Passenger booking seat | Passenger traversing path |
@@ -107,6 +107,10 @@ This is an example of how to list things you need to use the software and how to
 - npm
   ```sh
   npm install npm@latest -g
+  ```
+- Nodemon
+  ```sh
+  npm install -g nodemon
   ```
 - Expo CLI
   ```sh
@@ -155,7 +159,22 @@ This is an example of how to list things you need to use the software and how to
    ```sh
    php artisan db:seed
    ```
-6. Start the Server
+6. Start the Server (local IP)
    ```sh
-   php artisan serve --port 8000 --host 192.168.1.50
+   php artisan serve --port 8000 --host "Your IP"
+   ```
+7. Start the Server (localhost)
+   ```sh
+   php artisan serve
+   ```
+
+#### To Run NodeJS Server (socket.io) on your machine
+
+1. Navigate to the socket-backend/socket-server folder
+   ```sh
+   cd socket-backend/socket-serverd
+   ```
+2. Run the server
+   ```sh
+   npx nodemon
    ```

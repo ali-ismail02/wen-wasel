@@ -6,13 +6,13 @@ const colors = {
   dark: {
     color: "white",
     backgroundColor: "#1E1E1E",
-    borderColor: "#888",
+    borderColor: "rgba(255,255,255,0.25)",
     shadowColor: "#777",
   },
   light: {
     color: "black",
     backgroundColor: "white",
-    borderColor: "#888",
+    borderColor: "rgba(0,0,0,0.25)",
     shadowColor: "#777",
   }
 }
@@ -65,7 +65,7 @@ export default StyleSheet.create({
       width: "100%",
       textAlign: "center",
       color: "white",
-      fontSize: 12,
+      fontSize: 14,
       paddingTop: 5,
     },
     redLabel: {
@@ -290,7 +290,8 @@ export default StyleSheet.create({
     },
     buttonText: {
       color: colors.dark.color,
-      fontSize: 20,
+      fontSize: 24,
+      fontWeight: "bold",
     },
     // User Route Option Styles
     routeOption: {
@@ -516,10 +517,8 @@ export default StyleSheet.create({
       width: "90%",
       backgroundColor: colors.light.backgroundColor,
       shadowColor: colors.light.shadowColor,
-      shadowOffset: { width: 2, height: 2 },
       shadowOpacity: 0.5,
       elevation: 4,
-      padding: 8,
       borderRadius: 8,
     },
     input: {
@@ -527,6 +526,7 @@ export default StyleSheet.create({
       borderWidth: 1,
       backgroundColor: colors.light.backgroundColor,
       color: colors.light.color,
+      margin: 0,
     },
     separator: {
       height: 1,
@@ -688,7 +688,8 @@ export default StyleSheet.create({
     },
     buttonText: {
       color: colors.light.color,
-      fontSize: 20,
+      fontSize: 24,
+      fontWeight: "bold",
     },
     // User Route Option Styles
     routeOption: {

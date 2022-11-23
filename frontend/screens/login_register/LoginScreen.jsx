@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/core';
 import { useState, useEffect } from 'react';
-import { Dimensions, Image, ImageBackground, Text, TextInput, View,Appearance } from 'react-native';
+import { Dimensions, Image, ImageBackground, Text, TextInput, View, Appearance } from 'react-native';
 import Button from '../../components/Button';
 import Login from '../../hooks/Login';
 import { updateUserProfile } from "../../redux/slices/userSlice";
@@ -10,15 +10,15 @@ import * as Location from "expo-location";
 
 const LoginScreen = () => {
     const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
-    const [style, setStyle] = useState({bottomPopupContainer: null});
-    
+    const [style, setStyle] = useState({ bottomPopupContainer: null });
+
     Appearance.addChangeListener(({ colorScheme }) => {
         setColorScheme(colorScheme);
-        {}
+        { }
     });
 
     useEffect(() => {
-        {colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light)}
+        { colorScheme == 'dark' ? setStyle(styles.dark) : setStyle(styles.light) }
     }, [colorScheme]);
 
     const [email, setEmail] = useState('');
@@ -91,21 +91,24 @@ const LoginScreen = () => {
                     <Text style={styles.login.label}>Email</Text>
                     <TextInput
                         style={[styles.login.input, { borderColor: emailBorder }]}
-                        placeholder="email"
+                        placeholder="Email"
                         value={email}
                         onChangeText={setEmail}
                     />
                     <Text style={styles.login.label}>Password</Text>
                     <TextInput
                         style={[styles.login.input, { borderColor: passwordBorder }]}
-                        placeholder="password"
+                        placeholder="Password"
                         value={password}
                         onChangeText={setPassword}
                         secureTextEntry={true}
                     />
                     <Text style={styles.login.redLabel}>{failedMessage}</Text>
-                    <Button text="LOGIN" onPress={handleLogin} width={"100%"} color={"#FF9E0D"} style={style}/>
-                    <Text onPress={() => navigation.navigate('RegisterUser')} style={[styles.login.links, { paddingBottom: Dimensions.get("window").height * 0.3 }]}>Dont have an account? Sign up now!</Text>
+                    <Button text="LOGIN" onPress={handleLogin} width={"100%"} color={"#FF9E0D"} style={style} />
+                    <Text onPress={() => navigation.navigate('RegisterUser')} style={[styles.login.links, { paddingBottom: Dimensions.get("window").height * 0.3 }]}>
+                        <Text style={styles.login.links}>Dont have an account?</Text>
+                        <Text style={[styles.login.links, { fontWeight: "bold", color: "#FF9E0D" }]}> Register Now</Text>
+                    </Text>
                 </View>
             </ImageBackground>
         </View>

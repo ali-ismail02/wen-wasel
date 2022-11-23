@@ -467,6 +467,7 @@ export default StyleSheet.create({
         width: 100,
         height: 100,
         borderRadius: 100,
+        marginBottom: 10,
       },
       label: {
         width: "100%",
@@ -480,6 +481,7 @@ export default StyleSheet.create({
         color: colors.dark.color,
         textAlign: "center",
         fontWeight: "bold",
+        paddingBottom: 20,
       },
       view: {
         width: "100%",
@@ -494,7 +496,7 @@ export default StyleSheet.create({
       },
       input: {
         width: "100%",
-        height: 40,
+        height: 50,
         backgroundColor: colors.dark.backgroundColor,
         color: colors.dark.color,
         fontSize: 20,
@@ -897,7 +899,7 @@ export default StyleSheet.create({
       },
       input: {
         width: "100%",
-        height: 40,
+        height: 50,
         backgroundColor: colors.light.backgroundColor,
         color: colors.light.color,
         paddingHorizontal: 20,

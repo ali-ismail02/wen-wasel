@@ -166,7 +166,12 @@ export default StyleSheet.create({
     instructions: {
       fontSize: 14,
       color: colors.dark.color,
-      paddingVertical:16,
+      paddingVertical:12,
+    },
+    instructionsSlider: {
+      fontSize: 14,
+      color: colors.dark.color,
+      paddingBottom: 10,
     },
     subTitle: {
       fontSize: 20,
@@ -288,7 +293,8 @@ export default StyleSheet.create({
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      borderRadius: 3
+      borderRadius: 3,
+      marginVertical: 8,
     },
     buttonText: {
       color: colors.dark.color,
@@ -371,8 +377,8 @@ export default StyleSheet.create({
       color: colors.dark.color,
     },
     subRideTextTime: {
-      fontSize: 20,
-      color: colors.dark.color,
+      fontSize: 18,
+      color: colors.dark.subTextColor,
     },
     // Booking Styles
     BookingPopup: {
@@ -562,6 +568,11 @@ export default StyleSheet.create({
       justifyContent: "space-between",
     },
     instructions: {
+      fontSize: 14,
+      color: colors.light.color,
+      paddingVertical: 12,
+    },
+    instructionsSlider: {
       fontSize: 14,
       color: colors.light.color,
       paddingBottom: 10,
@@ -769,8 +780,8 @@ export default StyleSheet.create({
       color: colors.light.color,
     },
     subRideTextTime: {
-      fontSize: 20,
-      color: colors.light.color,
+      fontSize: 18,
+      color: colors.light.subTextColor,
     },
     // Booking Styles
     BookingPopup: {

@@ -110,7 +110,7 @@ const Main = () => {
             case "done":
                 return <CompletedTripState setUserState={setUserState} style={style} />
             case "none":
-                return <BaseState style={style} setState={setState} setSearchResult={setSearchResult} setDestination={setDestination} mapRef={mapRef} location={location} setCenterMap={setCenterMap} />
+                return <BaseState style={style} setState={setState} setSearchResult={setSearchResult} setDestination={setDestination} mapRef={mapRef} location={location} setCenterMap={setCenterMap} center_map={center_map}/>
             case "searched":
                 return <SearchedState setState={setState} setPaths={setPaths} style={style} slider_value={slider_value} setSliderValue={setSliderValue} colorScheme={colorScheme} location={location} destination={destination} />
             case "rideSelected":

@@ -4,7 +4,7 @@ import { centerScreen } from "../../hooks/CameraChange";
 import { moveTo } from "../../hooks/CameraChange";
 import Search from "../Search";
 
-const BaseState = ({ style, setState, setSearchResult, setDestination, mapRef, location, setCenterMap }) => {
+const BaseState = ({ style, setState, setSearchResult, setDestination, mapRef, location, setCenterMap, center_map }) => {
 
     // handling place selection from search or map
     const onPlaceSelect = (details) => {
@@ -27,7 +27,9 @@ const BaseState = ({ style, setState, setSearchResult, setDestination, mapRef, l
             moveTo={moveTo}
             mapRef={mapRef}
             location={location}
-            style={style} />
+            style={style}
+            center_map={center_map}
+        />
     </>)
 }
 

@@ -8,12 +8,14 @@ const colors = {
     backgroundColor: "#1E1E1E",
     borderColor: "rgba(255,255,255,0.25)",
     shadowColor: "#777",
+    subTextColor: "rgba(255,255,255,0.5)",
   },
   light: {
     color: "black",
     backgroundColor: "white",
     borderColor: "rgba(0,0,0,0.25)",
     shadowColor: "#777",
+    subTextColor: "rgba(0,0,0,0.5)",
   }
 }
 
@@ -331,12 +333,12 @@ export default StyleSheet.create({
     routeOptionTripText: {
       fontSize: 20,
       fontWeight: "bold",
-      paddingRight: 10,
+      paddingRight: 14,
       paddingLeft: 5,
       color: colors.dark.color,
     },
     routeOptionArriveTime: {
-      color: colors.dark.color,
+      color: colors.dark.subTextColor,
     },
     scrollViewBottom: {
       position: 'absolute',
@@ -729,12 +731,12 @@ export default StyleSheet.create({
     routeOptionTripText: {
       fontSize: 20,
       fontWeight: "bold",
-      paddingRight: 10,
+      paddingRight: 14,
       paddingLeft: 5,
       color: colors.light.color,
     },
     routeOptionArriveTime: {
-      color: colors.light.color,
+      color: colors.light.subTextColor,
     },
     scrollViewBottom: {
       position: 'absolute',

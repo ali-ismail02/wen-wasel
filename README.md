@@ -4,7 +4,7 @@
 
 > Hello world! Wen Wasel is aimed at organizing the lebanese public transportation systems and guiding users to their destinations.  
 
-**[PROJECT PHILOSOPHY](https://github.com/julescript/well_app#-project-philosophy) • [WIREFRAMES](https://github.com/julescript/well_app#-wireframes) • [TECH STACK](https://github.com/julescript/well_app#-tech-stack) • [IMPLEMENTATION](https://github.com/julescript/well_app#-impplementation) • [HOW TO RUN?](https://github.com/julescript/well_app#-how-to-run)**
+**[PROJECT PHILOSOPHY](https://github.com/ali-ismail02/wen-wasel#-project-philosophy) • [WIREFRAMES](https://github.com/ali-ismail02/wen-wasel#-wireframes) • [TECH STACK](https://github.com/ali-ismail02/wen-wasel#-tech-stack) • [IMPLEMENTATION](https://github.com/ali-ismail02/wen-wasel#-impplementation) • [HOW TO RUN?](https://github.com/ali-ismail02/wen-wasel#-how-to-run)**
 
 </div>
 
@@ -13,16 +13,16 @@
 
 <img src="./readme/title2.svg"/>
 
-> Since your average joe (me) doesn't know how to navigate through lebanon with all the different routes of every van and service drivers expected payments. Wen Wasel is an app that solves all the above by guiding the user to live van stops and previous service rides.
+> Since your average joe (me) doesn't know how to navigate through lebanon with all the different routes of every bus and cab drivers expected payments. Wen Wasel is an app that solves all the above by guiding the user to live bus stops and previous cab rides.
 > 
-> The app allows van drivers to input their routes with their arrival time and shares their live location with the users. Ensuring more passengers on their respective routes.
+> The app allows bus drivers to input their routes with their arrival time and shares their live location with the users. Ensuring more passengers on their respective routes.
 >
-> The app allows passengers to book seats at vans and browse through different possible routes to their destination as well as providing them with live guidance to their destination.
+> The app allows passengers to book seats at buses and browse through different possible routes to their destination as well as providing them with live guidance to their destination.
 
 ### User Stories
-- As a van driver, I want to add routes, so that I can find more passengers.
+- As a bus driver, I want to add routes, so that I can find more passengers.
 - As a passenger, I want to find a route, so that I can reach my destination.
-- As a passenger, I want to book van seats, so that I can ensure it's availibility.
+- As a passenger, I want to book bus seats, so that I can ensure it's availibility.
 
 <br><br>
 
@@ -35,7 +35,7 @@ Note that i didn't use any styling library or theme, all from scratch and using 
 | -----| -----| -----|
 | ![Landing](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Landing.png) | ![Home/Search](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Main_passenger.png) | ![Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Expanded_Passenger.png) |
 
-| Van Driver  | Viewing Routes  | Adding Route  |
+| Bus Driver  | Viewing Routes  | Adding Route  |
 | -----| -----| -----|
 | ![Van Driver](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Main%20(van).png) | ![Viewing Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Expanded%20(van).png) | ![Adding Route](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Adding%20Route.png) |
 
@@ -62,7 +62,7 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 - This project uses [Laravel PHP web framework](https://laravel.com/). Laravel is a free and open-source PHP web framework intended for the development of web applications following the model–view–controller architectural pattern and based on Symfony.
 - For persistent storage (database), the app uses [MySQL](https://www.mysql.com/). MySQL is an open-source relational database management system.
 - To view driver's live location, the app uses the a [NodeJS runtime environment](https://nodejs.org/en/) server.
-- In order to use [Google Maps API](https://developers.google.com/maps) for location and map services, the app uses [react-native-maps library](https://github.com/react-native-maps/react-native-maps)
+- In order to use [Google Maps API](https://developers.google.com/maps) for location and map cabs, the app uses [react-native-maps library](https://github.com/react-native-maps/react-native-maps)
 
 
 
@@ -75,17 +75,21 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 | ---|---|
 | ![Landing](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/login.jpg) | ![Signup](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/signup.jpg) |
 
-| Passenger searching for destination | Passenger choosing ride type | Passenger choosing path |
+| Passenger Searching for Destination | Passenger Choosing Ride Type | Passenger Choosing Path |
 |---|--- |---|
 | ![Passenger searching for destination](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/searching.gif) | ![Passenger choosing ride type](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-ride-type.gif) | ![Passenger choosing path](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-path.gif) |
 
-| Passenger booking seat | Passenger traversing path | Updating profile |
+| Passenger Booking seat | Passenger Traversing Path | Updating Profile |
 |---|---|---|
 | ![Passenger booking seat](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/booking-seat.gif) | ![Passenger traversing path](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/traversing-route.gif) | ![Updating profile](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/updating-profile.gif) |
 
-| Bus choosing presaved route | Bus delaying routes | Bus adding routes |
+| Bus Choosing Presaved Route | Bus Delaying Routes | Bus Adding Routes |
 |---|--- |---|
 | ![Van choosing presaved route](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-route.gif) | ![Bus delaying routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/delaying-routes.gif) | ![Bus adding routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/adding-route.gif) |
+
+| Admin Bus driver | Bus Driver Information | Admin Analytics |
+|---|--- |---|
+| ![Admin bus driver](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/bus-drivers.PNG) | ![bus driver information](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/driver-info.PNG) | ![Admin analytics](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/analytics.PNG) |
 
 <br><br>
 <img src="./readme/title6.svg"/>

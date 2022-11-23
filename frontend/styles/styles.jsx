@@ -166,7 +166,7 @@ export default StyleSheet.create({
     instructions: {
       fontSize: 14,
       color: colors.dark.color,
-      paddingBottom: 10,
+      paddingVertical:16,
     },
     subTitle: {
       fontSize: 20,

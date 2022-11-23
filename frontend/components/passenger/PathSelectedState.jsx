@@ -8,7 +8,7 @@ const PathSelectedState = ({ style, setState, setCenterMap, location, mapRef }) 
     const onPathConfirm = () => {
         setState("pathConfirmed");
         setCenterMap(true);
-        moveTo(location.coords, mapRef, 18);
+        moveTo(location, mapRef, 18);
     }
 
     return (

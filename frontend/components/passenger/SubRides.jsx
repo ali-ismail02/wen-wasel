@@ -79,8 +79,8 @@ const SubRides = ({ path, setPath, setState, setCenter, style, colorScheme }) =>
         return (
             <View style={style.bottomPopupContainer}>
                 <View style={style.subRides}>
-                    {imageName == "car" && <Icon name="shuttle-van" size={30} color={color} />}
-                    {imageName == "van" && <Icon name="taxi" size={30} color={color} />}
+                    {imageName == "car" && <Icon name="taxi" size={30} color={color} />}
+                    {imageName == "van" && <Icon name="shuttle-van" size={30} color={color} />}
                     {imageName == "walking" && <Icon name="walking" size={30} color={color} />}
                     <View style={style.subRideText}>
                         <Text style={style.subRideTextDestination}>To {destination}</Text>

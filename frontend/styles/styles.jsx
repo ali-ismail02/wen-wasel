@@ -278,7 +278,7 @@ export default StyleSheet.create({
     sliderMark: {
       width: 20,
       height: 20,
-      backgroundColor: colors.dark.color,
+      backgroundColor: "#666",
       borderRadius: 20,
     },
     // Button Styles
@@ -676,7 +676,7 @@ export default StyleSheet.create({
     sliderMark: {
       width: 20,
       height: 20,
-      backgroundColor: colors.light.color,
+      backgroundColor: "#CCC",
       borderRadius: 20,
     },
     // Button Styles
@@ -779,7 +779,7 @@ export default StyleSheet.create({
       borderRadius: 30,
       elevation: 5,
       zIndex: 1000,
-      backgroundColor: colors.light.backgroundColor,
+      backgroundColor: colors.dark.backgroundColor,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
@@ -791,7 +791,7 @@ export default StyleSheet.create({
       borderRadius: 30,
     },
     bookingText: {
-      color: colors.light.color,
+      color: colors.dark.color,
       fontSize: 20,
       fontWeight: "bold",
       textAlign: "center",

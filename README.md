@@ -43,7 +43,7 @@ Note that i didn't use any styling library or theme, all from scratch and using 
 | -----| -----| -----|
 | ![Landing](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Landing.png) | ![Home/Search](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Main%20npassenger.png) | ![Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Expanded%20Passenger.png) |
 
-| Van Driver  | Viewing Routes  | Adding Route  |
+| Bus Driver  | Viewing Routes  | Adding Route  |
 | -----| -----| -----|
 | ![Van Driver](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Main%20(van).png) | ![Viewing Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Expanded%20(van).png) | ![Adding Route](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Adding%20Route.png) |
 
@@ -83,6 +83,10 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 |---|---|
 | ![Passenger booking seat](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/booking-seat.gif) | ![Passenger traversing path](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/traversing-route.gif) |
 
+| Bus choosing presaved route | Bus delaying routes | Bus adding routes |
+|---|--- |---|
+| ![Van choosing presaved route](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-route.gif) | ![Bus delaying routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/delaying-routes.gif) | ![Bus adding routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/adding-route.gif) |
+
 <br><br>
 <img src="./readme/title6.svg"/>
 
@@ -119,6 +123,10 @@ This is an example of how to list things you need to use the software and how to
 - Expo Go app for iOS and Android
   > 🤖 [Android Play Store](https://play.google.com/store/apps/details?id=host.exp.exponent) - Android Lollipop (5) and greater.  
   > 🍎 [iOS App Store](https://apps.apple.com/app/expo-go/id982107779) - iOS 11 and greater.
+- Angular CLI
+  ```sh
+  npm install -g @angular/cli 
+  ```
 
 ### Installation
 
@@ -140,6 +148,16 @@ This is an example of how to list things you need to use the software and how to
    expo start
    ```
 
+#### To Run Admin panel (Angular)
+
+1. Navigate to the admin-frontend/admin_frontend folder
+   ```sh
+   cd admin-frontend/admin_frontend
+   ```
+2. Run the follwoing command
+   ```sh
+   ng serve
+   ```
 
 #### To Run Laravel Server on your machine
 

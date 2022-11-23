@@ -12,7 +12,7 @@ const moveTo = async (position, mapRef, altitude = null) => {
 
 const centerScreen = (origin, destination, mapRef, top = 30) => {
     mapRef.current?.fitToCoordinates([origin, destination], {
-        edgePadding: { top: top, right: 30, bottom: 150, left: 30 },
+        edgePadding: { top: top, right: 30, bottom: 200, left: 30 },
         animated: true,
     });
 }

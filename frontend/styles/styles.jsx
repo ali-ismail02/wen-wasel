@@ -345,7 +345,7 @@ export default StyleSheet.create({
     routeOptionTripText: {
       fontSize: 20,
       fontWeight: "bold",
-      paddingRight: 14,
+      paddingRight: 13,
       paddingLeft: 5,
       color: colors.dark.color,
     },
@@ -759,7 +759,7 @@ export default StyleSheet.create({
     routeOptionTripText: {
       fontSize: 20,
       fontWeight: "bold",
-      paddingRight: 14,
+      paddingRight: 13,
       paddingLeft: 5,
       color: colors.light.color,
     },

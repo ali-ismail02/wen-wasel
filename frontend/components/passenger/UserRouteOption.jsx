@@ -42,29 +42,29 @@ const UserRouteOption = ({ route, onPress, style, colorScheme }) => {
                                 if (trip.name.includes("service") && trip.name.includes("start")) {
                                     return (
                                         <View key={index} style={style.flex}>
-                                            <Icon name="taxi" size={20} color={color} />
+                                            <Icon name="taxi" size={16} color={color} />
                                             <Text style={style.routeOptionTripText}>{trip.cost}</Text>
                                         </View>
                                     );
                                 } else if (trip.name.includes("van") && trip.name.includes("start")) {
                                     return (
                                         <View key={index} style={style.flex}>
-                                            <Icon name="shuttle-van" size={20} color={color} />
+                                            <Icon name="shuttle-van" size={16} color={color} />
                                             <Text style={style.routeOptionTripText}>{trip.cost}</Text>
                                         </View>
                                     );
                                 } else {
                                     return (
                                         <View key={index} style={style.flex}>
-                                            <Icon name="walking" size={20} color={color} />
+                                            <Icon name="walking" size={16} color={color} />
                                             <Text style={style.routeOptionTripText}>{trip.cost}</Text>
                                         </View>
                                     );
                                 }
                             } else {
                                 return (
-                                    <View key={index} style={style.flex}>
-                                        <Feather name="map-pin" size={20} color={color} />
+                                    <View key={index} style={[style.flex, {paddingTop: 4, marginLeft:-3}]}>
+                                        <Feather name="map-pin" size={16} color={color} />
                                     </View>
                                 )
                             }

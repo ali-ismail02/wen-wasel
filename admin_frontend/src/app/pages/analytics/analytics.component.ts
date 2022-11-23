@@ -9,12 +9,13 @@ import { ChartType } from 'angular-google-charts';
   styleUrls: ['./analytics.component.css'],
 })
 export class AnalyticsComponent implements OnInit {
-  constructor() {}
+  constructor() { }
 
   most_popular_routes: any = {};
   least_popular_routes: any = [];
   most_active_van_drivers: any = [];
   most_active_service_drivers: any = [];
+
 
   most_array = [];
   least_array = [];
@@ -38,18 +39,45 @@ export class AnalyticsComponent implements OnInit {
           this.most_active_service_drivers = data.most_active_service_drivers;
 
           let res: any = [];
-          Object.entries(this.most_popular_routes).forEach(([key, value]) =>
-            console.log(res.push([key, value]))
-          );
-          this.most_array = res;
-          res = [];
-          Object.entries(this.least_popular_routes).forEach(([key, value]) =>
-            console.log(res.push([key, value]))
-          );
-          this.least_array = res;
+          Object.entries(this.most_popular_routes).forEach(([key, value]) => {
+            try {
+              axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${key}&key=AIzaSyDSoehUwr5ckYYANQjoFfZZmYsSDEC99Qs`)
+                .then(({ data }) => {
+                  const address = data.results[3].formatted_address;
+                  const addressArray = address.split(',');
+                  res.push([addressArray[0], value]);
+                  if(res.length === 5) {
+                    this.most_array = res;
+                  }
+                })
+            } catch (error) {
+              console.log(error);
+            }
+          });
+          let res2: any = [];
+          Object.entries(this.least_popular_routes).forEach(([key, value]) =>{
+            try {
+              axios.get(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${key}&key=AIzaSyDSoehUwr5ckYYANQjoFfZZmYsSDEC99Qs`)
+                .then(({ data }) => {
+                  const address = data.results[3].formatted_address;
+                  const addressArray = address.split(',');
+                  res2.push([addressArray[0], value]);
+                  if(res2.length === 5) {
+                    this.least_array = res2;
+                  }
+                })
+            } catch (error) {
+              console.log(error);
+            }
+          });
         });
     } catch (error) {
       console.log(error);
     }
+
+    console.log(this.least_array);
+
+    this.least_array.forEach((route: string) => {
+    })
   }
 }

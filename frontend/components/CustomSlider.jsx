@@ -1,6 +1,7 @@
 import { Slider } from '@miblanchard/react-native-slider';
 import React from 'react';
 import { Text, View } from 'react-native';
+import SliderMarker from './SliderMarker';
 
 const CustomSlider = ({slider_value, setSliderValue, style, colorScheme}) => {
     return (
@@ -22,12 +23,12 @@ const CustomSlider = ({slider_value, setSliderValue, style, colorScheme}) => {
                 maximumValue={3}
                 value={slider_value}
                 onValueChange={value => setSliderValue(value)}
-                minimumTrackTintColor={colorScheme == 'dark' ? '#555' : '#000000'}
-                maximumTrackTintColor={colorScheme == 'dark' ? '#FFFFFF' : '#000000'}
+                minimumTrackTintColor={colorScheme == 'dark' ? '#FF9E0D' : '#FF9E0D'}
+                maximumTrackTintColor={colorScheme == 'dark' ? '#666' : '#CCC'}
                 animateTransitions={true}
-                renderTrackMarkComponent={() => <View style={style.sliderMark} />}
+                renderTrackMarkComponent={(index) => <SliderMarker value={index} sliderValue={slider_value} style={style} />}
                 trackMarks={[1, 2, 3]}
-                thumbTintColor={colorScheme == 'dark' ? '#555' : '#000000'}
+                thumbTintColor={colorScheme == 'dark' ? '#FF9E0D' : '#FF9E0D'}
                 animationType="timing"
                 animationConfig={{duration: 1000}}
                 thumbTouchSize={{width: 50, height: 50}}

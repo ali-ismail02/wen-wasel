@@ -22,7 +22,7 @@ const RegisterUserScreen = () => {
     const [failedArray, setFailedArray] = useState([false,false,false,false,false]);
     const [failedMessage, setFailedMessage] = useState(null);
     const [borderColor, setBorderColor] = useState('red');
-    const [data, setData] = useState(['Passenger', 'Bus Driver', 'Cab Driver']);
+    const [data, setData] = useState(['Passenger', 'Bus Driver']);
     const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
     const [style, setStyle] = useState({bottomPopupContainer: null});
     
@@ -189,7 +189,10 @@ const RegisterUserScreen = () => {
                     />
                     <Text style={styles.login.redLabel}>{failedMessage}</Text>
                     <Button text="SIGNUP" onPress={register} width={"100%"} color={"#FF9E0D"}  style={style}/>
-                    <Text onPress={() => navigation.navigate('Login')} style={[styles.login.links,{paddingBottom: Dimensions.get("window").height * 0.3}]}>Already have an account? Sign in!</Text>
+                    <Text onPress={() => navigation.navigate('Login')} style={[styles.login.links,{paddingBottom: Dimensions.get("window").height * 0.3}]}>
+                        Already have an account? 
+                        <Text style={[styles.login.links,{fontWeight:"bold", color: "#FF9E0D"}]}> Login</Text>
+                        </Text>
                 </View>
             </ImageBackground>
         </View>

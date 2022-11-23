@@ -1,12 +1,10 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/core';
-import { Image, Text, TextInput, View, ImageBackground } from 'react-native';
+import React, { useState } from 'react';
+import { Dimensions, Image, ImageBackground, Text, TextInput, View } from 'react-native';
+import SelectDropdown from 'react-native-select-dropdown';
 import Button from '../../components/Button';
 import styles from '../../styles/styles';
-import React, { useState } from 'react';
-import { updateUserProfile } from '../../redux/slices/userSlice';
-import { Dimensions } from 'react-native';
-import SelectDropdown from 'react-native-select-dropdown';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const RegisterCarScreen = () => {
     const [make, setMake] = useState("");

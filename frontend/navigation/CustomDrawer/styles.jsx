@@ -17,10 +17,18 @@ const colors = {
 
 export default StyleSheet.create({
   dark: {
-    container: {
-      padding: 25,
+    main: {
+      height: Dimensions.get("window").height - 300,
       backgroundColor: colors.dark.backgroundColor,
-      height: Dimensions.get("window").height,
+    },
+    container: {
+      backgroundColor: colors.dark.backgroundColor,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      height: "100%",
+      paddingLeft: 5,
+      height: Dimensions.get("window").height - 150,
     },
     switchContainer: {
       paddingLeft: 18,
@@ -33,7 +41,7 @@ export default StyleSheet.create({
     },
     topSection: {
       backgroundColor: colors.dark.backgroundColor,
-      padding: 30,
+      padding: 10,
       paddingTop: Dimensions.get("window").height * 0.08,
       flexDirection: 'row'
     },
@@ -65,10 +73,18 @@ export default StyleSheet.create({
     }
   },
   light: {
-    container: {
-      padding: 25,
+    main: {
+      height: Dimensions.get("window").height - 300,
       backgroundColor: colors.light.backgroundColor,
-      height: Dimensions.get("window").height,
+    },
+    container: {
+      backgroundColor: colors.light.backgroundColor,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "space-between",
+      height: "100%",
+      paddingLeft: 5,
+      height: Dimensions.get("window").height - 300,
     },
     switchContainer: {
       paddingLeft: 18,
@@ -81,7 +97,7 @@ export default StyleSheet.create({
     },
     topSection: {
       backgroundColor: colors.light.backgroundColor,
-      padding: 30,
+      padding: 10,
       paddingTop: Dimensions.get("window").height * 0.08,
       flexDirection: 'row'
     },

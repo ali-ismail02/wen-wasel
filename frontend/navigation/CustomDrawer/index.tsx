@@ -23,10 +23,10 @@ const CustomDrawer = (props: any) => {
     }, [colorScheme]);
 
     const TopSection = () => {
-    
+
         const user = useSelector((state: any) => state?.user);
         const image = user?.userProfile.image;
-    
+
         return (
             <View style={style.topSection}>
                 {image ? <Image source={{ uri: "http://192.168.1.50:8000/images/" + image }} style={style.imageProfile} />
@@ -40,50 +40,53 @@ const CustomDrawer = (props: any) => {
     const user = useSelector((state: any) => state?.user);
     // const dispatch = useDispatch()
     return (
-        <ScrollView bounces={false}>
+        <ScrollView bounces={false} style={style.main}>
             <TopSection />
             <View style={style.container}>
-                <DrawerItem
-                    icon={({ color, size }) => (
-                        <Icon name="home" color={iconColor} size={24} />
-                    )}
-                    label="Home"
-                    labelStyle={{
-                        color: iconColor,
-                    }}
-                    onPress={() => {
-                        props.navigation.navigate('Home');
-                    }}
-                />
-                <DrawerItem
-                    icon={({ color, size }) => (
-                        <Icon
-                            name="user"
-                            color={iconColor}
-                            size={24}
-                        />
-                    )}
-                    label="My Profile"
-                    labelStyle={{
-                        color: iconColor,
-                    }}
-                    onPress={() => {
-                        props.navigation.navigate('My Profile');
-                    }}
-                />
-                <View style={style.divider} />
-                <DrawerItem
-                    icon={({ color, size }) => (
-                        <Icon name="log-out" color={"#FF9E0D"} size={24} />
-                    )}
-                    label="Logout"
-                    labelStyle={{
-                        color: "#FF9E0D",
-                    }}
-                    onPress={() => {
-                        store.dispatch(deleteUser())
-                    }}
-                />
+                <View>
+                    <DrawerItem
+                        icon={({ color, size }) => (
+                            <Icon name="home" color={iconColor} size={24} />
+                        )}
+                        label="Home"
+                        labelStyle={{
+                            color: iconColor,
+                        }}
+                        onPress={() => {
+                            props.navigation.navigate('Home');
+                        }}
+                    />
+                    <DrawerItem
+                        icon={({ color, size }) => (
+                            <Icon
+                                name="user"
+                                color={iconColor}
+                                size={24}
+                            />
+                        )}
+                        label="My Profile"
+                        labelStyle={{
+                            color: iconColor,
+                        }}
+                        onPress={() => {
+                            props.navigation.navigate('My Profile');
+                        }}
+                    />
+                </View>
+                <View>
+                    <DrawerItem
+                        icon={({ color, size }) => (
+                            <Icon name="log-out" color={"#FF9E0D"} size={24} />
+                        )}
+                        label="Logout"
+                        labelStyle={{
+                            color: "#FF9E0D",
+                        }}
+                        onPress={() => {
+                            store.dispatch(deleteUser())
+                        }}
+                    />
+                </View>
             </View>
         </ScrollView>
     );

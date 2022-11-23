@@ -43,6 +43,9 @@ export function DrawerStack() {
             headerTitleStyle: {
               color: color,
             },
+            drawerStyle: {
+              width: 300,
+            }
           }}
           op
           drawerType='slide'
@@ -64,7 +67,9 @@ export function DrawerStack() {
             headerTitleStyle: {
               color: color,
             },
-
+            drawerStyle: {
+              width: 230,
+            }
           }}
           drawerType='slide'
           edgeWidth={30}

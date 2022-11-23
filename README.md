@@ -71,9 +71,9 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 
 > Uing the above mentioned tecch stacks and the wireframes build with figma from the user sotries we have, the implementation of the app is shown as below, these are screenshots from the real app
 
-| Landing | Signup | 
-| ---|---|
-| ![Landing](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/login.jpg) | ![Signup](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/signup.jpg) |
+| Landing | Signup | Passenger-Driver Live Location | 
+|---|---|---|
+| ![Landing](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/login.jpg) | ![Signup](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/signup.jpg) | ![Passenger-Driver Live Location](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/live-location.gif) |
 
 | Passenger Searching for Destination | Passenger Choosing Ride Type | Passenger Choosing Path |
 |---|--- |---|

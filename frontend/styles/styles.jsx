@@ -163,6 +163,12 @@ export default StyleSheet.create({
       alignItems: "center",
       justifyContent: "space-between",
     },
+    flexColumn: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "flex-start",
+      justifyContent: "center",
+    },
     instructions: {
       fontSize: 14,
       color: colors.dark.color,
@@ -435,13 +441,11 @@ export default StyleSheet.create({
       routeDescriptionAddress: {
         fontSize: 20,
         color: colors.dark.color,
-        width: 100,
         textAlign: "center",
       },
       routeDescriptionTime: {
         fontSize: 14,
         color: "#777",
-        width: 100,
         textAlign: "center",
       },
       presavedRouteView: { 
@@ -851,13 +855,11 @@ export default StyleSheet.create({
       routeDescriptionAddress: {
         fontSize: 20,
         color: colors.light.color,
-        width: 100,
         textAlign: "center",
       },
       routeDescriptionTime: {
         fontSize: 14,
         color: "#777",
-        width: 100,
         textAlign: "center",
       },
       presavedRouteView: { 

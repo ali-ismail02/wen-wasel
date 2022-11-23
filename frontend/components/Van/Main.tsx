@@ -26,7 +26,7 @@ const Main = () => {
     const io = require("socket.io-client");
     const socket = io('http://192.168.1.50:5000');
     const [colorScheme, setColorScheme] = useState(Appearance.getColorScheme());
-    const [style, setStyle] = useState<any>({ bottomPopupContainer: null });
+    const [style, setStyle] = useState<any>({ bottomPopupContainer: null, van: {presavedRouteView:null }});
 
     Appearance.addChangeListener(({ colorScheme }) => {
         setColorScheme(colorScheme);

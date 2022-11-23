@@ -69,19 +69,24 @@ const RouteDescription = ({ destination, setDestinations, allDestionations, upda
     return (<>
         {destination[0].arrived == false ?
             <TouchableOpacity style={style.van.routeDescription} onPress={onPress}>
-                <FontAwasone name="hourglass-2" size={30} color={color} />
+                <View style={style.flexColumn}>
+                    <Text style={style.van.routeDescriptionAddress}>{destination_address}</Text>
+                    <Text style={style.van.routeDescriptionTime}>Scheduled at {time}</Text>
+                </View>
                 <View style={style.flex}>
                     <Material name="human-handsdown" size={30} color={color} />
                     <Text style={style.van.routeDescriptionText}>{route.reservations}</Text>
+                    <FontAwasone name="hourglass-2" size={30} color={color} style={{ paddingLeft: 20 }} />
                 </View>
-                <Text style={style.van.routeDescriptionAddress}>{destination_address}</Text>
-                <Text style={style.van.routeDescriptionTime}>Scheduled at {time}</Text>
             </TouchableOpacity> :
             <View style={style.van.routeDescription}>
-                <Entypo name="check" size={30} color={color} />
+            <View style={style.flexColumn}>
                 <Text style={style.van.routeDescriptionAddress}>{destination_address}</Text>
                 <Text style={style.van.routeDescriptionTime}>Scheduled at {time}</Text>
-            </View>}
+            </View>
+                <Entypo name="check" size={30} color={color} />
+            </View>
+        }
     </>
     );
 }

@@ -249,7 +249,7 @@ export default StyleSheet.create({
       width: "100%",
       color: colors.dark.color,
       backgroundColor: colors.dark.backgroundColor,
-      borderColor: colors.dark.borderColor,
+      borderBottomColor: colors.dark.borderColor,
     },
     dropdownRowText: {
       color: colors.dark.color,
@@ -444,6 +444,16 @@ export default StyleSheet.create({
         width: 100,
         textAlign: "center",
       },
+      presavedRouteView: { 
+        paddingHorizontal: 30, 
+        paddingVertical: 10, 
+        borderBottomColor: colors.dark.borderColor,
+        borderBottomWidth: 1,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+      }
     },
     // update profiile screen
     updateProfile: {
@@ -656,6 +666,7 @@ export default StyleSheet.create({
       color: colors.light.color,
       backgroundColor: colors.light.backgroundColor,
       borderColor: colors.light.borderColor,
+      borderBottomColor: colors.light.borderColor,
     },
     dropdownRowText: {
       color: colors.light.color,
@@ -849,6 +860,16 @@ export default StyleSheet.create({
         width: 100,
         textAlign: "center",
       },
+      presavedRouteView: { 
+        paddingHorizontal: 30, 
+        paddingVertical: 10, 
+        borderBottomColor: colors.light.borderColor,
+        borderBottomWidth: 1,
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+      }
     },
     // update profiile screen
     updateProfile: {

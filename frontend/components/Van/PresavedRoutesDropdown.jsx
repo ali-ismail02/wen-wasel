@@ -33,7 +33,7 @@ const PresavedRoutesDropdown = ({ presaved_routes, setAllDestinations, setUserSt
 
     return (
         <View style={style.bottomPopupContainerNoPadding}>
-            <View style={[style.flex, { paddingHorizontal: 30, paddingVertical: 10, borderBottomColor: "#DDD", borderBottomWidth: 1 }]}>
+            <View style={style.van.presavedRouteView}>
                 <Text style={style.subTitle}>Presaved Routes:</Text>
                 <SelectDropdown
                     data={names}

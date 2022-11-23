@@ -75,8 +75,7 @@ const buildVanGraph = async (van, start_location, end_location, start, end, grap
         const date2 = new Date(bits[0], --bits[1], bits[2], bits[3], bits[4]);
         let time = date1 - date2;
         // get time in minutes
-        time = time / 1000 / 60;
-        console.log(time);
+        time = Math.abs(time / 1000);
         // add edge to graph with weight of time
         graph.addEdge(obj_start, obj_end, time);
         // add walking edge to graph from start to start of service

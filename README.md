@@ -77,7 +77,7 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 
 | Passenger Searching for Destination | Passenger Choosing Ride Type | Passenger Choosing Path |
 |---|--- |---|
-| ![Passenger searching for destination](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/searching.gif) | ![Passenger choosing ride type](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-ride-type.gif) | ![Passenger choosing path](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-path.gif) |
+| ![Passenger searching for destination](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/searching.gif) | ![Passenger choosing ride type](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-ride-type.gif) | ![Passenger choosing path](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-path%20(2).gif ) |
 
 | Passenger Booking seat | Passenger Traversing Path | Updating Profile |
 |---|---|---|

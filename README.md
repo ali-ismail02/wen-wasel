@@ -114,8 +114,6 @@ This is an example of how to list things you need to use the software and how to
 - Download and Install [Composer](https://getcomposer.org/download/)
 - Download and Install [XAMPP](https://www.apachefriends.org/download.html)
 
-### Installation
-
 - npm
   ```sh
   npm install npm@latest -g

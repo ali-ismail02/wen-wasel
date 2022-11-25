@@ -1,0 +1,30 @@
+<div class="container">
+    <div class="drivers-header">
+        <div class="title">Passengers</div>
+        <div class="search-container">
+            <fa-icon [icon]="searchIcon" class="search-icon"></fa-icon>
+            <input type="text" class="search" placeholder="Search" (change)="filterDrivers($event)" />
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Date</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let user of filteredPassengers">
+                <td>{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.email}}</td>
+                <td>{{user.phone}}</td>
+                <td>{{user.created_at}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

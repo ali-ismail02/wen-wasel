@@ -1,0 +1,33 @@
+<div class="app-container globalContainer" *ngIf="this._router.url !== '/login'">
+  <div class="navbar">
+    <div class="navbar-container">
+      <div class="top">
+        <div class="navbar-header" routerLink="/"><img src="../assets/logo.png" alt="logo" class="navbar-logo" /><span
+            class="navbar-name">Wen Wasel</span></div>
+        <div class="menu">Menu</div>
+        <div class="navbar-item" routerLink="/passengers"><img src="../assets/passenger.svg" alt="Passengers"
+            class="navbar-icon" /><span>Passengers</span>
+        </div>
+        <div class="navbar-item" routerLink="/van-drivers"><img src="../assets/bus.svg" alt="Drivers"
+            class="navbar-icon" /><span>Van Drivers</span></div>
+        <div class="navbar-item" routerLink="/service-drivers">
+          <fa-icon [icon]="faTaxi" class="navbar-icon"></fa-icon><span>Service Drivers</span>
+        </div>
+        <div class="navbar-item" routerLink="/analytics"><img src="../assets/reports.svg" alt="Drivers"
+            class="navbar-icon" /><span>Analytics</span></div>
+      </div>
+    </div>
+    <div class="bottom">
+      <div class="button-container"><button (click)="handleSubmit()">Logout</button>
+      </div>
+    </div>
+  </div>
+  <div class="top-bar">
+    <div class="username" [innerHTML]="name"></div>
+    <div class="user"><img [src]="image" alt="User" /></div>
+  </div>
+  <div class="right">
+    <router-outlet></router-outlet>
+  </div>
+</div>
+<app-login *ngIf="this._router.url === '/login'"></app-login>

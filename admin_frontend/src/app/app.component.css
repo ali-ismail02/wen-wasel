@@ -1,0 +1,137 @@
+.app-container {
+    display: flex;
+}
+
+.navbar {
+    width: 300px;
+    background-color: #1f1f1f;
+    color: #f1f1f1;
+    min-height: 768px;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    justify-content: space-between;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+}
+
+.navbar-header {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.navbar-name {
+    font-size: 1.5rem;
+    font-style: italic;
+}
+
+.navbar-logo {
+    width: 60px;
+    height: 60px;
+    margin-right: 20px;
+    margin: 1rem 0;
+}
+
+.menu {
+    font-size: 0.9rem;
+    color: grey;
+    margin: 1rem 0;
+}
+
+.navbar-item {
+    cursor: pointer;
+    padding: 1rem 0 1rem 0.25rem;
+    width: 90%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+.navbar-item:hover {
+    background-color: rgb(88, 80, 80);
+    border-radius: 16px;
+}
+
+.navbar-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.navbar-icon {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+.user img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 3rem;
+    margin-left: 1rem;
+    cursor: pointer;
+}
+
+.bottom button {
+    background: rgb(88, 80, 80);
+    color: white;
+    border-radius: 4px;
+    border: none;
+    padding-block: 0.25rem;
+    padding-inline: 1.5rem;
+}
+
+.bottom {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+    height: 57px;
+}
+
+.logout-icon {
+    position: absolute;
+    top: 0.25rem;
+    left: 0.25rem;
+}
+
+.right {
+    width: calc(100vw - 300px);
+    background-color: #f1f1f1;
+    height: calc(100vh - 75px);
+    color: #1f1f1f;
+    position: fixed;
+    padding-top: 75px;
+    right: 0;
+    overflow: auto;
+    scroll-behavior: smooth;
+}
+
+.top-bar {
+    width: calc(100vw - 300px);
+    position: fixed;
+    background-color: white;
+    height: 75px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    top: 0;
+    right: 0;
+    z-index: 2;
+}
+
+.username {
+    font-size: 1.2rem;
+}

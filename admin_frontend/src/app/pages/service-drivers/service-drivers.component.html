@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="drivers-header">
+        <div class="title">Service Drivers</div>
+        <div class="search-container">
+            <fa-icon [icon]="searchIcon" class="search-icon"></fa-icon>
+            <input type="text" class="search" placeholder="Search" (change)="filterDrivers($event)" />
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Car</th>
+                <th scope="col">Plate</th>
+                <th scope="col">Seats</th>
+                <th scope="col">Status</th>
+                <th scope="col">Date</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let driver of filteredDrivers">
+                <td>{{driver[0].id}}</td>
+                <td>{{driver[0].name}}</td>
+                <td>{{driver[0].email}}</td>
+                <td>{{driver[1].make + " " + driver[1].model + " " + driver[1].year}}</td>
+                <td>{{driver[1].license_plate}}</td>
+                <td>
+                    <fa-icon [icon]="checkIcon" [ngClass]="driver[1].approval_status === 0 ? '': 'checked'"></fa-icon>
+                </td>
+                <td>{{driver[0].created_at}}</td>
+                <td>
+                    <fa-icon [icon]="arrowRight" class="pointer" (click)="handleNavigate(driver)"></fa-icon>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

@@ -1,0 +1,61 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="row">
+        <div class="col-75">
+            <div class="container">
+
+                <form>
+                    <div class="row">
+                        <label for="name"><i class="fa fa-user"></i> Name</label>
+                        <input type="text" id="name" name="name" placeholder="{{driver[0].name}}" readonly>
+
+                        <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                        <input type="text" id="email" name="email" placeholder="{{driver[0].email}}" readonly>
+
+                        <label for="car"><i class="fa fa-car"></i> Car</label>
+                        <input type="text" id="car" name="car"
+                            placeholder="{{driver[1].make +' '+ driver[1].model +' ' + driver[1].year}}" readonly>
+
+                        <label for="plate"><i class="fa fa-id-card"></i> Plate</label>
+                        <input type="text" id="plate" name="plate" placeholder="{{driver[1].license_plate}}" readonly>
+
+                        <label for="seats"><i class="fa fa-sort-numeric-asc"></i> Seats</label>
+                        <input type="text" id="seat" name="seats" placeholder="{{driver[1].seats}}" readonly>
+
+                        <label for="date"><i class="fa fa-calendar"></i> Date</label>
+                        <input type="text" id="date" name="date" placeholder="{{toDate(driver[1].created_at)}}"
+                            readonly>
+                    </div>
+                </form>
+
+                <section class="images-container">
+                    <div>
+                        <img class="images-item" [src]="this.api + '/images/' + this.driver[1].front_image"
+                            alt="Example image">
+                    </div>
+                    <div>
+                        <img class="images-item" [src]="this.api + '/images/' + this.driver[1].side_image"
+                            alt="Example image">
+                    </div>
+                    <div>
+                        <img class="images-item" [src]="this.api + '/images/' + this.driver[1].license"
+                            alt="Example image">
+                    </div>
+                </section>
+
+                <div class="row">
+                    <button class="btn" (click)="handleAcceptReject(1)" [disabled]="loading">Accept</button>
+                    <button class="btn" (click)="handleAcceptReject(-1)" [disabled]="loading">Reject</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

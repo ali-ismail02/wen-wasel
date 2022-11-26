@@ -73,31 +73,27 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 
 | Landing | Light-Dark Theme | Passenger-Driver Live Location | 
 |---|---|---|
-| <img width="500px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/login.jpg"> | ![Light-Dark Theme](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/dark-theme.gif) | ![Passenger-Driver Live Location](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/live-location.gif) |
+| <img width="500px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/login.jpg"> | <img width="500px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/dark-theme.gif"> | <img width="500px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/live-location.gif"> |
 
 | Passenger Searching for Destination | Passenger Choosing Ride Type | Passenger Choosing Path |
 |---|--- |---|
-| ![Passenger searching for destination](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/searching.gif) | ![Passenger choosing ride type](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-ride-type.gif) | ![Passenger choosing path](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-path%20(2).gif ) |
+| <img width="500px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/searching.gif"> | <img width="500px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-ride-type.gif"> | <img width="500px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-path%20(2).gif"> |
 
 | Passenger Booking seat | Passenger Traversing Path | Updating Profile |
 |---|---|---|
-| ![Passenger booking seat](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/booking-seat.gif) | ![Passenger traversing path](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/traversing-route.gif) | ![Updating profile](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/updating-profile.gif) |
+| <img width="500px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/booking-seat.gif"> | <img width="500px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/traversing-route-location.gif"> | <img width="500px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/updating-profile.gif"> |
 
 | Bus Choosing Presaved Route | Bus Delaying Routes | Bus Adding Routes |
 |---|--- |---|
-| ![Van choosing presaved route](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-route.gif) | ![Bus delaying routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/delaying-routes.gif) | ![Bus adding routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/adding-route.gif) |
+| <img width="500px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-route.gif"> | <img width="500px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/delaying-routes.gif"> | <img width="500px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/adding-route.gif"> |
 
-| Admin Bus driver | 
-|---|
-| ![Admin bus driver](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/bus-drivers.PNG) |
-
-| Bus Driver Information |
-|---|
-| ![bus driver information](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/driver-info.PNG) |
+| Admin Bus driver | Bus Driver Information |
+|---|---|
+| ![Admin bus driver](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/bus-drivers.PNG) | ![bus driver information](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/driver-info.PNG) |
 
 | Admin Analytics |
 |---|
-| ![Admin analytics](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/analytics.PNG) |
+| <img width="500px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/analytics.PNG"> |
 
 <br><br>
 <img src="./readme/title6.svg"/>

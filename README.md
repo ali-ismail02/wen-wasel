@@ -73,7 +73,7 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 
 | Landing | Light-Dark Theme | Passenger-Driver Live Location | 
 |---|---|---|
-| <img width="400px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/login.jpg"> | ![Light-Dark Theme](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/dark-theme.gif) | ![Passenger-Driver Live Location](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/live-location.gif) |
+| <img width="500px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/login.jpg"> | ![Light-Dark Theme](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/dark-theme.gif) | ![Passenger-Driver Live Location](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/live-location.gif) |
 
 | Passenger Searching for Destination | Passenger Choosing Ride Type | Passenger Choosing Path |
 |---|--- |---|

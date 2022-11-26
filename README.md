@@ -73,19 +73,19 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 
 | Landing | Light-Dark Theme | Passenger-Driver Live Location | 
 |---|---|---|
-| <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/login.jpg"> | <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/dark-theme.gif"> | <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/live-location.gif"> |
+| <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/login.jpg"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/dark-theme.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/live-location.gif"> |
 
 | Passenger Searching for Destination | Passenger Choosing Ride Type | Passenger Choosing Path |
 |---|--- |---|
-| <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/searching.gif"> | <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-ride-type.gif"> | <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-path%20(2).gif"> |
+| <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/searching.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-ride-type.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-path%20(2).gif"> |
 
 | Passenger Booking seat | Passenger Traversing Path | Updating Profile |
 |---|---|---|
-| <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/booking-seat.gif"> | <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/traversing-route-location.gif"> | <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/updating-profile.gif"> |
+| <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/booking-seat.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/traversing-route-location.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/updating-profile.gif"> |
 
 | Bus Choosing Presaved Route | Bus Delaying Routes | Bus Adding Routes |
 |---|--- |---|
-| <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-route.gif"> | <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/delaying-routes.gif"> | <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/adding-route.gif"> |
+| <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-route.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/delaying-routes.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/adding-route.gif"> |
 
 | Admin Bus driver | Bus Driver Information |
 |---|---|
@@ -93,7 +93,7 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 
 | Admin Analytics |
 |---|
-| <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/analytics.PNG"> |
+| <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/analytics.PNG"> |
 
 <br><br>
 <img src="./readme/title6.svg"/>

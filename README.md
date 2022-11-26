@@ -4,14 +4,14 @@
 
 > Hello world! Wen Wasel is aimed at organizing the lebanese public transportation systems and guiding users to their destinations.  
 
-**[PROJECT PHILOSOPHY](https://github.com/ali-ismail02/wen-wasel#-project-philosophy) • [WIREFRAMES](https://github.com/ali-ismail02/wen-wasel#-wireframes) • [TECH STACK](https://github.com/ali-ismail02/wen-wasel#-tech-stack) • [IMPLEMENTATION](https://github.com/ali-ismail02/wen-wasel#-impplementation) • [HOW TO RUN?](https://github.com/ali-ismail02/wen-wasel#-how-to-run)**
+**[PROJECT PHILOSOPHY](https://github.com/ali-ismail02/wen-wasel#project-philosophy) • [WIREFRAMES](https://github.com/ali-ismail02/wen-wasel#wireframes) • [TECH STACK](https://github.com/ali-ismail02/wen-wasel#tech-stack) • [IMPLEMENTATION](https://github.com/ali-ismail02/wen-wasel#impplementation) • [HOW TO RUN?](https://github.com/ali-ismail02/wen-wasel#how-to-run)**
 
 </div>
 
 <br><br>
 
 
-<img src="./readme/title2.svg"/>
+<img src="./readme/title2.svg" id="project-philosophy"/>
 
 > Since your average joe (me) doesn't know how to navigate through lebanon with all the different routes of every bus and cab drivers expected payments. Wen Wasel is an app that solves all the above by guiding the user to live bus stops and previous cab rides.
 > 
@@ -26,7 +26,7 @@
 
 <br><br>
 
-<img src="./readme/title3.svg"/>
+<img src="./readme/title3.svg" id="wireframes"/>
 
 > This design was planned before on paper, then moved to Figma app for the fine details.
 Note that i didn't use any styling library or theme, all from scratch and using pure css modules
@@ -53,7 +53,7 @@ Note that i didn't use any styling library or theme, all from scratch and using 
 
 <br><br>
 
-<img src="./readme/title4.svg"/>
+<img src="./readme/title4.svg" id="impplementation"/>
 
 Here's a brief high-level overview of the tech stack the Well app uses:
 
@@ -67,7 +67,7 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 
 
 <br><br>
-<img src="./readme/title5.svg"/>
+<img src="./readme/title5.svg" id="how-to-run"/>
 
 > Using the above mentioned tecch stacks and the wireframes build with figma from the user sotries we have, the implementation of the app is shown as below, these are screenshots from the real app
 

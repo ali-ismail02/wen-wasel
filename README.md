@@ -71,29 +71,29 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 
 > Using the above mentioned tecch stacks and the wireframes build with figma from the user sotries we have, the implementation of the app is shown as below, these are screenshots from the real app
 
-| Landing | Light-Dark Theme | Passenger-Driver Live Location | Searching for Destination |
-|---|---|---|---|
-| <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/login.jpg"> | <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/dark-theme.gif"> | <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/live-location.gif"> |<img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/searching.gif">
+| Landing | Light-Dark Theme | Passenger-Driver Live Location | 
+|---|---|---|
+| <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/login.jpg"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/dark-theme.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/live-location.gif"> |
 
- Passenger Choosing Ride Type | Passenger Choosing Path |Passenger Booking seat | Passenger Traversing Path |
-|--- |---|---|---|
-| <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-ride-type.gif"> | <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-path%20(2).gif"> | <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/booking-seat.gif"> | <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/traversing-route.gif"> |
+| Passenger Searching for Destination | Passenger Choosing Ride Type | Passenger Choosing Path |
+|---|--- |---|
+| <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/searching.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-ride-type.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-path%20(2).gif"> |
 
-| Updating Profile | Bus Choosing Presaved Route | Bus Delaying Routes | Bus Adding Routes |
-|---|--- |---|---|
-| <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/updating-profile.gif"> | <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-route.gif"> | <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/delaying-routes.gif"> | <img width="200px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/adding-route.gif"> |
+| Passenger Booking seat | Passenger Traversing Path | Updating Profile |
+|---|---|---|
+| <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/booking-seat.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/traversing-route.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/updating-profile.gif"> |
 
-| Admin Bus driver |
-|---|
-| ![Admin bus driver](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/bus-drivers.PNG) |
+| Bus Choosing Presaved Route | Bus Delaying Routes | Bus Adding Routes |
+|---|--- |---|
+| <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-route.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/delaying-routes.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/adding-route.gif"> |
 
-| Bus Driver Information |
-|---|
-| ![bus driver information](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/driver-info.PNG) |
+| Admin Bus driver | Bus Driver Information |
+|---|---|
+| ![Admin bus driver](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/bus-drivers.PNG) | ![bus driver information](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/driver-info.PNG) |
 
 | Admin Analytics |
 |---|
-| <img width="400px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/analytics.PNG"> |
+| <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/analytics.PNG"> |
 
 <br><br>
 <img src="./readme/title6.svg"/>

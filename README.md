@@ -71,6 +71,7 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 
 > Using the above mentioned tecch stacks and the wireframes build with figma from the user sotries we have, the implementation of the app is shown as below, these are screenshots from the real app
 
+<div style="display='flex'; width='100%'; justify-content='center';">
 | Landing | Light-Dark Theme | Passenger-Driver Live Location | 
 |---|---|---|
 | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/login.jpg"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/dark-theme.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/live-location.gif"> |
@@ -98,7 +99,7 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 | Admin Analytics |
 |---|
 | ![bus driver information](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/analytics.PNG) |
-
+</div>
 <br><br>
 <img src="./readme/title6.svg"/>
 

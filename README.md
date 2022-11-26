@@ -97,7 +97,7 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 
 | Admin Analytics |
 |---|
-| <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/analytics.PNG"> |
+| ![bus driver information](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/analytics.PNG) |
 
 <br><br>
 <img src="./readme/title6.svg"/>

@@ -33,19 +33,19 @@ Note that i didn't use any styling library or theme, all from scratch and using 
 
 | Landing  | Home/Search  | Routes  |
 | -----| -----| -----|
-| ![Landing](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Landing.png) | ![Home/Search](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Main_passenger.png) | ![Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Expanded_Passenger.png) |
+| <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Landing.png"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Main_passenger.png"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Expanded_Passenger.png"> |
 
 | Bus Driver  | Viewing Routes  | Adding Route  |
 | -----| -----| -----|
-| ![Van Driver](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Main%20(van).png) | ![Viewing Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Expanded%20(van).png) | ![Adding Route](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Adding%20Route.png) |
+| <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Main%20(van).png"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Expanded%20(van).png"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/wireframes/Adding%20Route.png"> |
 
 | Landing  | Home/Search  | Routes  |
 | -----| -----| -----|
-| ![Landing](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Landing.png) | ![Home/Search](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Main%20npassenger.png) | ![Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Expanded%20Passenger.png) |
+| <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Landing.png"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Main%20npassenger.png"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Expanded%20(van).png"> |
 
 | Bus Driver  | Viewing Routes  | Adding Route  |
 | -----| -----| -----|
-| ![Van Driver](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Main%20(van).png) | ![Viewing Routes](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Expanded%20(van).png) | ![Adding Route](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Adding%20Route.png) |
+| <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Main%20(van).png"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Expanded%20(van).png"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/mockups/Adding%20Route.png">) |
 
 | Admin Panel  | Admin Analytics  |
 | -----| -----|
@@ -87,17 +87,13 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 |---|--- |---|
 | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-route.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/delaying-routes.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/adding-route.gif"> |
 
-| Admin Bus driver |
-|---|
-| ![Admin bus driver](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/bus-drivers.PNG) |
-
-| Bus Driver Information |
-|---|
-| ![bus driver information](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/driver-info.PNG) |
+| Admin Bus driver |Bus Driver Information |
+|---|---|
+| <img width="380px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/bus-drivers.PNG">| <img width="380px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/driver-info.PNG"> |
 
 | Admin Analytics |
 |---|
-| ![bus driver information](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/analytics.PNG) |
+| <img width="380px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/analytics.PNG"> |
 
 <br><br>
 <img src="./readme/title6.svg"/>

@@ -87,13 +87,17 @@ Here's a brief high-level overview of the tech stack the Well app uses:
 |---|--- |---|
 | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/choosing-route.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/delaying-routes.gif"> | <img width="230px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/adding-route.gif"> |
 
-| Admin Bus driver |Bus Driver Information |
-|---|---|
-| <img width="380px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/bus-drivers.PNG">| <img width="380px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/driver-info.PNG"> |
+| Admin Bus driver |
+|---|
+| ![Admin bus driver](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/bus-drivers.PNG) |
+
+| Bus Driver Information |
+|---|
+| ![bus driver information](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/driver-info.PNG) |
 
 | Admin Analytics |
 |---|
-| <img width="380px" src="https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/analytics.PNG"> |
+| ![bus driver information](https://github.com/ali-ismail02/wen-wasel/blob/main/demo/implementations/analytics.PNG) |
 
 <br><br>
 <img src="./readme/title6.svg"/>

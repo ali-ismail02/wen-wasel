@@ -63,22 +63,22 @@ class PassengerController extends Controller
     
     // Api to add a trip
     public function addTrip(Request $request){
-        return app("App\Http\Controllers\PassengerControllers\TripAddOrUpdate")->addTrip($request);
+        return app("App\Http\Controllers\PassengerControllers\TripsController")->addTrip($request);
     }
 
     // Api to update trip info by id
     public function updateTrip(Request $request){
-        return app("App\Http\Controllers\PassengerControllers\TripAddOrUpdate")->updateTrip($request);
+        return app("App\Http\Controllers\PassengerControllers\TripsController")->updateTrip($request);
     }
 
     // Api to get trip by id
     public function getTripById(Request $request){
-        return app("App\Http\Controllers\PassengerControllers\TripAddOrUpdate")->getTripById($request);
+        return app("App\Http\Controllers\PassengerControllers\TripsController")->getTripById($request);
     }
 
     // Api to get all trips
     public function getTrips(Request $request){
-        return app("App\Http\Controllers\PassengerControllers\TripAddOrUpdate")->getTrips($request);
+        return app("App\Http\Controllers\PassengerControllers\TripsController")->getTrips($request);
     }
     
     // Api to get the cuurent trip if any

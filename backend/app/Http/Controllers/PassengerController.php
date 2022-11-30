@@ -19,6 +19,10 @@ use Validator;
 
 class PassengerController extends Controller
 {
+    // Api for passenger signup
+    public function passengerSignUp(Request $request){
+        return app("App\Http\Controllers\PassengerControllers\ProfileController")->passengerSignUp($request);
+    }
     
     // Api to add a trip
     public function addTrip(Request $request){

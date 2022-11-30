@@ -147,43 +147,19 @@ class PassengerController extends Controller
         ]);
     }
 
+    // Api to add reservation
+    public function addReservation(Request $request){
+        return app("App\Http\Controllers\PassengerControllers\ReservationController")->addReservation($request);
+    }
+    
+    // Api to get the reservations
+    public function getReservations(Request $request){
+        return app("App\Http\Controllers\PassengerControllers\ReservationController")->getReservations($request);
+    }
+
     // Api to update reservation status to 1 (arrived)
     public function updateReservation(Request $request){
-        // Validate the request
-        $rules = [
-            'user_data'=>'required',
-            'reservation_id'=>'required'
-        ];
-        if($error = validate($request->all(), $rules)){
-            return response()->json([
-                "status" => "Failed",
-                "message" => "Validation Failed",
-                "errors" => $error
-            ]);
-        }
-        
-        $user = $request->user_data;
-
-        if(!$reservation = $user->reservations()->where('id',$request->reservation_id)->first()){
-            return response()->json([
-                "status" => "Failed",
-                "message" => "Reservation not found"
-            ]);
-        }
-
-        // Update the reservation status
-        $reservation->status = 1;
-        $reservation->save();
-
-        // Add seat to the driver
-        $driver = $reservation->route()->first()->driver()->first();
-        $driver->seats = $driver->seats + 1;
-        $driver->save();
-
-        return response()->json([
-            "status" => "success",
-            "message" => "Reservation updated successfully"
-        ]);
+        return app("App\Http\Controllers\PassengerControllers\ReservationController")->updateReservation($request);
     }
 
     // Api to get all possible routes for a passenger to take

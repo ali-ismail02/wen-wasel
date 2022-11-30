@@ -5,7 +5,7 @@ namespace App\Http\Controllers\PassengerControllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class TripAddOrUpdate extends Controller
+class TripsController extends Controller
 {
     public function addTrip(Request $request){
         // Validate the request
@@ -85,6 +85,82 @@ class TripAddOrUpdate extends Controller
             "status" => "success",
             "message" => "Trip added successfully",
             "trip_id" => $trip->id
+        ]);
+    }
+
+    // Api to update trip info by id
+    public function updateTrip(Request $request){
+        // Validate the request
+        $rules = [
+            'trip_id'=>'required',
+            'user_data'=>'required',
+        ];
+        if($error = validate($request->all(), $rules)){
+            return response()->json([
+                "status" => "Failed",
+                "message" => "Validation Failed",
+                "errors" => $error
+            ]);
+        }
+
+        $user = $request->user_data;
+
+        // Get the trip
+        $trip = $user->trips()->where('id',$request->trip_id)->first();
+        if(!$trip){
+            return response()->json([
+                "status" => "Failed",
+                "message" => "Trip not found"
+            ]);
+        }
+
+        // Get the sub trips
+        $sub_trips_all = $trip->subTrips()->get();
+        $sub_trips = [];
+
+        // Get the trip info for each sub trip
+        foreach($sub_trips_all as $sub_trip){
+            $trip_info = $sub_trip->tripInfo()->first();
+            $sub_trips[] = [$sub_trip, $trip_info];
+        }
+        
+        // Get the trip info for each sub trip and update the arrival time for the first sub trip with departure time but no arrival time
+        foreach($sub_trips as $sub_trip){
+            $trip_info =  $sub_trip[1];
+            if($trip_info->departure_time && $trip_info->arrival_time == null){
+                $trip_info->arrival_time = date("Y-m-d H:i:s");
+                $trip_info->save();
+                
+                if($sub_trip == $sub_trips[count($sub_trips)-1]){
+                    return response()->json([
+                        "status" => "2",
+                        "message" => "Trip Completed"
+                    ]);
+                }
+
+                break;
+            }
+        }
+
+        // Get the trip info for each sub trip and update the departure time for the first sub trip with no departure time
+        foreach($sub_trips as $sub_trip){
+            $trip_info =  $sub_trip[1];
+            if($trip_info->departure_time == null){
+                $trip_info->departure_time = date("Y-m-d H:i:s");
+                $trip_info->save();
+
+                return response()->json([
+                    "status" => "success",
+                    "message" => "Trip updated successfully"
+                ]);
+
+                break;
+            }
+        }
+
+        return response()->json([
+            "status" => "Failed",
+            "message" => "Trip already completed"
         ]);
     }
 }

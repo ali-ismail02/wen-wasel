@@ -197,7 +197,6 @@ class PassengerController extends Controller
     }
 
     // Api to get fares
-
     public function getFares(Request $request){
         // Validate the request
         if($error = validate($request->all(), ['user_data' => 'required'])){

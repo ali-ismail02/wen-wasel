@@ -215,4 +215,49 @@ class TripsController extends Controller
             "trip" => $trip_infos
         ]);
     }
+
+    // Api to get all trips
+    public function getTrips(Request $request){
+        // Validate the request
+        if($error = validate($request->all(), ['user_data' => 'required'])){
+            return response()->json([
+                "status" => "Failed",
+                "message" => "Validation Failed",
+                "errors" => $error
+            ]);
+        }
+
+        $user = $request->user_data;
+        $trips = $user->trips()->get();
+
+        $trips_data = [];
+        // loop through each trip and get the trip info for each sub trip
+        foreach($trips as $trip){
+            $sub_trips = $trip->subTrips()->get();
+            $trip_infos = [];
+            // Get the trip info for each sub trip
+            foreach($sub_trips as $sub_trip){
+                $trip_info = $sub_trip->tripInfo()->first();
+                $trip_infos[] = [
+                    "trip_info_id" => $trip_info->id,
+                    "start_location" => $trip_info->start_location,
+                    "end_location" => $trip_info->end_location,
+                    "departure_time" => $trip_info->departure_time,
+                    "arrival_time" => $trip_info->arrival_time,
+                    "directions" => $sub_trip->directions,
+                    "trip_type" => $sub_trip->trip_type
+                ];
+            }
+            $trips_data[] = [
+                "trip_id" => $trip->id,
+                "trip" => $trip_infos
+            ];
+        }
+
+        return response()->json([
+            "status" => "success",
+            "message" => "Trips found",
+            "trips" => $trips_data
+        ]);
+    }
 }

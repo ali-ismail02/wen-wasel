@@ -137,27 +137,6 @@ class PassengerController extends Controller
 
     // Api to get fares
     public function getFares(Request $request){
-        // Validate the request
-        if($error = validate($request->all(), ['user_data' => 'required'])){
-            return response()->json([
-                "status" => "Failed",
-                "message" => "Validation Failed",
-                "errors" => $error
-            ]);
-        }
-
-        // Get the fares for the distance
-        if(!$fares = Fare::all()){
-            return response()->json([
-                "status" => "Failed",
-                "message" => "No fares found"
-            ]);
-        }
-
-        return response()->json([
-            "status" => "success",
-            "message" => "Success",
-            "fares" => $fares
-        ]);
+        return app("App\Http\Controllers\PassengerControllers\ProfileController")->getFares($request);
     }
 }
